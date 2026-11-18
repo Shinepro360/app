@@ -512,7 +512,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v4';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v5';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -611,6 +611,7 @@ function crowdHTML(){
   const c=S.crowd||{level:'quiet',percent:0},lc={quiet:'ok',moderate:'warn',full:'bad'}[c.level]||'ok';
   const word={ok:'खाली',warn:'ठीक-ठाक',bad:'भरा'}[lc],txt={ok:'खाली: मशीन आसानी से मिलेगी',warn:'ठीक-ठाक भीड़',bad:'भीड़ ज़्यादा है'}[lc];
   return '<div class="crowd"><span class="big" style="font-size:56px">'+word+'</span><span class="muted">अभी जिम</span></div>'
+   +(c.count!=null?'<p style="font-size:20px;margin-top:6px"><b class="num">'+c.count+'</b> / '+c.capacity+' लोग अभी जिम में</p>':'')
    +'<div class="cap" aria-hidden="true"><i class="'+lc+'" style="width:'+Math.min(100,Number(c.percent)||0)+'%"></i></div>'
    +'<p><span class="pill '+lc+'">'+txt+'</span></p>'+chartHTML();
 }
@@ -739,7 +740,7 @@ function pubHTML(){
   const p=ui.pub;if(!p)return '';
   if(!p.found)return '<p class="err" style="margin-top:12px">यह जिम ID नहीं मिली।</p>';
   const lc={quiet:'ok',moderate:'warn',full:'bad'}[p.level]||'ok',word={ok:'खाली',warn:'ठीक-ठाक',bad:'भरा'}[lc];
-  return '<div style="margin-top:14px"><b>'+esc(p.name)+'</b><div class="crowd"><span class="big" style="font-size:48px">'+word+'</span><span class="muted">अभी जिम</span></div><div class="cap" aria-hidden="true"><i class="'+lc+'" style="width:'+Math.min(100,Number(p.percent)||0)+'%"></i></div></div>';
+  return '<div style="margin-top:14px"><b>'+esc(p.name)+'</b><div class="crowd"><span class="big" style="font-size:48px">'+word+'</span><span class="muted">अभी जिम</span></div>'+(p.count!=null?'<p style="font-size:20px"><b class="num">'+p.count+'</b> / '+p.capacity+' लोग अभी जिम में</p>':'')+'<div class="cap" aria-hidden="true"><i class="'+lc+'" style="width:'+Math.min(100,Number(p.percent)||0)+'%"></i></div></div>';
 }
 function vMember(){
   const m=S.members.find(x=>x.id===S.me)||S.members[0];
