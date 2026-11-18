@@ -375,7 +375,27 @@ const EXTRA={
 "WhatsApp / Drive पर भेजें": "Send via WhatsApp / Drive",
 "तीनों फ़ाइलें एक साथ डाउनलोड करें": "Download all three files together",
 "फ़ाइल तैयार है": "File is ready",
-"फ़ाइल डाउनलोड हो रही है": "File is downloading"
+"फ़ाइल डाउनलोड हो रही है": "File is downloading",
+"जिम सेटिंग और बैकअप": "Gym settings and backup",
+"जिम की जानकारी": "Gym information",
+"सेव करें": "Save",
+"क्षमता से ही भीड़ का स्तर (खाली / ठीक-ठाक / भरा) तय होता है।": "The crowd level (quiet / moderate / full) is decided by the capacity.",
+"बंद मेंबर": "Inactive members",
+"ये मेंबर स्कैन नहीं कर सकते और सूची व अलर्ट में नहीं गिने जाते। पुराना रिकॉर्ड बचा है।": "These members cannot scan and are not counted in lists or alerts. Their old record is kept.",
+"फिर चालू करें": "Reactivate",
+"हमेशा के लिए हटाएँ": "Delete permanently",
+"मेंबर बंद करें": "Deactivate member",
+"हटाएँ": "Delete",
+"मेंबर बंद करना है? वह स्कैन नहीं कर पाएगा। बाद में फिर चालू कर सकते हैं।": "Deactivate this member? They will not be able to scan. You can reactivate later.",
+"पक्का हटाना है? उसका लॉगिन, फ़ीस और हाज़िरी हमेशा के लिए मिट जाएगी। यह वापस नहीं आएगा।": "Delete for sure? Their login, fees and attendance will be erased permanently. This cannot be undone.",
+"मेंबर बंद कर दिया": "Member deactivated",
+"मेंबर फिर चालू हो गया": "Member reactivated",
+"मेंबर हटा दिया": "Member deleted",
+"जिम हटा दिया": "Gym deleted",
+"जिम हटाएँ": "Delete gym",
+"ID मेल नहीं खाई। कुछ नहीं हटाया।": "ID did not match. Nothing was deleted.",
+"आपकी सदस्यता बंद है": "Your membership is inactive",
+"एंट्री नहीं हुई। कृपया काउंटर पर जिम से संपर्क करें।": "Entry not recorded. Please contact the gym at the counter."
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -481,7 +501,7 @@ function vMembers(){
 function mDetail(m){
   const g=gym(m.gym),f=feeInfo(m),s=stats(m.id),used=Math.min(100,Math.max(0,(f.days-f.left)/f.days*100));
   return '<section class="panel" style="margin-top:16px"><div class="row sp"><div><p class="eyebrow">मेंबर</p><h2>'+esc(m.name)+'</h2><p class="muted">'+esc(m.phone)+' · <span class="pill '+f.st+'">'+f.lab+'</span></p></div>'
-   +'<a class="btn gold" target="_blank" rel="noopener" href="'+wa(m.phone,'नमस्ते '+m.name+', '+g.name+' की तरफ़ से: आपकी फ़ीस '+fd(f.last)+' तक वैध है'+(f.due?', ₹'+f.due+' बाकी है':'')+'।')+'">WhatsApp रिमाइंडर</a> <button class="btn alt sm" type="button" data-act="resetpin" data-id="'+m.id+'">नया पिन बनाएँ</button></div>'
+   +'<a class="btn gold" target="_blank" rel="noopener" href="'+wa(m.phone,'नमस्ते '+m.name+', '+g.name+' की तरफ़ से: आपकी फ़ीस '+fd(f.last)+' तक वैध है'+(f.due?', ₹'+f.due+' बाकी है':'')+'।')+'">WhatsApp रिमाइंडर</a> <button class="btn alt sm" type="button" data-act="resetpin" data-id="'+m.id+'">नया पिन बनाएँ</button> <button class="btn alt sm" type="button" data-act="deactivate" data-id="'+m.id+'">मेंबर बंद करें</button> <button class="btn alt sm" type="button" data-act="delmember" data-id="'+m.id+'">हटाएँ</button></div>'
    +'<div class="cols" style="margin-top:16px"><div class="stack">'
    +'<dl class="kv"><div><dt>प्लान</dt><dd>'+m.months+' महीने</dd></div><div><dt>आखिरी फ़ीस जमा</dt><dd>'+fd(pd(m.lastPaid))+'</dd></div><div><dt>कुल फ़ीस</dt><dd class="num">'+inr(m.total)+'</dd></div><div><dt>अब तक पेड</dt><dd class="num">'+inr(m.paid)+'</dd></div><div><dt>बाकी</dt><dd class="num">'+inr(f.due)+'</dd></div><div><dt>वैधता तक</dt><dd>'+fd(f.last)+'</dd></div></dl>'
    +'<div><div class="row sp sm"><b>बचे दिन: '+Math.max(0,f.left)+' / '+f.days+'</b><span class="muted">हर दिन एक दिन कटता है</span></div><div class="prog" aria-hidden="true"><i style="width:'+used+'%"></i></div></div>'
@@ -535,7 +555,7 @@ function vToday(){
 }
 function vOwner(){
   const g=gOwn();
-  const subs=[['today','आज'],['members','मेंबर और फ़ीस'],['trainers','ट्रेनर'],['diet','डाइट इंक्वायरी'],['backup','डेटा बैकअप']];
+  const subs=[['today','आज'],['members','मेंबर और फ़ीस'],['trainers','ट्रेनर'],['diet','डाइट इंक्वायरी'],['backup','जिम सेटिंग और बैकअप']];
   return '<div class="ohead"><div><p class="eyebrow">जिम ओनर पैनल</p><h1>'+esc(g.name)+'</h1><p class="muted">'+esc(g.address)+' · ID '+esc(g.code)+' · <span class="pill '+svc(g).c+'">'+svc(g).t+'</span></p></div></div>'
    +'<div class="sub" role="group" aria-label="पैनल के हिस्से">'+subs.map(s=>'<button type="button" data-act="sub" data-v="'+s[0]+'" aria-pressed="'+(ui.sub===s[0])+'">'+s[1]+'</button>').join('')+'</div>'
    +({today:vToday,members:vMembersP,trainers:vTrainers,diet:vOwnerDiet,backup:vBackup}[ui.sub]||vToday)();
@@ -543,14 +563,14 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v6';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v7';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
 const lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
 
 /* ---------- state ---------- */
-const BLANK=()=>({role:'',sess:'',me:'',gyms:[],members:[],logs:[],trainers:[],diets:[],crowd:null,hourly:Array(24).fill(0)});
+const BLANK=()=>({role:'',sess:'',me:'',gyms:[],members:[],off:[],logs:[],trainers:[],diets:[],crowd:null,hourly:Array(24).fill(0)});
 let S=BLANK();
 const ui={sub:'today',filt:'all',q:'',sel:null,cal:{y:new Date().getFullYear(),m:new Date().getMonth()},err:'',lv:{},lmode:lsGet('sp360-mode')||'owner',
   newGym:null,newPin:null,dietMsg:null,fee:'149',lastScan:null,loading:true,gTok:'',sTok:'',gW:null,gAt:0,gBusy:false,fatal:''};
@@ -616,7 +636,8 @@ async function loadAll(){
   if(g){const s=subOf(g.trial_start,g.paid_until);N.gyms=[{id:g.id,code:g.code,name:g.name,owner:g.owner_name,phone:g.owner_phone,address:g.address,capacity:g.capacity,hasTrainers:g.has_trainers,qrMode:g.qr_mode||'rotating',lat:g.lat,lng:g.lng,radius:g.radius_m||150,sub:s.sub,trialLeft:s.trialLeft}];N.sess=g.id}
   N.trainers=(must(tr)||[]).map(t=>({id:t.id,gym:t.gym_id,name:t.name,phone:t.phone||'',spec:t.speciality||''}));
   const fee={};(must(fv)||[]).forEach(f=>{fee[f.member_id]=f});
-  N.members=(must(mm)||[]).map(m=>{const f=fee[m.id]||{};return{id:m.id,gym:m.gym_id,name:m.name,phone:m.phone,months:f.months||1,total:f.total_fee||0,paid:f.paid||0,start:f.start_date||iso(T0()),lastPaid:f.last_paid_on||f.start_date||iso(T0()),trainer:m.trainer_id||'',msId:f.membership_id||null,inside:false,inTs:0}});
+  const allM=(must(mm)||[]).map(m=>{const f=fee[m.id]||{};return{active:m.active!==false,id:m.id,gym:m.gym_id,name:m.name,phone:m.phone,months:f.months||1,total:f.total_fee||0,paid:f.paid||0,start:f.start_date||iso(T0()),lastPaid:f.last_paid_on||f.start_date||iso(T0()),trainer:m.trainer_id||'',msId:f.membership_id||null,inside:false,inTs:0}});
+  N.members=allM.filter(m=>m.active);N.off=allM.filter(m=>!m.active);
   const byId={};N.members.forEach(m=>{byId[m.id]=m});const cut=Date.now()-6*36e5;
   rows.forEach(a=>{const tin=Date.parse(a.checked_in_at);N.logs.push({m:a.member_id,t:'in',ts:tin});
     if(a.checked_out_at)N.logs.push({m:a.member_id,t:'out',ts:Date.parse(a.checked_out_at)});
@@ -720,6 +741,7 @@ function scanBannerR(){
   if(r.result==='nolocation')return mk('लोकेशन चालू करें','छपे QR से एंट्री के लिए फ़ोन की लोकेशन की अनुमति (Allow) देनी ज़रूरी है। लोकेशन चालू करके QR फिर स्कैन करें।');
   if(r.result==='far')return mk('आप जिम के पास नहीं हैं','आप जिम से लगभग '+r.distance+' मीटर दूर हैं। जिम के अंदर से QR स्कैन करें।');
   if(r.result==='nosetup')return mk('जिम की लोकेशन सेट नहीं है','ओनर से कहें कि ऐप में जिम की लोकेशन सेट करें।');
+  if(r.result==='inactive')return '<section class="scan bad" role="status"><div class="scan-h"><span class="mark">✕</span><div><b>आपकी सदस्यता बंद है</b><p>एंट्री नहीं हुई। कृपया काउंटर पर जिम से संपर्क करें।</p></div></div></section>';
   if(r.result!=='in'&&r.result!=='out')return '<section class="scan bad" role="status"><div class="scan-h"><span class="mark">✕</span><div><b>यह QR इस जिम का नहीं है</b><p>अपने जिम के गेट की स्क्रीन पर चल रहा QR स्कैन करें।</p></div></div></section>';
   const left=r.days_left==null?0:Number(r.days_left),due=Number(r.due)||0,st=r.fee_status;
   let cls=st==='expired'?'bad':st==='warning'?'warn':'ok',mark='✓',head,sub;
@@ -743,7 +765,12 @@ function pinBox(){
    +'<p class="sm muted" style="margin-top:8px">यह पिन अभी एक ही बार दिखेगा। मेंबर को भेज दें। भूल जाए तो नया पिन बनाएँ।</p>'
    +'<p class="row" style="margin-top:12px"><a class="btn sm" target="_blank" rel="noopener" href="'+wa(p.phone,'नमस्ते '+p.name+', '+g.name+' के ऐप का लॉगिन। लिंक: '+url+' जिम ID: '+g.code+', मोबाइल: '+p.phone+', पिन: '+p.pin)+'">WhatsApp से भेजें</a><button class="btn alt sm" type="button" data-act="closepin">बंद करें</button></p></section>';
 }
-function vMembersP(){return pinBox()+vMembers()}
+function offList(){
+  if(!S.off.length)return '';
+  return '<section class="panel" style="margin-top:20px"><h2>बंद मेंबर</h2><p class="muted sm" style="margin-bottom:8px">ये मेंबर स्कैन नहीं कर सकते और सूची व अलर्ट में नहीं गिने जाते। पुराना रिकॉर्ड बचा है।</p><ul class="feed">'
+   +S.off.map(m=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span><b>'+esc(m.name)+'</b> <span class="muted sm num">'+esc(m.phone)+'</span></span><span class="row"><button class="btn sm" type="button" data-act="reactivate" data-id="'+m.id+'">फिर चालू करें</button><button class="btn alt sm" type="button" data-act="delmember" data-id="'+m.id+'">हमेशा के लिए हटाएँ</button></span></li>').join('')+'</ul></section>';
+}
+function vMembersP(){return pinBox()+vMembers()+offList()}
 function vLogin(){
   const m=ui.lmode,lv=ui.lv||{};
   const tabs=[['owner','जिम ओनर'],['member','मेंबर'],['admin','एडमिन']];
@@ -843,7 +870,7 @@ function vAdmin(){
    +'<p class="sm muted" style="margin-top:8px">यह पासवर्ड अभी एक ही बार दिखेगा। ओनर को भेज दें।</p>'
    +'<p class="row" style="margin-top:12px"><a class="btn sm" target="_blank" rel="noopener" href="'+wa(ng.phone,'नमस्ते '+ng.owner+', ShinePro360 पर आपके जिम '+ng.name+' का लॉगिन तैयार है। जिम ID: '+ng.code+', पासवर्ड: '+ng.pass+' ऐप लिंक: '+appUrl())+'">WhatsApp से भेजें</a></p></section>':'')
    +'<section><h2 style="margin-bottom:8px">जुड़े हुए जिम</h2><div class="tw"><table><thead><tr><th>ID</th><th>जिम</th><th>ओनर</th><th>पता</th><th>मेंबर</th><th>अभी अंदर</th><th>सेवा</th><th></th></tr></thead><tbody>'
-   +(S.gyms.length?S.gyms.map(g=>'<tr><td class="num">'+esc(g.code)+'</td><td><b>'+esc(g.name)+'</b></td><td>'+esc(g.owner)+'<br><span class="muted sm num">'+esc(g.phone)+'</span></td><td>'+esc(g.address)+'</td><td class="num">'+g.count+'</td><td class="num">'+g.inside+'</td><td><span class="pill '+svc(g).c+'">'+svc(g).t+'</span></td><td><div class="row"><button class="btn gold sm" type="button" data-act="paidgym" data-id="'+g.id+'">'+(g.sub==='paid'?'भुगतान हटाएँ':'भुगतान मिला')+'</button><button class="btn alt sm" type="button" data-act="resetpw" data-id="'+g.id+'">नया पासवर्ड</button></div></td></tr>').join(''):'<tr><td colspan="8" class="muted">अभी कोई जिम नहीं जुड़ा।</td></tr>')+'</tbody></table></div></section></div>'
+   +(S.gyms.length?S.gyms.map(g=>'<tr><td class="num">'+esc(g.code)+'</td><td><b>'+esc(g.name)+'</b></td><td>'+esc(g.owner)+'<br><span class="muted sm num">'+esc(g.phone)+'</span></td><td>'+esc(g.address)+'</td><td class="num">'+g.count+'</td><td class="num">'+g.inside+'</td><td><span class="pill '+svc(g).c+'">'+svc(g).t+'</span></td><td><div class="row"><button class="btn gold sm" type="button" data-act="paidgym" data-id="'+g.id+'">'+(g.sub==='paid'?'भुगतान हटाएँ':'भुगतान मिला')+'</button><button class="btn alt sm" type="button" data-act="resetpw" data-id="'+g.id+'">नया पासवर्ड</button><button class="btn alt sm" type="button" data-act="delgym" data-id="'+g.id+'">जिम हटाएँ</button></div></td></tr>').join(''):'<tr><td colspan="8" class="muted">अभी कोई जिम नहीं जुड़ा।</td></tr>')+'</tbody></table></div></section></div>'
    +'<div class="stack"><section class="panel"><h2>कमाई का हिसाब</h2><label for="fee">हर जिम से मासिक शुल्क (₹)</label><input id="fee" type="number" min="0" data-inp="fee" value="'+esc(ui.fee)+'"><p class="sm muted" style="margin-top:8px">'+paying+' भुगतान वाले जिम × '+inr(fee)+' = <b id="feeTot">'+inr(paying*fee)+'</b> प्रति माह। पहला महीना फ़्री ट्रायल है।</p></section>'
    +'<section class="panel"><h2>डाइट इंक्वायरी</h2><p class="sm muted">ऊपर वाले मेंबर की इंक्वायरी नीचे की तालिका में है।</p></section></div></div>'
    +'<section style="margin-top:28px"><h2 style="margin-bottom:8px">सभी डाइट इंक्वायरी</h2><div class="tw">'+dietRows(S.diets,true)+'</div></section>';
@@ -875,7 +902,18 @@ async function exportCsv(kinds,share){
   else files.forEach((f,i)=>{setTimeout(()=>{const u=URL.createObjectURL(f),a=document.createElement('a');a.href=u;a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(u);a.remove()},1500)},i*600)});
   lsSet('sp360-backup-'+g.code,day);ui.lastBackup=day;render();toast(share?'फ़ाइल तैयार है':'फ़ाइल डाउनलोड हो रही है');
 }
+function gymForm(){
+  const g=gOwn();
+  return '<section class="panel" style="max-width:640px;margin-bottom:20px"><h2>जिम की जानकारी</h2><form data-form="gymedit" class="frm" style="margin-top:8px">'
+   +'<div class="full"><label for="en">जिम का नाम</label><input id="en" name="name" value="'+esc(g.name)+'" required></div>'
+   +'<div class="full"><label for="ea">पता</label><input id="ea" name="address" value="'+esc(g.address)+'" required></div>'
+   +'<div><label for="ec">क्षमता (एक समय में कितने लोग)</label><input id="ec" name="cap" type="number" min="5" max="500" value="'+g.capacity+'" required></div>'
+   +'<div class="full"><button class="btn" type="submit">सेव करें</button></div></form><p class="sm muted" style="margin-top:8px">क्षमता से ही भीड़ का स्तर (खाली / ठीक-ठाक / भरा) तय होता है।</p></section>';
+}
 function vBackup(){
+  return gymForm()+vBackup2();
+}
+function vBackup2(){
   const g=gOwn(),last=ui.lastBackup||lsGet('sp360-backup-'+g.code),d=T0().getDate(),due=d>=28||d<=2;
   const btn=(k,t)=>'<div class="row" style="margin-bottom:10px"><b style="min-width:180px">'+t+'</b><button class="btn sm" type="button" data-act="csv" data-v="'+k+'">डाउनलोड करें</button><button class="btn alt sm" type="button" data-act="csv" data-v="'+k+'" data-share="1">WhatsApp / Drive पर भेजें</button></div>';
   return '<section class="panel" style="max-width:640px"><h2>डेटा बैकअप (CSV फ़ाइल)</h2>'
@@ -887,6 +925,7 @@ function vBackup(){
 
 /* ---------- actions ---------- */
 function toast(t){const e=$('#toast');e.textContent=lang==='en'?tr(t):t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>{e.hidden=true},3200)}
+const ask=t=>confirm(lang==='en'?tr(t):t);
 const num=v=>Math.max(0,Math.round(Number(v)||0));
 const ACT={
   sub:b=>{ui.sub=b.dataset.v;render()},
@@ -898,6 +937,14 @@ const ACT={
   lmode:b=>{ui.lmode=b.dataset.v;ui.err='';lsSet('sp360-mode',ui.lmode);render()},
   copy:b=>{const t=b.dataset.t;try{navigator.clipboard.writeText(t).then(()=>toast('कॉपी हो गया'),()=>toast(t))}catch(e){toast(t)}},
   forceout:async b=>{const id=b.dataset.id;must(await sb.from('attendance').update({checked_out_at:new Date().toISOString()}).eq('member_id',id).is('checked_out_at',null).select());await refresh();toast('मेंबर को बाहर दर्ज कर दिया')},
+  deactivate:async b=>{const m=S.members.find(x=>x.id===b.dataset.id);if(!ask('मेंबर बंद करना है? वह स्कैन नहीं कर पाएगा। बाद में फिर चालू कर सकते हैं।'))return;
+    must(await sb.from('members').update({active:false}).eq('id',m.id).select());ui.sel=null;await refresh();toast('मेंबर बंद कर दिया')},
+  reactivate:async b=>{must(await sb.from('members').update({active:true}).eq('id',b.dataset.id).select());await refresh();toast('मेंबर फिर चालू हो गया')},
+  delmember:async b=>{const m=S.members.concat(S.off).find(x=>x.id===b.dataset.id);if(!ask('पक्का हटाना है? उसका लॉगिन, फ़ीस और हाज़िरी हमेशा के लिए मिट जाएगी। यह वापस नहीं आएगा।'))return;
+    must(await sb.rpc('owner_delete_member',{p_member:m.id}));ui.sel=null;await refresh();toast('मेंबर हटा दिया')},
+  delgym:async b=>{const g=gym(b.dataset.id);const t=prompt((lang==='en'?'To delete this gym type its ID: ':'जिम हटाने के लिए उसकी ID लिखें: ')+g.code);if(t==null)return;
+    if(String(t).trim().toUpperCase()!==g.code.toUpperCase()){toast('ID मेल नहीं खाई। कुछ नहीं हटाया।');return}
+    must(await sb.rpc('admin_delete_gym',{p_gym:g.id}));await refresh();toast('जिम हटा दिया')},
   closepin:()=>{ui.newPin=null;render()},
   camscan:()=>camScan(),
   print:()=>window.print(),
@@ -941,6 +988,7 @@ const FORMS={
     const ms=must(await sb.from('memberships').insert({gym_id:m.gym,member_id:m.id,months:mo,total_fee:PLAN[mo],start_date:iso(T0())}).select().single());
     if(paid>0)must(await sb.from('payments').insert({gym_id:m.gym,member_id:m.id,membership_id:ms.id,amount:paid,paid_on:iso(T0())}));
     const t=new Date();ui.cal={y:t.getFullYear(),m:t.getMonth()};await refresh();toast('फ़ीस आज से रिन्यू हो गई')},
+  gymedit:async f=>{const d=new FormData(f),g=gOwn();must(await sb.rpc('update_my_gym',{p_name:String(d.get('name')).trim(),p_address:String(d.get('address')).trim(),p_capacity:Math.max(5,Math.min(500,Math.round(Number(d.get('cap'))||25))),p_has_trainers:g.hasTrainers}));await refresh();toast('सेव हो गया')},
   addt:async f=>{const d=new FormData(f);must(await sb.from('trainers').insert({gym_id:S.sess,name:String(d.get('name')).trim(),phone:String(d.get('phone')),speciality:String(d.get('spec')).trim()}));await refresh();toast('ट्रेनर जुड़ गया')},
   diet:async f=>{const d=new FormData(f),m=S.members.find(x=>x.id===f.dataset.id),w=Number(d.get('w')),h=Number(d.get('h')),goal=d.get('goal'),s=dietSuggest(w,h,goal);
     must(await sb.from('diet_inquiries').insert({gym_id:m.gym,member_id:m.id,weight_kg:w,height_cm:Math.round(h),goal:goal,food_pref:d.get('pref'),consent:true}));
