@@ -1,0 +1,16 @@
+# Pings Supabase once a day so the free project does not pause from inactivity.
+name: keepalive
+on:
+  schedule:
+    - cron: '30 4 * * *'
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase
+        run: |
+          curl -sf -X POST "https://nlztthivztrcnvklbllk.supabase.co/rest/v1/rpc/public_crowd" \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A" \
+            -H "Content-Type: application/json" \
+            -d '{"p_code":"ping"}'
