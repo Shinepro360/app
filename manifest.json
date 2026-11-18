@@ -1,0 +1,16 @@
+{
+  "name": "ShinePro360 Gym",
+  "short_name": "ShinePro360",
+  "description": "ShinePro360 Management - Gym Support & Service",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#12254a",
+  "theme_color": "#12254a",
+  "lang": "hi",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
