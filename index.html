@@ -469,7 +469,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v2';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -510,7 +510,8 @@ function errH(m){
   return m||'कुछ गड़बड़ हुई। इंटरनेट जाँचकर फिर कोशिश करें।';
 }
 async function fn(body){
-  const r=await sb.functions.invoke(FN,{body:body});
+  let r=await sb.functions.invoke(FN,{body:body});
+  if(r.error&&/Failed to send|fetch/i.test(String(r.error.message))){const r2=await sb.functions.invoke(FN2,{body:body});if(!r2.error||!/Failed to send|fetch/i.test(String(r2.error.message)))r=r2}
   if(r.error){let msg=r.error.message;try{const j=await r.error.context.json();if(j&&j.error)msg=j.error}catch(e){}throw new Error(msg)}
   if(r.data&&r.data.error)throw new Error(r.data.error);
   return r.data;
@@ -822,7 +823,7 @@ function render(){
   loc($('.top'));
   if(ui.fatal){app.innerHTML='<section class="panel"><p class="err">'+esc(ui.fatal)+'</p></section>';loc(app);return}
   if(ui.loading){app.innerHTML='<p class="muted">लोड हो रहा है…</p>';loc(app);return}
-  app.innerHTML=ROUTES[r]();loc(app);
+  app.innerHTML=ROUTES[r]()+'<p class="muted sm" style="margin-top:32px">ShinePro360 · '+VER+'</p>';loc(app);
   if(r==='gate')drawQR();
 }
 window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
