@@ -158,6 +158,15 @@ body{margin:0}
 .camov{position:fixed;inset:0;background:#000;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
 .camov video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .camov .btn{position:relative}
+.mhero{background:var(--head-bg);color:#fff;padding:18px;border-radius:10px;margin-bottom:14px;border-bottom:4px solid var(--gold-btn)}
+.mhero .by{font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+.mhero h1{color:#fff;font-size:40px;margin:2px 0 2px}
+.mhero p{margin:0}
+.entry{background:var(--surface);border:2px solid var(--gold-btn);border-radius:10px;padding:16px;margin-bottom:16px;display:flex;flex-direction:column;gap:10px}
+.entry .st{display:flex;align-items:center;gap:8px;font-weight:700;font-size:17px}
+.entry .btn{min-height:58px;font-size:19px;width:100%}
+.dotl{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--line-strong)}
+.dotl.on{background:var(--ok)}
 .pbig{font-family:var(--f-disp);font-weight:600;font-size:36px;line-height:1.1;margin:8px 0 12px}
 .pwrap{max-width:420px}
 @media print{.top,.noprint,.toast,.camov,.pver{display:none!important}body{background:#fff}main.wrap{padding:0}.pwrap{max-width:none;text-align:center;margin:0 auto}.pwrap .qrbox{max-width:480px;margin:0 auto;border:0}.pwrap h1{font-size:44px}.pbig{font-size:56px}}
@@ -344,7 +353,29 @@ const EXTRA={
 "भीड़ देखें": "See crowd",
 "यह जिम ID नहीं मिली।": "This gym ID was not found.",
 "बाहर करें": "Mark out",
-"मेंबर को बाहर दर्ज कर दिया": "Member marked as out"
+"मेंबर को बाहर दर्ज कर दिया": "Member marked as out",
+"दोनों साथ में": "Both together",
+"दोनों चालू हैं: स्क्रीन वाला घूमता QR (बिना लोकेशन) और छपा QR (लोकेशन जाँच के साथ)। मेंबर जो चाहे स्कैन करे।": "Both are on: the rotating QR on a screen (no location) and the printed QR (with location check). Members can scan either.",
+"छपा QR प्रिंट करें": "Print the printed QR",
+"बाहर निकलने के लिए QR स्कैन करें": "Scan QR to check out",
+"एंट्री के लिए QR स्कैन करें": "Scan QR to check in",
+"अभी आप जिम में हैं": "You are in the gym now",
+"अभी आप जिम में नहीं हैं": "You are not in the gym now",
+"गेट का QR स्कैन करें। आते और जाते, दोनों समय। ऐप का बटन न चले तो फ़ोन के कैमरा से स्कैन करें।": "Scan the gate QR, both when you arrive and when you leave. If the app button does not work, scan with the phone camera.",
+"डेटा बैकअप": "Data backup",
+"डेटा बैकअप (CSV फ़ाइल)": "Data backup (CSV file)",
+"महीना बदलने वाला है।": "The month is about to change.",
+" अपना डेटा अभी फ़ोन में रख लें।": " Save your data on your phone now.",
+"महीने के अंत में अपने जिम का डेटा CSV फ़ाइल में अपने फ़ोन या लैपटॉप में रख लें। यह फ़ाइल Excel या Google Sheets में खुलती है। आख़िरी बैकअप: ": "At the end of the month, save your gym data as a CSV file on your phone or laptop. The file opens in Excel or Google Sheets. Last backup: ",
+"अभी तक नहीं लिया": "not taken yet",
+"मेंबर और फ़ीस": "Members and fees",
+"भुगतान": "Payments",
+"हाज़िरी (आना-जाना)": "Attendance (in and out)",
+"डाउनलोड करें": "Download",
+"WhatsApp / Drive पर भेजें": "Send via WhatsApp / Drive",
+"तीनों फ़ाइलें एक साथ डाउनलोड करें": "Download all three files together",
+"फ़ाइल तैयार है": "File is ready",
+"फ़ाइल डाउनलोड हो रही है": "File is downloading"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -504,15 +535,15 @@ function vToday(){
 }
 function vOwner(){
   const g=gOwn();
-  const subs=[['today','आज'],['members','मेंबर और फ़ीस'],['trainers','ट्रेनर'],['diet','डाइट इंक्वायरी']];
+  const subs=[['today','आज'],['members','मेंबर और फ़ीस'],['trainers','ट्रेनर'],['diet','डाइट इंक्वायरी'],['backup','डेटा बैकअप']];
   return '<div class="ohead"><div><p class="eyebrow">जिम ओनर पैनल</p><h1>'+esc(g.name)+'</h1><p class="muted">'+esc(g.address)+' · ID '+esc(g.code)+' · <span class="pill '+svc(g).c+'">'+svc(g).t+'</span></p></div></div>'
    +'<div class="sub" role="group" aria-label="पैनल के हिस्से">'+subs.map(s=>'<button type="button" data-act="sub" data-v="'+s[0]+'" aria-pressed="'+(ui.sub===s[0])+'">'+s[1]+'</button>').join('')+'</div>'
-   +({today:vToday,members:vMembersP,trainers:vTrainers,diet:vOwnerDiet}[ui.sub]||vToday)();
+   +({today:vToday,members:vMembersP,trainers:vTrainers,diet:vOwnerDiet,backup:vBackup}[ui.sub]||vToday)();
 }
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v5';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v6';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -617,9 +648,7 @@ function crowdHTML(){
 }
 
 /* ---------- gate QR (owner screen) ---------- */
-function drawQR(){
-  const box=$('#qr');if(!box)return;
-  const g=gOwn(),tk=(g&&g.qrMode==='static')?ui.sTok:ui.gTok;
+function paintQR(box,tk,g){
   if(!tk){box.innerHTML='<p class="muted sm">QR लोड हो रहा है…</p>';loc(box);return}
   if(box.dataset.t===tk)return;
   box.dataset.t=tk;
@@ -630,13 +659,17 @@ function drawQR(){
   for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(q.isDark(r,c))p+='M'+c+' '+r+'h1v1h-1z';
   box.innerHTML='<svg viewBox="-2 -2 '+(n+4)+' '+(n+4)+'" shape-rendering="crispEdges" role="img" aria-label="गेट का QR कोड"><path d="'+p+'" fill="#0e1a33"/></svg>';loc(box);
 }
+function drawQR(){
+  const g=gOwn();if(!g)return;
+  const a=$('#qr');if(a)paintQR(a,g.qrMode==='static'?ui.sTok:ui.gTok,g);
+  const b=$('#qrs');if(b)paintQR(b,ui.sTok,g);
+}
 async function gateTick(){
   if(routeNow()!=='gate')return;
   const g0=gOwn();if(!g0)return;
-  if(g0.qrMode==='static'){
-    if(!ui.sTok&&!ui.gBusy){ui.gBusy=true;try{ui.sTok=must(await sb.rpc('static_token'))}catch(e){}ui.gBusy=false;drawQR()}
-    return;
-  }
+  const mm=g0.qrMode;
+  if((mm==='static'||mm==='both')&&!ui.sTok&&!ui.sBusy){ui.sBusy=true;try{ui.sTok=must(await sb.rpc('static_token'))}catch(e){}ui.sBusy=false;drawQR()}
+  if(mm==='static')return;
   const now=Date.now()/1000;
   const stale=!ui.gTok||(ui.gW!=null&&now>=(ui.gW+1)*30&&Date.now()-ui.gAt>2500);
   if(stale&&!ui.gBusy){
@@ -748,15 +781,16 @@ function vMember(){
   const g=gym(m.gym)||{name:'',hasTrainers:false},f=feeInfo(m),s=stats(m.id),used=Math.min(100,Math.max(0,(f.days-f.left)/f.days*100));
   const mine=S.diets.filter(d=>d.mid===m.id).sort((a,b)=>b.ts-a.ts);
   const tr=S.trainers.find(t=>t.id===m.trainer);
-  return '<div class="ohead"><div><p class="eyebrow">मेंबर ऐप</p><h1>'+esc(g.name)+'</h1><p class="muted">नमस्ते, '+esc(m.name.split(' ')[0])+'</p></div></div>'
+  return '<section class="mhero"><p class="by">Powered by ShinePro360</p><h1>'+esc(g.name)+'</h1><p>नमस्ते, '+esc(m.name.split(' ')[0])+'</p></section>'
+   +'<section class="entry"><div class="st"><i class="dotl'+(m.inside?' on':'')+'"></i><span>'+(m.inside?'अभी आप जिम में हैं':'अभी आप जिम में नहीं हैं')+'</span></div>'
+   +'<button class="btn gold" type="button" data-act="camscan">'+(m.inside?'बाहर निकलने के लिए QR स्कैन करें':'एंट्री के लिए QR स्कैन करें')+'</button>'
+   +'<p class="sm muted">गेट का QR स्कैन करें। आते और जाते, दोनों समय। ऐप का बटन न चले तो फ़ोन के कैमरा से स्कैन करें।</p></section>'
    +(ui.lastScan?'<div style="margin-bottom:20px">'+scanBannerR()+'</div>':'')
    +'<div class="cols"><div class="stack">'
    +'<section class="panel"><h2>जिम में अभी भीड़</h2>'+crowdHTML()+'</section>'+'<section class="panel">'+(f.st==='bad'?'<p class="scan bad" style="margin-bottom:12px"><b>आपकी फ़ीस खत्म हो चुकी है।</b> कृपया काउंटर पर जमा करें।</p>':'')
    +'<div class="row sp"><div><div class="muted sm">फ़ीस के बचे दिन</div><div class="crowd"><span class="big num">'+Math.max(0,f.left)+'</span><span class="muted">/ '+f.days+' दिन</span></div></div><span class="pill '+f.st+'">'+f.lab+'</span></div>'
    +'<div class="prog" aria-hidden="true"><i style="width:'+used+'%"></i></div>'
    +'<dl class="kv" style="margin-top:14px"><div><dt>वैधता तक</dt><dd>'+fd(f.last)+'</dd></div><div><dt>आखिरी फ़ीस जमा</dt><dd>'+fd(pd(m.lastPaid))+'</dd></div><div><dt>कुल / पेड</dt><dd class="num">'+inr(m.total)+' / '+inr(m.paid)+'</dd></div><div><dt>बाकी</dt><dd class="num">'+inr(f.due)+'</dd></div></dl></section>'
-   +'<section class="panel"><h2>जिम में एंट्री</h2><p class="muted sm" style="margin-bottom:10px">गेट की स्क्रीन का QR अपने फ़ोन के कैमरा से स्कैन करें। ऐप अपने आप खुलकर एंट्री दर्ज करेगा। दोबारा स्कैन करने पर बाहर निकलना दर्ज होता है। '+(m.inside?'<b>अभी आप जिम में हैं।</b>':'अभी आप जिम में नहीं हैं।')+'</p>'
-   +'<button class="btn gold" type="button" data-act="camscan">ऐप से QR स्कैन करें</button></section>'
    +'<section class="panel"><h2>मेरी टाइमिंग</h2><p>आमतौर पर <b class="num">'+(s.avgIn==null?'–':ftm(s.avgIn))+'</b> आते हैं और <b class="num">'+(s.avgOut==null?'–':ftm(s.avgOut))+'</b> जाते हैं। पिछले 30 दिन में <b>'+s.d30+'</b> दिन आए।</p></section>'
    +(g.hasTrainers?'<section class="panel"><h2>मेरा ट्रेनर</h2><p>'+(tr?'<b>'+esc(tr.name)+'</b> <span class="muted">'+esc(tr.spec)+' · '+esc(tr.phone)+'</span>':'<span class="muted">अभी कोई ट्रेनर नहीं दिया गया। काउंटर पर बात करें।</span>')+'</p></section>':'')
    +(isStandalone()?'':'<section class="panel"><h2>होम स्क्रीन पर रखें</h2><p class="muted sm">ऐप की तरह इस्तेमाल करने के लिए ब्राउज़र का ⋮ मेन्यू खोलें और Add to Home screen दबाएँ।</p></section>')
@@ -770,10 +804,10 @@ function vMember(){
    +(mine.length?'<h3 style="margin-top:14px">मेरी इंक्वायरी</h3><ul class="feed">'+mine.map(d=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span>'+esc(d.type)+'<br><span class="muted sm">'+fd(new Date(d.ts))+'</span></span><span class="pill '+(d.status==='नया'?'warn':'mute')+'">'+d.status+'</span></li>').join('')+'</ul>':'')+'</section></div></div>';
 }
 function qrSettings(){
-  const g=gOwn(),st=g.qrMode==='static',has=g.lat!=null&&g.lng!=null;
+  const g=gOwn(),md=g.qrMode,st=(md==='static'||md==='both'),has=g.lat!=null&&g.lng!=null;
   return '<section class="panel noprint" style="margin-bottom:20px"><h2>QR का प्रकार</h2>'
-   +'<div class="chips" role="group" aria-label="QR का प्रकार"><button type="button" data-act="qrmode" data-v="rotating" aria-pressed="'+!st+'">घूमता QR (स्क्रीन चाहिए)</button><button type="button" data-act="qrmode" data-v="static" aria-pressed="'+st+'">छपा QR (लोकेशन जाँच के साथ)</button></div>'
-   +'<p class="sm muted" style="margin-top:8px">'+(st?'QR एक बार छपवाकर गेट पर लगाएँ। मेंबर के फ़ोन की लोकेशन जिम के घेरे के अंदर होनी चाहिए, तभी एंट्री लगेगी।':'गेट पर एक फ़ोन या टैबलेट इंटरनेट से जुड़ा रखें और यह पेज खुला रखें। QR हर 30 सेकंड में बदलता है।')+'</p>'
+   +'<div class="chips" role="group" aria-label="QR का प्रकार"><button type="button" data-act="qrmode" data-v="rotating" aria-pressed="'+(md==='rotating')+'">घूमता QR (स्क्रीन चाहिए)</button><button type="button" data-act="qrmode" data-v="static" aria-pressed="'+(md==='static')+'">छपा QR (लोकेशन जाँच के साथ)</button><button type="button" data-act="qrmode" data-v="both" aria-pressed="'+(md==='both')+'">दोनों साथ में</button></div>'
+   +'<p class="sm muted" style="margin-top:8px">'+(md==='both'?'दोनों चालू हैं: स्क्रीन वाला घूमता QR (बिना लोकेशन) और छपा QR (लोकेशन जाँच के साथ)। मेंबर जो चाहे स्कैन करे।':st?'QR एक बार छपवाकर गेट पर लगाएँ। मेंबर के फ़ोन की लोकेशन जिम के घेरे के अंदर होनी चाहिए, तभी एंट्री लगेगी।':'गेट पर एक फ़ोन या टैबलेट इंटरनेट से जुड़ा रखें और यह पेज खुला रखें। QR हर 30 सेकंड में बदलता है।')+'</p>'
    +(st?'<div class="row" style="margin-top:12px"><span class="pill '+(has?'ok':'bad')+'">'+(has?'जिम की लोकेशन सेट है':'जिम की लोकेशन सेट नहीं है')+'</span><button class="btn gold sm" type="button" data-act="setloc">इस जगह को जिम की लोकेशन बनाएँ</button>'
     +'<div style="min-width:150px"><label for="rad">घेरा (मीटर)</label><select id="rad" data-chg="radius">'+[100,150,250,500].map(r=>opt(r,r+' मीटर',g.radius===r)).join('')+'</select></div></div>'
     +'<p class="sm muted" style="margin-top:8px">लोकेशन सेट करने के लिए जिम के बीच में खड़े होकर यह बटन दबाएँ और फ़ोन की लोकेशन की अनुमति दें।'+(has?'':' जब तक यह सेट नहीं होगी, किसी की एंट्री नहीं लगेगी।')+'</p>':'')
@@ -787,11 +821,13 @@ function vGate(){
      +'<p class="noprint" style="margin-top:16px"><button class="btn" type="button" data-act="print">QR प्रिंट करें</button></p>'
      +'<p class="sm muted noprint" style="margin-top:8px">QR को एक बार प्रिंट करवाकर गेट पर लगाएँ। मोड बदलने पर यह QR बंद हो जाता है।</p>';
   }
-  return qrSettings()+'<div class="ohead"><div><p class="eyebrow">गेट स्क्रीन</p><h1>'+esc(g.name)+'</h1><p class="muted">इस स्क्रीन को जिम के गेट पर टैबलेट या मोबाइल में खुला रखें।</p></div></div>'
+  const both=g.qrMode==='both';
+  const printBlock=both?'<div class="printarea" style="margin-top:28px"><div class="pwrap"><p class="eyebrow">ShinePro360</p><h1>'+esc(g.name)+'</h1><p class="pbig">स्कैन करके एंट्री करें</p><div class="qrbox" id="qrs" data-t=""></div><p class="sm muted" style="margin-top:8px">दोबारा स्कैन करने पर बाहर निकलना दर्ज होता है। फ़ोन की लोकेशन चालू रखें।</p></div></div><p class="noprint" style="margin-top:16px"><button class="btn" type="button" data-act="print">छपा QR प्रिंट करें</button></p>':'';
+  return qrSettings()+'<div'+(both?' class="noprint"':'')+'><div class="ohead"><div><p class="eyebrow">गेट स्क्रीन</p><h1>'+esc(g.name)+'</h1><p class="muted">इस स्क्रीन को जिम के गेट पर टैबलेट या मोबाइल में खुला रखें।</p></div></div>'
    +'<div class="gate"><div><div class="qrbox" id="qr" data-t=""></div><div class="cdbar" aria-hidden="true"><i id="cdbar" style="width:100%"></i></div><p class="sm">नया QR <b id="cd" class="num">30</b> सेकंड में</p></div>'
    +'<div class="stack"><section class="panel"><div class="crowd"><span class="big num" id="gcount">'+n+'</span><span class="muted">लोग अभी अंदर</span></div></section>'
    +'<section class="panel"><h2>यह QR सुरक्षित कैसे है</h2><ul class="checks"><li>QR हर 30 सेकंड में बदलता है, इसलिए स्क्रीनशॉट भेजने से एंट्री नहीं होगी।</li><li>स्कैन मेंबर के अपने लॉगिन वाले फ़ोन से होता है, इसलिए दोस्त का नाम नहीं चढ़ेगा।</li><li>QR में जिम की पहचान जुड़ी है, दूसरे जिम का QR यहाँ नहीं चलेगा।</li><li>फ़ीस खत्म हो तो स्कैन पर लाल "अनपेड" दिखता है और ओनर को अलर्ट मिलता है।</li></ul>'
-   +'<p class="sm muted" style="margin-top:12px">मेंबर अपने फ़ोन के कैमरा से यह QR स्कैन करें। ऐप खुलेगा और एंट्री अपने आप दर्ज होगी।</p></section></div></div>';
+   +'<p class="sm muted" style="margin-top:12px">मेंबर अपने फ़ोन के कैमरा से यह QR स्कैन करें। ऐप खुलेगा और एंट्री अपने आप दर्ज होगी।</p></section></div></div></div>'+printBlock;
 }
 function vAdmin(){
   const open=S.diets.filter(d=>d.status==='नया').length,fee=Number(ui.fee)||0,paying=S.gyms.filter(g=>g.sub==='paid').length,ng=ui.newGym;
@@ -813,6 +849,42 @@ function vAdmin(){
    +'<section style="margin-top:28px"><h2 style="margin-bottom:8px">सभी डाइट इंक्वायरी</h2><div class="tw">'+dietRows(S.diets,true)+'</div></section>';
 }
 
+
+/* ---------- data backup (CSV) ---------- */
+const csvCell=v=>{v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+const csvText=rows=>'\ufeff'+rows.map(r=>r.map(csvCell).join(',')).join('\r\n');
+const istStr=ts=>ts?new Date(ts).toLocaleString('en-GB',{timeZone:'Asia/Kolkata',hour12:false}).replace(',',''):'';
+async function pagedAll(q){const all=[];for(let p=0;p<60;p++){const d=must(await q().range(p*1000,p*1000+999))||[];all.push.apply(all,d);if(d.length<1000)break}return all}
+async function buildCsv(kind){
+  const nm={},ph={};S.members.forEach(m=>{nm[m.id]=m.name;ph[m.id]=m.phone});
+  if(kind==='members'){
+    const tn={};S.trainers.forEach(t=>{tn[t.id]=t.name});
+    return [['Name','Phone','Plan (months)','Total fee','Paid','Due','Start date','Valid until','Last paid on','Trainer']].concat(S.members.map(m=>{const f=feeInfo(m);return [m.name,m.phone,m.months,m.total,m.paid,Math.max(0,m.total-m.paid),m.start,iso(f.last),m.lastPaid,tn[m.trainer]||'']}));
+  }
+  if(kind==='payments'){
+    const rows=await pagedAll(()=>sb.from('payments').select('member_id,amount,paid_on').order('paid_on',{ascending:true}));
+    return [['Name','Phone','Amount','Paid on']].concat(rows.map(r=>[nm[r.member_id]||'',ph[r.member_id]||'',r.amount,r.paid_on]));
+  }
+  const rows=await pagedAll(()=>sb.from('attendance').select('member_id,checked_in_at,checked_out_at').order('checked_in_at',{ascending:true}));
+  return [['Name','Phone','In (IST)','Out (IST)','Minutes']].concat(rows.map(r=>{const a=Date.parse(r.checked_in_at),o=r.checked_out_at?Date.parse(r.checked_out_at):null;return [nm[r.member_id]||'',ph[r.member_id]||'',istStr(a),istStr(o),o?Math.round((o-a)/60000):'']}));
+}
+async function exportCsv(kinds,share){
+  const g=gOwn(),day=iso(T0()),files=[];
+  for(const k of kinds){const f=new File([csvText(await buildCsv(k))],g.code+'-'+k+'-'+day+'.csv',{type:'text/csv'});files.push(f)}
+  if(share&&navigator.canShare&&navigator.canShare({files:files})){await navigator.share({files:files,title:g.name});}
+  else files.forEach((f,i)=>{setTimeout(()=>{const u=URL.createObjectURL(f),a=document.createElement('a');a.href=u;a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(u);a.remove()},1500)},i*600)});
+  lsSet('sp360-backup-'+g.code,day);ui.lastBackup=day;render();toast(share?'फ़ाइल तैयार है':'फ़ाइल डाउनलोड हो रही है');
+}
+function vBackup(){
+  const g=gOwn(),last=ui.lastBackup||lsGet('sp360-backup-'+g.code),d=T0().getDate(),due=d>=28||d<=2;
+  const btn=(k,t)=>'<div class="row" style="margin-bottom:10px"><b style="min-width:180px">'+t+'</b><button class="btn sm" type="button" data-act="csv" data-v="'+k+'">डाउनलोड करें</button><button class="btn alt sm" type="button" data-act="csv" data-v="'+k+'" data-share="1">WhatsApp / Drive पर भेजें</button></div>';
+  return '<section class="panel" style="max-width:640px"><h2>डेटा बैकअप (CSV फ़ाइल)</h2>'
+   +(due?'<p class="scan warn" style="margin-bottom:12px"><b>महीना बदलने वाला है।</b> अपना डेटा अभी फ़ोन में रख लें।</p>':'')
+   +'<p class="muted sm" style="margin-bottom:12px">महीने के अंत में अपने जिम का डेटा CSV फ़ाइल में अपने फ़ोन या लैपटॉप में रख लें। यह फ़ाइल Excel या Google Sheets में खुलती है। आख़िरी बैकअप: <b>'+(last?esc(last):'अभी तक नहीं लिया')+'</b></p>'
+   +btn('members','मेंबर और फ़ीस')+btn('payments','भुगतान')+btn('attendance','हाज़िरी (आना-जाना)')
+   +'<div class="row" style="margin-top:14px"><button class="btn gold" type="button" data-act="csv" data-v="all">तीनों फ़ाइलें एक साथ डाउनलोड करें</button></div></section>';
+}
+
 /* ---------- actions ---------- */
 function toast(t){const e=$('#toast');e.textContent=lang==='en'?tr(t):t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>{e.hidden=true},3200)}
 const num=v=>Math.max(0,Math.round(Number(v)||0));
@@ -829,12 +901,13 @@ const ACT={
   closepin:()=>{ui.newPin=null;render()},
   camscan:()=>camScan(),
   print:()=>window.print(),
-  qrmode:async b=>{const g=gOwn();must(await sb.rpc('update_gym_qr',{p_mode:b.dataset.v,p_lat:null,p_lng:null,p_radius:null}));ui.sTok='';await refresh();if(b.dataset.v==='static'&&g.lat==null)toast('अब जिम की लोकेशन सेट करें।')},
+  csv:async b=>{const v=b.dataset.v;await exportCsv(v==='all'?['members','payments','attendance']:[v],!!b.dataset.share)},
+  qrmode:async b=>{const g=gOwn();must(await sb.rpc('update_gym_qr',{p_mode:b.dataset.v,p_lat:null,p_lng:null,p_radius:null}));ui.sTok='';await refresh();if((b.dataset.v==='static'||b.dataset.v==='both')&&g.lat==null)toast('अब जिम की लोकेशन सेट करें।')},
   setloc:async()=>{toast('लोकेशन ली जा रही है…');const p=await getPos();if(!p){toast('लोकेशन नहीं मिली। फ़ोन की लोकेशन चालू करके अनुमति दें।');return}
     if(p.acc>200){toast('लोकेशन साफ़ नहीं मिली। खुली जगह में जाकर फिर कोशिश करें।');return}
     const g=gOwn();must(await sb.rpc('update_gym_qr',{p_mode:g.qrMode,p_lat:p.lat,p_lng:p.lng,p_radius:null}));await refresh();toast('जिम की लोकेशन सेव हो गई')},
   camclose:()=>camStop(),
-  logout:async()=>{camStop();try{await sb.auth.signOut()}catch(e){}S=BLANK();ui.err='';ui.newPin=null;ui.newGym=null;ui.lastScan=null;ui.dietMsg=null;ui.sel=null;ui.gTok='';ui.sTok='';ui.gW=null;location.hash='';render()},
+  logout:async()=>{camStop();try{await sb.auth.signOut()}catch(e){}S=BLANK();ui.err='';ui.newPin=null;ui.newGym=null;ui.lastScan=null;ui.dietMsg=null;ui.sel=null;ui.gTok='';ui.sTok='';ui.gW=null;ui.lastBackup=null;location.hash='';render()},
   resetpin:async b=>{const m=S.members.find(x=>x.id===b.dataset.id);const r=await fn({action:'reset_member_pin',member_id:m.id});ui.newPin={name:m.name,phone:m.phone,pin:r.pin};render();toast('नया पिन बन गया');const e=$('#pinbox');if(e)e.scrollIntoView()},
   resetpw:async b=>{const g=gym(b.dataset.id);const r=await fn({action:'reset_gym_password',gym_id:g.id});ui.newGym={name:g.name,code:g.code,pass:r.password,owner:g.owner,phone:g.phone};render();toast('नया पासवर्ड बन गया')},
   paidgym:async b=>{const g=gym(b.dataset.id);let v=null;
