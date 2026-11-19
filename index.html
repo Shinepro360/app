@@ -395,7 +395,21 @@ const EXTRA={
 "जिम हटाएँ": "Delete gym",
 "ID मेल नहीं खाई। कुछ नहीं हटाया।": "ID did not match. Nothing was deleted.",
 "आपकी सदस्यता बंद है": "Your membership is inactive",
-"एंट्री नहीं हुई। कृपया काउंटर पर जिम से संपर्क करें।": "Entry not recorded. Please contact the gym at the counter."
+"एंट्री नहीं हुई। कृपया काउंटर पर जिम से संपर्क करें।": "Entry not recorded. Please contact the gym at the counter.",
+"कुल फ़ीस (₹) — बदल सकते हैं": "Total fee (₹) — you can change it",
+"इस प्लान की कुल फ़ीस बदलें (₹) — छूट या बढ़ोतरी": "Change total fee of this plan (₹) — discount or increase",
+"फ़ीस बदलें": "Change fee",
+"फ़ीस बदल गई": "Fee changed",
+"फ़ीस के रेट (आपके जिम के)": "Fee rates (your gym)",
+"1 महीना (₹)": "1 month (₹)",
+"3 महीने (₹)": "3 months (₹)",
+"6 महीने (₹)": "6 months (₹)",
+"12 महीने (₹)": "12 months (₹)",
+"रेट सेव करें": "Save rates",
+"रेट सेव हो गए": "Rates saved",
+"नया मेंबर जोड़ते या रिन्यू करते समय यही रेट अपने-आप भरे आएँगे। किसी मेंबर को छूट देनी हो तो वहीं फ़ीस बदल सकते हैं।": "These rates are filled in automatically when you add or renew a member. To give a member a discount, just change the fee there.",
+"प्लान नहीं मिला": "Plan not found",
+"कुल फ़ीस जमा हो चुकी रकम से कम नहीं हो सकती": "Total fee cannot be less than the amount already paid"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -490,8 +504,8 @@ function vMembers(){
   const m=S.members.find(x=>x.id===ui.sel&&x.gym===g.id);
   return '<details class="panel" style="margin-bottom:16px"><summary>नया मेंबर जोड़ें</summary><form data-form="addm" class="frm" style="margin-top:12px">'
    +'<div><label for="an">नाम</label><input id="an" name="name" required></div><div><label for="ap">मोबाइल नंबर</label><input id="ap" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required></div>'
-   +'<div><label for="am">प्लान</label><select id="am" name="mo">'+Object.keys(PLAN).map(k=>opt(k,k+' महीने, '+inr(PLAN[k]),k==='1')).join('')+'</select></div>'
-   +'<div><label for="apd">अभी जमा (₹)</label><input id="apd" name="paid" type="number" min="0" value="1200" required></div>'
+   +'<div><label for="am">प्लान</label><select id="am" name="mo" data-chg="planpick">'+Object.keys(PLAN).map(k=>opt(k,k+' महीने, '+inr(PLAN[k]),k==='1')).join('')+'</select></div>'
+   +'<div><label for="at">कुल फ़ीस (₹) — बदल सकते हैं</label><input id="at" name="total" data-inp="total" type="number" min="0" value="'+PLAN[1]+'" required></div><div><label for="apd">अभी जमा (₹)</label><input id="apd" name="paid" type="number" min="0" value="'+PLAN[1]+'" required></div>'
    +'<div><button class="btn" type="submit">जोड़ें</button></div></form></details>'
    +'<div class="row sp" style="margin-bottom:12px"><div class="chips" role="group" aria-label="फ़िल्टर">'+F.map(f=>'<button type="button" data-act="filt" data-v="'+f[0]+'" aria-pressed="'+(ui.filt===f[0])+'">'+f[1]+'</button>').join('')+'</div>'
    +'<div style="min-width:200px;flex:0 1 260px"><label class="sr" for="mq" style="display:none">खोजें</label><input id="mq" data-inp="q" placeholder="नाम या नंबर से खोजें" value="'+esc(ui.q)+'"></div></div>'
@@ -508,7 +522,8 @@ function mDetail(m){
    +'<div><h3>आने-जाने की टाइमिंग</h3><p class="sm">आमतौर पर <b class="num">'+(s.avgIn==null?'–':ftm(s.avgIn))+'</b> आते हैं और <b class="num">'+(s.avgOut==null?'–':ftm(s.avgOut))+'</b> जाते हैं। पिछले 30 दिन में <b>'+s.d30+'</b> दिन आए'+(s.last?', आखिरी बार '+fd(sod(s.last))+' को':'')+'.</p></div>'
    +(g.hasTrainers?'<div><label for="tr">ट्रेनर</label><select id="tr" data-chg="assign" data-id="'+m.id+'">'+opt('','कोई ट्रेनर नहीं',!m.trainer)+S.trainers.filter(t=>t.gym===g.id).map(t=>opt(t.id,t.name+' · '+t.spec,m.trainer===t.id)).join('')+'</select></div>':'')
    +'<form data-form="pay" data-id="'+m.id+'" class="frm"><div><label for="pa">फ़ीस जमा (₹)</label><input id="pa" name="amt" type="number" min="1" '+(f.due?'max="'+f.due+'" value="'+f.due+'"':'')+' required></div><div><button class="btn" type="submit"'+(f.due?'':' disabled')+'>बाकी रकम जमा करें</button></div></form>'
-   +'<form data-form="renew" data-id="'+m.id+'" class="frm"><div><label for="rp">नया प्लान</label><select id="rp" name="mo">'+Object.keys(PLAN).map(k=>opt(k,k+' माह, '+inr(PLAN[k]),Number(k)===m.months)).join('')+'</select></div><div><label for="ra">अभी जमा (₹)</label><input id="ra" name="paid" type="number" min="0" value="'+PLAN[m.months]+'" required></div><div><button class="btn gold" type="submit">आज से रिन्यू करें</button></div></form></div>'
+   +'<form data-form="renew" data-id="'+m.id+'" class="frm"><div><label for="rp">नया प्लान</label><select id="rp" name="mo" data-chg="planpick">'+Object.keys(PLAN).map(k=>opt(k,k+' माह, '+inr(PLAN[k]),Number(k)===m.months)).join('')+'</select></div><div><label for="rt">कुल फ़ीस (₹) — बदल सकते हैं</label><input id="rt" name="total" data-inp="total" type="number" min="0" value="'+PLAN[m.months]+'" required></div><div><label for="ra">अभी जमा (₹)</label><input id="ra" name="paid" type="number" min="0" value="'+PLAN[m.months]+'" required></div><div><button class="btn gold" type="submit">आज से रिन्यू करें</button></div></form></div>'
+   +'<form data-form="setfee" data-id="'+m.id+'" class="frm"><div><label for="sf">इस प्लान की कुल फ़ीस बदलें (₹) — छूट या बढ़ोतरी</label><input id="sf" name="total" type="number" min="0" value="'+m.total+'" required></div><div><button class="btn alt" type="submit">फ़ीस बदलें</button></div></form>'
    +'<div><h3 style="margin-bottom:8px">फ़ीस कैलेंडर</h3>'+calendar(m)+'</div></div></section>';
 }
 function vTrainers(){
@@ -563,7 +578,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v7';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v8';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -633,7 +648,7 @@ async function loadAll(){
     sb.from('member_fee_status').select('*'),sb.from('diet_inquiries').select('*').order('created_at',{ascending:false}).limit(300),
     sb.rpc('crowd_now'),sb.rpc('crowd_hourly'),att()]);
   const g=(must(gy)||[])[0];
-  if(g){const s=subOf(g.trial_start,g.paid_until);N.gyms=[{id:g.id,code:g.code,name:g.name,owner:g.owner_name,phone:g.owner_phone,address:g.address,capacity:g.capacity,hasTrainers:g.has_trainers,qrMode:g.qr_mode||'rotating',lat:g.lat,lng:g.lng,radius:g.radius_m||150,sub:s.sub,trialLeft:s.trialLeft}];N.sess=g.id}
+  if(g){const s=subOf(g.trial_start,g.paid_until);N.gyms=[{id:g.id,code:g.code,name:g.name,owner:g.owner_name,phone:g.owner_phone,address:g.address,capacity:g.capacity,hasTrainers:g.has_trainers,qrMode:g.qr_mode||'rotating',fees:g.plan_fees||{},lat:g.lat,lng:g.lng,radius:g.radius_m||150,sub:s.sub,trialLeft:s.trialLeft}];N.sess=g.id;if(g.plan_fees)['1','3','6','12'].forEach(k=>{if(g.plan_fees[k]!=null)PLAN[k]=Number(g.plan_fees[k])})}
   N.trainers=(must(tr)||[]).map(t=>({id:t.id,gym:t.gym_id,name:t.name,phone:t.phone||'',spec:t.speciality||''}));
   const fee={};(must(fv)||[]).forEach(f=>{fee[f.member_id]=f});
   const allM=(must(mm)||[]).map(m=>{const f=fee[m.id]||{};return{active:m.active!==false,id:m.id,gym:m.gym_id,name:m.name,phone:m.phone,months:f.months||1,total:f.total_fee||0,paid:f.paid||0,start:f.start_date||iso(T0()),lastPaid:f.last_paid_on||f.start_date||iso(T0()),trainer:m.trainer_id||'',msId:f.membership_id||null,inside:false,inTs:0}});
@@ -910,8 +925,14 @@ function gymForm(){
    +'<div><label for="ec">क्षमता (एक समय में कितने लोग)</label><input id="ec" name="cap" type="number" min="5" max="500" value="'+g.capacity+'" required></div>'
    +'<div class="full"><button class="btn" type="submit">सेव करें</button></div></form><p class="sm muted" style="margin-top:8px">क्षमता से ही भीड़ का स्तर (खाली / ठीक-ठाक / भरा) तय होता है।</p></section>';
 }
+function plansForm(){
+  const row=k=>'<div><label for="pf'+k+'">'+k+(k==='1'?' महीना':' महीने')+' (₹)</label><input id="pf'+k+'" name="p'+k+'" type="number" min="0" max="1000000" value="'+(PLAN[k]||0)+'" required></div>';
+  return '<section class="panel" style="max-width:640px;margin-bottom:20px"><h2>फ़ीस के रेट (आपके जिम के)</h2><form data-form="plans" class="frm" style="margin-top:8px">'
+   +['1','3','6','12'].map(row).join('')
+   +'<div class="full"><button class="btn" type="submit">रेट सेव करें</button></div></form><p class="sm muted" style="margin-top:8px">नया मेंबर जोड़ते या रिन्यू करते समय यही रेट अपने-आप भरे आएँगे। किसी मेंबर को छूट देनी हो तो वहीं फ़ीस बदल सकते हैं।</p></section>';
+}
 function vBackup(){
-  return gymForm()+vBackup2();
+  return gymForm()+plansForm()+vBackup2();
 }
 function vBackup2(){
   const g=gOwn(),last=ui.lastBackup||lsGet('sp360-backup-'+g.code),d=T0().getDate(),due=d>=28||d<=2;
@@ -963,6 +984,7 @@ const ACT={
     await refresh();toast(v?'भुगतान दर्ज हुआ':'भुगतान हटाया')}
 };
 const CHG={
+  planpick:async t=>{const f=t.closest('form');if(!f)return;const v=PLAN[t.value]||0;f.elements.total.value=v;f.elements.paid.value=v},
   assign:async t=>{must(await sb.from('members').update({trainer_id:t.value||null}).eq('id',t.dataset.id).select());await refresh();toast('ट्रेनर अपडेट हुआ')},
   radius:async t=>{const g=gOwn();must(await sb.rpc('update_gym_qr',{p_mode:g.qrMode,p_lat:null,p_lng:null,p_radius:Number(t.value)}));await refresh();toast('सेव हो गया')},
   hastr:async t=>{const g=gOwn();must(await sb.rpc('update_my_gym',{p_name:g.name,p_address:g.address,p_capacity:g.capacity,p_has_trainers:t.checked}));await refresh();toast('सेव हो गया')},
@@ -980,14 +1002,20 @@ const FORMS={
   'login-member':f=>{const d=new FormData(f),code=String(d.get('code')).trim();lsSet('sp360-gym',code);return doLogin(emailOf.member(d.get('phone'),code),String(d.get('pin')),'मोबाइल नंबर या पिन गलत है।',{code:code,phone:d.get('phone')})},
   'login-admin':f=>{const d=new FormData(f);return doLogin(String(d.get('email')).trim(),String(d.get('pass')),'ईमेल या पासवर्ड गलत है।',{email:d.get('email')})},
   addm:async f=>{const d=new FormData(f),mo=Number(d.get('mo')),name=String(d.get('name')).trim(),phone=String(d.get('phone'));
-    const r=await fn({action:'create_member',name:name,phone:phone,months:mo,paid:num(d.get('paid'))});
+    const r=await fn({action:'create_member',name:name,phone:phone,months:mo,total_fee:num(d.get('total')),paid:num(d.get('paid'))});
     ui.newPin={name:name,phone:phone,pin:r.pin};ui.sel=r.member_id;await refresh();const e=$('#pinbox');if(e)e.scrollIntoView();toast(name+' जुड़ गए')},
   pay:async f=>{const m=S.members.find(x=>x.id===f.dataset.id),amt=num(new FormData(f).get('amt')),due=Math.max(0,m.total-m.paid);
     if(amt>0&&m.msId){must(await sb.from('payments').insert({gym_id:m.gym,member_id:m.id,membership_id:m.msId,amount:Math.min(amt,due||amt),paid_on:iso(T0())}));await refresh();toast(inr(Math.min(amt,due||amt))+' जमा हुए')}},
-  renew:async f=>{const m=S.members.find(x=>x.id===f.dataset.id),d=new FormData(f),mo=Number(d.get('mo')),paid=Math.min(PLAN[mo],num(d.get('paid')));
-    const ms=must(await sb.from('memberships').insert({gym_id:m.gym,member_id:m.id,months:mo,total_fee:PLAN[mo],start_date:iso(T0())}).select().single());
+  renew:async f=>{const m=S.members.find(x=>x.id===f.dataset.id),d=new FormData(f),mo=Number(d.get('mo')),tot=num(d.get('total')),paid=Math.min(tot,num(d.get('paid')));
+    const ms=must(await sb.from('memberships').insert({gym_id:m.gym,member_id:m.id,months:mo,total_fee:tot,start_date:iso(T0())}).select().single());
     if(paid>0)must(await sb.from('payments').insert({gym_id:m.gym,member_id:m.id,membership_id:ms.id,amount:paid,paid_on:iso(T0())}));
     const t=new Date();ui.cal={y:t.getFullYear(),m:t.getMonth()};await refresh();toast('फ़ीस आज से रिन्यू हो गई')},
+  setfee:async f=>{const m=S.members.find(x=>x.id===f.dataset.id),tot=num(new FormData(f).get('total'));
+    if(!m.msId)throw new Error('प्लान नहीं मिला');
+    if(tot<m.paid){toast('कुल फ़ीस जमा हो चुकी रकम से कम नहीं हो सकती');return}
+    must(await sb.from('memberships').update({total_fee:tot}).eq('id',m.msId).select());await refresh();toast('फ़ीस बदल गई')},
+  plans:async f=>{const d=new FormData(f),o={};['1','3','6','12'].forEach(k=>{o[k]=num(d.get('p'+k))});
+    must(await sb.rpc('set_plan_fees',{p_fees:o}));await refresh();toast('रेट सेव हो गए')},
   gymedit:async f=>{const d=new FormData(f),g=gOwn();must(await sb.rpc('update_my_gym',{p_name:String(d.get('name')).trim(),p_address:String(d.get('address')).trim(),p_capacity:Math.max(5,Math.min(500,Math.round(Number(d.get('cap'))||25))),p_has_trainers:g.hasTrainers}));await refresh();toast('सेव हो गया')},
   addt:async f=>{const d=new FormData(f);must(await sb.from('trainers').insert({gym_id:S.sess,name:String(d.get('name')).trim(),phone:String(d.get('phone')),speciality:String(d.get('spec')).trim()}));await refresh();toast('ट्रेनर जुड़ गया')},
   diet:async f=>{const d=new FormData(f),m=S.members.find(x=>x.id===f.dataset.id),w=Number(d.get('w')),h=Number(d.get('h')),goal=d.get('goal'),s=dietSuggest(w,h,goal);
@@ -1003,6 +1031,7 @@ document.addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.
 document.addEventListener('submit',e=>{const f=e.target.closest('form[data-form]');if(!f)return;e.preventDefault();const btn=f.querySelector('[type=submit]');if(btn)btn.disabled=true;run(FORMS[f.dataset.form](f),btn)});
 document.addEventListener('input',e=>{const t=e.target;if(!t.dataset)return;
   if(t.dataset.inp==='q'){ui.q=t.value;const w=$('#mtable');if(w){w.innerHTML=mTable();loc(w)}}
+  if(t.dataset.inp==='total'){const f=t.closest('form');if(f&&f.elements.paid)f.elements.paid.value=t.value}
   if(t.dataset.inp==='fee'){ui.fee=t.value;const fee=Number(t.value)||0,e1=$('#feeTot');if(e1)e1.textContent=inr(S.gyms.filter(g=>g.sub==='paid').length*fee)}});
 
 /* ---------- sign-in, routing, render ---------- */
