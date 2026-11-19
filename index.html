@@ -410,7 +410,17 @@ const EXTRA={
 "रेट सेव हो गए": "Rates saved",
 "नया मेंबर जोड़ते या रिन्यू करते समय यही रेट अपने-आप भरे आएँगे। किसी मेंबर को छूट देनी हो तो वहीं फ़ीस बदल सकते हैं।": "These rates are filled in automatically when you add or renew a member. To give a member a discount, just change the fee there.",
 "प्लान नहीं मिला": "Plan not found",
-"कुल फ़ीस जमा हो चुकी रकम से कम नहीं हो सकती": "Total fee cannot be less than the amount already paid"
+"कुल फ़ीस जमा हो चुकी रकम से कम नहीं हो सकती": "Total fee cannot be less than the amount already paid",
+"ओनर का नाम": "Owner name",
+"ओनर का मोबाइल नंबर": "Owner mobile number",
+"मेंबर का नाम": "Member name",
+"मोबाइल नंबर (यही लॉगिन है)": "Mobile number (this is the login)",
+"नाम / नंबर बदलें": "Change name / number",
+"बदल गया": "Changed",
+"बदल गया। अब नए नंबर से लॉगिन होगा, पिन वही रहेगा": "Changed. The member now logs in with the new number; the PIN stays the same.",
+"ओनर बदलें": "Edit owner",
+"ओनर का 10 अंकों का मोबाइल नंबर": "Owner's 10 digit mobile number",
+"ओनर की जानकारी बदल गई": "Owner details changed"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -524,6 +534,7 @@ function mDetail(m){
    +(g.hasTrainers?'<div><label for="tr">ट्रेनर</label><select id="tr" data-chg="assign" data-id="'+m.id+'">'+opt('','कोई ट्रेनर नहीं',!m.trainer)+S.trainers.filter(t=>t.gym===g.id).map(t=>opt(t.id,t.name+' · '+t.spec,m.trainer===t.id)).join('')+'</select></div>':'')
    +'<form data-form="pay" data-id="'+m.id+'" class="frm"><div><label for="pa">फ़ीस जमा (₹)</label><input id="pa" name="amt" type="number" min="1" '+(f.due?'max="'+f.due+'" value="'+f.due+'"':'')+' required></div><div><button class="btn" type="submit"'+(f.due?'':' disabled')+'>बाकी रकम जमा करें</button></div></form>'
    +'<form data-form="renew" data-id="'+m.id+'" class="frm"><div><label for="rp">नया प्लान</label><select id="rp" name="mo" data-chg="planpick">'+Object.keys(PLAN).map(k=>opt(k,k+' माह, '+inr(PLAN[k]),Number(k)===m.months)).join('')+'</select></div><div><label for="rt">कुल फ़ीस (₹) — बदल सकते हैं</label><input id="rt" name="total" data-inp="total" type="number" min="0" value="'+PLAN[m.months]+'" required></div><div><label for="ra">अभी जमा (₹)</label><input id="ra" name="paid" type="number" min="0" value="'+PLAN[m.months]+'" required></div><div><button class="btn gold" type="submit">आज से रिन्यू करें</button></div></form></div>'
+   +'<form data-form="editm" data-id="'+m.id+'" class="frm"><div><label for="en2">मेंबर का नाम</label><input id="en2" name="name" value="'+esc(m.name)+'" required></div><div><label for="ep2">मोबाइल नंबर (यही लॉगिन है)</label><input id="ep2" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" value="'+esc(m.phone)+'" required></div><div><button class="btn alt" type="submit">नाम / नंबर बदलें</button></div></form>'
    +'<form data-form="setfee" data-id="'+m.id+'" class="frm"><div><label for="sf">इस प्लान की कुल फ़ीस बदलें (₹) — छूट या बढ़ोतरी</label><input id="sf" name="total" type="number" min="0" value="'+m.total+'" required></div><div><button class="btn alt" type="submit">फ़ीस बदलें</button></div></form>'
    +'<div><h3 style="margin-bottom:8px">फ़ीस कैलेंडर</h3>'+calendar(m)+'</div></div></section>';
 }
@@ -579,7 +590,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v8';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v9';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -886,7 +897,7 @@ function vAdmin(){
    +'<p class="sm muted" style="margin-top:8px">यह पासवर्ड अभी एक ही बार दिखेगा। ओनर को भेज दें।</p>'
    +'<p class="row" style="margin-top:12px"><a class="btn sm" target="_blank" rel="noopener" href="'+wa(ng.phone,'नमस्ते '+ng.owner+', ShinePro360 पर आपके जिम '+ng.name+' का लॉगिन तैयार है। जिम ID: '+ng.code+', पासवर्ड: '+ng.pass+' ऐप लिंक: '+appUrl())+'">WhatsApp से भेजें</a></p></section>':'')
    +'<section><h2 style="margin-bottom:8px">जुड़े हुए जिम</h2><div class="tw"><table><thead><tr><th>ID</th><th>जिम</th><th>ओनर</th><th>पता</th><th>मेंबर</th><th>अभी अंदर</th><th>सेवा</th><th></th></tr></thead><tbody>'
-   +(S.gyms.length?S.gyms.map(g=>'<tr><td class="num">'+esc(g.code)+'</td><td><b>'+esc(g.name)+'</b></td><td>'+esc(g.owner)+'<br><span class="muted sm num">'+esc(g.phone)+'</span></td><td>'+esc(g.address)+'</td><td class="num">'+g.count+'</td><td class="num">'+g.inside+'</td><td><span class="pill '+svc(g).c+'">'+svc(g).t+'</span></td><td><div class="row"><button class="btn gold sm" type="button" data-act="paidgym" data-id="'+g.id+'">'+(g.sub==='paid'?'भुगतान हटाएँ':'भुगतान मिला')+'</button><button class="btn alt sm" type="button" data-act="resetpw" data-id="'+g.id+'">नया पासवर्ड</button><button class="btn alt sm" type="button" data-act="delgym" data-id="'+g.id+'">जिम हटाएँ</button></div></td></tr>').join(''):'<tr><td colspan="8" class="muted">अभी कोई जिम नहीं जुड़ा।</td></tr>')+'</tbody></table></div></section></div>'
+   +(S.gyms.length?S.gyms.map(g=>'<tr><td class="num">'+esc(g.code)+'</td><td><b>'+esc(g.name)+'</b></td><td>'+esc(g.owner)+'<br><span class="muted sm num">'+esc(g.phone)+'</span></td><td>'+esc(g.address)+'</td><td class="num">'+g.count+'</td><td class="num">'+g.inside+'</td><td><span class="pill '+svc(g).c+'">'+svc(g).t+'</span></td><td><div class="row"><button class="btn gold sm" type="button" data-act="paidgym" data-id="'+g.id+'">'+(g.sub==='paid'?'भुगतान हटाएँ':'भुगतान मिला')+'</button><button class="btn alt sm" type="button" data-act="editowner" data-id="'+g.id+'">ओनर बदलें</button> <button class="btn alt sm" type="button" data-act="resetpw" data-id="'+g.id+'">नया पासवर्ड</button><button class="btn alt sm" type="button" data-act="delgym" data-id="'+g.id+'">जिम हटाएँ</button></div></td></tr>').join(''):'<tr><td colspan="8" class="muted">अभी कोई जिम नहीं जुड़ा।</td></tr>')+'</tbody></table></div></section></div>'
    +'<div class="stack"><section class="panel"><h2>कमाई का हिसाब</h2><label for="fee">हर जिम से मासिक शुल्क (₹)</label><input id="fee" type="number" min="0" data-inp="fee" value="'+esc(ui.fee)+'"><p class="sm muted" style="margin-top:8px">'+paying+' भुगतान वाले जिम × '+inr(fee)+' = <b id="feeTot">'+inr(paying*fee)+'</b> प्रति माह। पहला महीना फ़्री ट्रायल है।</p></section>'
    +'<section class="panel"><h2>डाइट इंक्वायरी</h2><p class="sm muted">ऊपर वाले मेंबर की इंक्वायरी नीचे की तालिका में है।</p></section></div></div>'
    +'<section style="margin-top:28px"><h2 style="margin-bottom:8px">सभी डाइट इंक्वायरी</h2><div class="tw">'+dietRows(S.diets,true)+'</div></section>';
@@ -923,6 +934,7 @@ function gymForm(){
   return '<section class="panel" style="max-width:640px;margin-bottom:20px"><h2>जिम की जानकारी</h2><form data-form="gymedit" class="frm" style="margin-top:8px">'
    +'<div class="full"><label for="en">जिम का नाम</label><input id="en" name="name" value="'+esc(g.name)+'" required></div>'
    +'<div class="full"><label for="ea">पता</label><input id="ea" name="address" value="'+esc(g.address)+'" required></div>'
+   +'<div><label for="eo">ओनर का नाम</label><input id="eo" name="owner" value="'+esc(g.owner)+'" required></div><div><label for="eph">ओनर का मोबाइल नंबर</label><input id="eph" name="ophone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" value="'+esc(g.phone)+'" required></div>'
    +'<div><label for="ec">क्षमता (एक समय में कितने लोग)</label><input id="ec" name="cap" type="number" min="5" max="500" value="'+g.capacity+'" required></div>'
    +'<div class="full"><button class="btn" type="submit">सेव करें</button></div></form><p class="sm muted" style="margin-top:8px">क्षमता से ही भीड़ का स्तर (खाली / ठीक-ठाक / भरा) तय होता है।</p></section>';
 }
@@ -978,6 +990,8 @@ const ACT={
   camclose:()=>camStop(),
   logout:async()=>{camStop();try{await sb.auth.signOut()}catch(e){}S=BLANK();ui.err='';ui.newPin=null;ui.newGym=null;ui.lastScan=null;ui.dietMsg=null;ui.sel=null;ui.gTok='';ui.sTok='';ui.gW=null;ui.lastBackup=null;location.hash='';render()},
   resetpin:async b=>{const m=S.members.find(x=>x.id===b.dataset.id);const r=await fn({action:'reset_member_pin',member_id:m.id});ui.newPin={name:m.name,phone:m.phone,pin:r.pin};render();toast('नया पिन बन गया');const e=$('#pinbox');if(e)e.scrollIntoView()},
+  editowner:async b=>{const g=gym(b.dataset.id);const n=prompt('ओनर का नाम',g.owner);if(n===null)return;const p=prompt('ओनर का 10 अंकों का मोबाइल नंबर',g.phone);if(p===null)return;
+    await fn({action:'update_gym_owner',gym_id:g.id,owner_name:n.trim(),owner_phone:p.trim()});await refresh();toast('ओनर की जानकारी बदल गई')},
   resetpw:async b=>{const g=gym(b.dataset.id);const r=await fn({action:'reset_gym_password',gym_id:g.id});ui.newGym={name:g.name,code:g.code,pass:r.password,owner:g.owner,phone:g.phone};render();toast('नया पासवर्ड बन गया')},
   paidgym:async b=>{const g=gym(b.dataset.id);let v=null;
     if(g.sub!=='paid'){const row=must(await sb.from('gyms').select('paid_until').eq('id',g.id).single());const base=row.paid_until&&pd(row.paid_until)>T0()?pd(row.paid_until):T0();v=iso(addD(base,30))}
@@ -1011,13 +1025,15 @@ const FORMS={
     const ms=must(await sb.from('memberships').insert({gym_id:m.gym,member_id:m.id,months:mo,total_fee:tot,start_date:iso(T0())}).select().single());
     if(paid>0)must(await sb.from('payments').insert({gym_id:m.gym,member_id:m.id,membership_id:ms.id,amount:paid,paid_on:iso(T0())}));
     const t=new Date();ui.cal={y:t.getFullYear(),m:t.getMonth()};await refresh();toast('फ़ीस आज से रिन्यू हो गई')},
+  editm:async f=>{const m=S.members.find(x=>x.id===f.dataset.id),d=new FormData(f),name=String(d.get('name')).trim(),phone=String(d.get('phone')).trim();
+    await fn({action:'update_member',member_id:m.id,name:name,phone:phone});await refresh();toast(phone!==m.phone?'बदल गया। अब नए नंबर से लॉगिन होगा, पिन वही रहेगा':'बदल गया')},
   setfee:async f=>{const m=S.members.find(x=>x.id===f.dataset.id),tot=num(new FormData(f).get('total'));
     if(!m.msId)throw new Error('प्लान नहीं मिला');
     if(tot<m.paid){toast('कुल फ़ीस जमा हो चुकी रकम से कम नहीं हो सकती');return}
     must(await sb.from('memberships').update({total_fee:tot}).eq('id',m.msId).select());await refresh();toast('फ़ीस बदल गई')},
   plans:async f=>{const d=new FormData(f),o={};['1','3','6','12'].forEach(k=>{o[k]=num(d.get('p'+k))});
     must(await sb.rpc('set_plan_fees',{p_fees:o}));await refresh();toast('रेट सेव हो गए')},
-  gymedit:async f=>{const d=new FormData(f),g=gOwn();must(await sb.rpc('update_my_gym',{p_name:String(d.get('name')).trim(),p_address:String(d.get('address')).trim(),p_capacity:Math.max(5,Math.min(500,Math.round(Number(d.get('cap'))||25))),p_has_trainers:g.hasTrainers}));await refresh();toast('सेव हो गया')},
+  gymedit:async f=>{const d=new FormData(f),g=gOwn();must(await sb.rpc('update_my_gym',{p_name:String(d.get('name')).trim(),p_address:String(d.get('address')).trim(),p_capacity:Math.max(5,Math.min(500,Math.round(Number(d.get('cap'))||25))),p_has_trainers:g.hasTrainers}));const on=String(d.get('owner')).trim(),op=String(d.get('ophone')).trim();if(on!==g.owner||op!==g.phone)await fn({action:'update_gym_owner',owner_name:on,owner_phone:op});await refresh();toast('सेव हो गया')},
   addt:async f=>{const d=new FormData(f);must(await sb.from('trainers').insert({gym_id:S.sess,name:String(d.get('name')).trim(),phone:String(d.get('phone')),speciality:String(d.get('spec')).trim()}));await refresh();toast('ट्रेनर जुड़ गया')},
   diet:async f=>{const d=new FormData(f),m=S.members.find(x=>x.id===f.dataset.id),w=Number(d.get('w')),h=Number(d.get('h')),goal=d.get('goal'),s=dietSuggest(w,h,goal);
     must(await sb.from('diet_inquiries').insert({gym_id:m.gym,member_id:m.id,weight_kg:w,height_cm:Math.round(h),goal:goal,food_pref:d.get('pref'),consent:true}));
