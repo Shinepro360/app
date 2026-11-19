@@ -170,6 +170,7 @@ body{margin:0}
 .pbig{font-family:var(--f-disp);font-weight:600;font-size:36px;line-height:1.1;margin:8px 0 12px}
 .pwrap{max-width:420px}
 @media print{.top,.noprint,.toast,.camov,.pver{display:none!important}body{background:#fff}main.wrap{padding:0}.pwrap{max-width:none;text-align:center;margin:0 auto}.pwrap .qrbox{max-width:480px;margin:0 auto;border:0}.pwrap h1{font-size:44px}.pbig{font-size:56px}}
+[hidden]{display:none!important}
 img.logo{width:46px;height:46px;padding:0;background:none;border-radius:50%;display:block;flex:none}
 </style>
 </head>
@@ -344,7 +345,7 @@ const EXTRA={
 "लोकेशन चालू करें": "Turn on location",
 "छपे QR से एंट्री के लिए फ़ोन की लोकेशन की अनुमति (Allow) देनी ज़रूरी है। लोकेशन चालू करके QR फिर स्कैन करें।": "For entry with a printed QR you must allow the phone location. Turn on location and scan the QR again.",
 "आप जिम के पास नहीं हैं": "You are not near the gym",
-"आप जिम से लगभग ": "You are about ",
+"आप जिम से लगभग ": "You appear about ",
 " मीटर दूर हैं। जिम के अंदर से QR स्कैन करें।": " metres from the gym. Scan the QR from inside the gym.",
 "ओनर से कहें कि ऐप में जिम की लोकेशन सेट करें।": "Ask the owner to set the gym location in the app.",
 "होम स्क्रीन पर रखें": "Keep on home screen",
@@ -424,7 +425,34 @@ const EXTRA={
 "फ़ीस याद दिलाएँ": "Send fee reminders",
 "अभी किसी की फ़ीस खत्म या बाकी नहीं है।": "Nobody's fee is expired or pending right now.",
 "हर नाम के आगे WhatsApp दबाएँ। संदेश पहले से लिखा आएगा, बस भेज दें।": "Tap WhatsApp next to a name. The message comes pre-written, just send it.",
-"आज भेजा ✓": "Sent today ✓"
+"आज भेजा ✓": "Sent today ✓",
+"QR स्कैन करना भूल गए? बाहर निकल गया दर्ज करें": "Forgot to scan? Mark me as out",
+"आपका बाहर निकलना दर्ज हो गया": "Your exit has been recorded",
+"आप पहले से बाहर हैं": "You are already outside",
+"छपे QR पर लोकेशन जाँच": "Location check for printed QR",
+"चालू": "On",
+"बंद": "Off",
+"लोकेशन जाँच": "Location check",
+"अगर लोकेशन ठीक से नहीं पकड़ रही, तो घेरा बढ़ाएँ (500 या 1000 मीटर) या जाँच बंद कर दें।": "If the location is not being picked up well, increase the circle (500 or 1000 metres) or turn the check off.",
+"जाँच बंद है: छपा QR कहीं से भी स्कैन हो सकता है, यहाँ तक कि QR की फ़ोटो से भी। इसलिए हाज़िरी पर नज़र रखें।": "Check is off: the printed QR can be scanned from anywhere, even from a photo of it. Keep an eye on attendance.",
+"नए जिम के अनुरोध": "New gym requests",
+"इन ओनर्स ने खुद अनुरोध भेजा है। मंज़ूर करने पर उनका जिम ID और पासवर्ड बन जाएगा।": "These owners sent a request themselves. On approval their gym ID and password are created.",
+"मंज़ूर करें": "Approve",
+"ठुकराएँ": "Reject",
+"जिम जुड़ गया। नीचे से ID-पासवर्ड भेजें": "Gym added. Send the ID and password from below",
+"अनुरोध ठुकरा दिया": "Request rejected",
+"अपना जिम जोड़ना चाहते हैं?": "Want to add your gym?",
+"अपनी जानकारी भेजें। एडमिन मंज़ूर करेगा तो आपको जिम ID और पासवर्ड मिलेगा। पहला महीना मुफ़्त।": "Send your details. When the admin approves, you get your gym ID and password. First month free.",
+"जिम का नाम": "Gym name",
+"मोबाइल नंबर": "Mobile number",
+"पता": "Address",
+"अनुरोध भेजें": "Send request",
+"अनुरोध भेज दिया": "Request sent",
+"एडमिन मंज़ूर करेगा तो आपको जिम ID और पासवर्ड मिल जाएगा। जल्दी के लिए नीचे WhatsApp से भी बता दें।": "When the admin approves, you will get your gym ID and password. For speed, also let us know on WhatsApp below.",
+"WhatsApp से बताएँ": "Tell us on WhatsApp",
+"इस नंबर का अनुरोध पहले से भेजा हुआ है": "A request for this number is already sent",
+"अभी बहुत अनुरोध हैं, कुछ देर बाद कोशिश करें": "Too many requests right now, try again later",
+"जानकारी सही भरें": "Please fill the details correctly"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -594,7 +622,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v10';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v11';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -655,6 +683,7 @@ async function loadAll(){
     const [ov,dt]=await Promise.all([sb.rpc('admin_gym_overview'),sb.from('diet_inquiries').select('*').order('created_at',{ascending:false}).limit(500)]);
     N.gyms=(must(ov)||[]).map(r=>({id:r.gym_id,code:r.gym_code,name:r.gym_name,owner:r.owner_name,phone:r.owner_phone,address:r.address,count:Number(r.member_count),inside:Number(r.inside_now),sub:r.subscription,trialLeft:Number(r.trial_days_left)}));
     N.diets=(must(dt)||[]).map(adaptDiet);
+    try{N.reqs=(must(await sb.rpc('admin_requests'))||[]).map(q=>({id:q.id,name:q.name,address:q.address,owner:q.owner_name,phone:q.owner_phone,at:q.created_at}))}catch(e){N.reqs=[]}
     Object.assign(S,N);return;
   }
   const since=new Date(Date.now()-60*DAY).toISOString();
@@ -664,7 +693,7 @@ async function loadAll(){
     sb.from('member_fee_status').select('*'),sb.from('diet_inquiries').select('*').order('created_at',{ascending:false}).limit(300),
     sb.rpc('crowd_now'),sb.rpc('crowd_hourly'),att()]);
   const g=(must(gy)||[])[0];
-  if(g){const s=subOf(g.trial_start,g.paid_until);N.gyms=[{id:g.id,code:g.code,name:g.name,owner:g.owner_name,phone:g.owner_phone,address:g.address,capacity:g.capacity,hasTrainers:g.has_trainers,qrMode:g.qr_mode||'rotating',fees:g.plan_fees||{},lat:g.lat,lng:g.lng,radius:g.radius_m||150,sub:s.sub,trialLeft:s.trialLeft}];N.sess=g.id;if(g.plan_fees)['1','3','6','12'].forEach(k=>{if(g.plan_fees[k]!=null)PLAN[k]=Number(g.plan_fees[k])})}
+  if(g){const s=subOf(g.trial_start,g.paid_until);N.gyms=[{id:g.id,code:g.code,name:g.name,owner:g.owner_name,phone:g.owner_phone,address:g.address,capacity:g.capacity,hasTrainers:g.has_trainers,qrMode:g.qr_mode||'rotating',fees:g.plan_fees||{},lat:g.lat,lng:g.lng,radius:g.radius_m||150,locCheck:g.loc_check!==false,sub:s.sub,trialLeft:s.trialLeft}];N.sess=g.id;if(g.plan_fees)['1','3','6','12'].forEach(k=>{if(g.plan_fees[k]!=null)PLAN[k]=Number(g.plan_fees[k])})}
   N.trainers=(must(tr)||[]).map(t=>({id:t.id,gym:t.gym_id,name:t.name,phone:t.phone||'',spec:t.speciality||''}));
   const fee={};(must(fv)||[]).forEach(f=>{fee[f.member_id]=f});
   const allM=(must(mm)||[]).map(m=>{const f=fee[m.id]||{};return{active:m.active!==false,id:m.id,gym:m.gym_id,name:m.name,phone:m.phone,months:f.months||1,total:f.total_fee||0,paid:f.paid||0,start:f.start_date||iso(T0()),lastPaid:f.last_paid_on||f.start_date||iso(T0()),trainer:m.trainer_id||'',msId:f.membership_id||null,inside:false,inTs:0}});
@@ -735,7 +764,10 @@ async function gateTick(){
 
 /* ---------- member scan ---------- */
 let pending='';
-function getPos(){return new Promise(res=>{if(!navigator.geolocation)return res(null);navigator.geolocation.getCurrentPosition(p=>res({lat:p.coords.latitude,lng:p.coords.longitude,acc:p.coords.accuracy}),()=>res(null),{enableHighAccuracy:true,timeout:15000,maximumAge:0})})}
+function getPos(){return new Promise(res=>{if(!navigator.geolocation)return res(null);let best=null,id=null,done=false;
+  const fin=()=>{if(done)return;done=true;try{navigator.geolocation.clearWatch(id)}catch(e){}clearTimeout(tm);res(best)};
+  const tm=setTimeout(fin,12000);
+  id=navigator.geolocation.watchPosition(p=>{if(!best||p.coords.accuracy<best.acc)best={lat:p.coords.latitude,lng:p.coords.longitude,acc:p.coords.accuracy};if(best.acc<=30)fin()},()=>fin(),{enableHighAccuracy:true,timeout:12000,maximumAge:0})})}
 const isStandalone=()=>{try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){return false}};
 async function doScan(tok){
   const args={p_token:tok};
@@ -770,7 +802,7 @@ function scanBannerR(){
   if(r.result==='expired')return '<section class="scan bad" role="status"><div class="scan-h"><span class="mark">✕</span><div><b>QR एक्सपायर: एंट्री नहीं हुई</b><p>यह पुराना QR है (स्क्रीनशॉट या 30 सेकंड से पुराना)। गेट की स्क्रीन पर चल रहा नया QR स्कैन करें।</p></div></div></section>';
   const mk=(h,p)=>'<section class="scan bad" role="status"><div class="scan-h"><span class="mark">✕</span><div><b>'+h+'</b><p>'+p+'</p></div></div></section>';
   if(r.result==='nolocation')return mk('लोकेशन चालू करें','छपे QR से एंट्री के लिए फ़ोन की लोकेशन की अनुमति (Allow) देनी ज़रूरी है। लोकेशन चालू करके QR फिर स्कैन करें।');
-  if(r.result==='far')return mk('आप जिम के पास नहीं हैं','आप जिम से लगभग '+r.distance+' मीटर दूर हैं। जिम के अंदर से QR स्कैन करें।');
+  if(r.result==='far')return mk('आप जिम के पास नहीं हैं','आप जिम से लगभग '+r.distance+' मीटर दूर दिख रहे हैं। जिम के अंदर, खुली जगह या खिड़की के पास जाकर फिर स्कैन करें। फ़ोन की लोकेशन "High accuracy" पर रखें। फिर भी न हो तो ओनर से कहें कि वह घेरा बढ़ा दे या लोकेशन जाँच बंद कर दे।');
   if(r.result==='nosetup')return mk('जिम की लोकेशन सेट नहीं है','ओनर से कहें कि ऐप में जिम की लोकेशन सेट करें।');
   if(r.result==='inactive')return '<section class="scan bad" role="status"><div class="scan-h"><span class="mark">✕</span><div><b>आपकी सदस्यता बंद है</b><p>एंट्री नहीं हुई। कृपया काउंटर पर जिम से संपर्क करें।</p></div></div></section>';
   if(r.result!=='in'&&r.result!=='out')return '<section class="scan bad" role="status"><div class="scan-h"><span class="mark">✕</span><div><b>यह QR इस जिम का नहीं है</b><p>अपने जिम के गेट की स्क्रीन पर चल रहा QR स्कैन करें।</p></div></div></section>';
@@ -841,7 +873,15 @@ function vLogin(){
    +'<p class="muted" style="margin:0 0 16px">'+hint+'</p>'
    +'<form data-form="login-'+m+'" class="frm">'+f+(ui.err?'<p class="err full" role="alert">'+esc(ui.err)+'</p>':'')+'<div class="full"><button class="btn" type="submit">लॉगिन</button></div></form></div>'
    +'<div class="panel" style="max-width:460px;margin-top:16px"><h2>जिम में अभी भीड़ देखें</h2><p class="muted sm" style="margin-bottom:10px">लॉगिन के बिना भी। सिर्फ़ भीड़ का स्तर दिखता है, किसी का नाम नहीं।</p>'
-   +'<form data-form="pubcrowd" class="frm"><div><label for="pg">जिम ID</label><input id="pg" name="code" value="'+esc(lsGet('sp360-gym')||'')+'" autocapitalize="characters" placeholder="SP360-001" required></div><div><button class="btn gold" type="submit">भीड़ देखें</button></div></form>'+pubHTML()+'</div>';
+   +'<form data-form="pubcrowd" class="frm"><div><label for="pg">जिम ID</label><input id="pg" name="code" value="'+esc(lsGet('sp360-gym')||'')+'" autocapitalize="characters" placeholder="SP360-001" required></div><div><button class="btn gold" type="submit">भीड़ देखें</button></div></form>'+pubHTML()+'</div>'+reqHTML();
+}
+function reqHTML(){
+  const d=ui.reqDone;
+  if(d)return '<div class="panel" style="max-width:460px;margin-top:16px" role="status"><h2>अनुरोध भेज दिया</h2><p class="muted sm" style="margin-top:6px">एडमिन मंज़ूर करेगा तो आपको जिम ID और पासवर्ड मिल जाएगा। जल्दी के लिए नीचे WhatsApp से भी बता दें।</p><p style="margin-top:12px"><a class="btn gold sm" target="_blank" rel="noopener" href="'+wa('8318360447','नमस्ते, मैंने ShinePro360 पर जिम जोड़ने का अनुरोध भेजा है। जिम: '+d.name+', ओनर: '+d.owner+', मोबाइल: '+d.phone)+'">WhatsApp से बताएँ</a></p></div>';
+  return '<div class="panel" style="max-width:460px;margin-top:16px"><h2>अपना जिम जोड़ना चाहते हैं?</h2><p class="muted sm" style="margin-bottom:10px">अपनी जानकारी भेजें। एडमिन मंज़ूर करेगा तो आपको जिम ID और पासवर्ड मिलेगा। पहला महीना मुफ़्त।</p>'
+   +'<form data-form="reqgym" class="frm"><div><label for="rq1">जिम का नाम</label><input id="rq1" name="name" required></div><div><label for="rq2">ओनर का नाम</label><input id="rq2" name="owner" required></div>'
+   +'<div><label for="rq3">मोबाइल नंबर</label><input id="rq3" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required></div><div><label for="rq4">पता</label><input id="rq4" name="address" required></div>'
+   +'<div class="full"><button class="btn gold" type="submit">अनुरोध भेजें</button></div></form></div>';
 }
 function pubHTML(){
   const p=ui.pub;if(!p)return '';
@@ -858,6 +898,7 @@ function vMember(){
   return '<section class="mhero"><p class="by">Powered by ShinePro360</p><h1>'+esc(g.name)+'</h1><p>नमस्ते, '+esc(m.name.split(' ')[0])+'</p></section>'
    +'<section class="entry"><div class="st"><i class="dotl'+(m.inside?' on':'')+'"></i><span>'+(m.inside?'अभी आप जिम में हैं':'अभी आप जिम में नहीं हैं')+'</span></div>'
    +'<button class="btn gold" type="button" data-act="camscan">'+(m.inside?'बाहर निकलने के लिए QR स्कैन करें':'एंट्री के लिए QR स्कैन करें')+'</button>'
+   +(m.inside?'<button class="btn alt sm" type="button" data-act="leave">QR स्कैन करना भूल गए? बाहर निकल गया दर्ज करें</button>':'')
    +'<p class="sm muted">गेट का QR स्कैन करें। आते और जाते, दोनों समय। ऐप का बटन न चले तो फ़ोन के कैमरा से स्कैन करें।</p></section>'
    +(ui.lastScan?'<div style="margin-bottom:20px">'+scanBannerR()+'</div>':'')
    +'<div class="cols"><div class="stack">'
@@ -883,7 +924,9 @@ function qrSettings(){
    +'<div class="chips" role="group" aria-label="QR का प्रकार"><button type="button" data-act="qrmode" data-v="rotating" aria-pressed="'+(md==='rotating')+'">घूमता QR (स्क्रीन चाहिए)</button><button type="button" data-act="qrmode" data-v="static" aria-pressed="'+(md==='static')+'">छपा QR (लोकेशन जाँच के साथ)</button><button type="button" data-act="qrmode" data-v="both" aria-pressed="'+(md==='both')+'">दोनों साथ में</button></div>'
    +'<p class="sm muted" style="margin-top:8px">'+(md==='both'?'दोनों चालू हैं: स्क्रीन वाला घूमता QR (बिना लोकेशन) और छपा QR (लोकेशन जाँच के साथ)। मेंबर जो चाहे स्कैन करे।':st?'QR एक बार छपवाकर गेट पर लगाएँ। मेंबर के फ़ोन की लोकेशन जिम के घेरे के अंदर होनी चाहिए, तभी एंट्री लगेगी।':'गेट पर एक फ़ोन या टैबलेट इंटरनेट से जुड़ा रखें और यह पेज खुला रखें। QR हर 30 सेकंड में बदलता है।')+'</p>'
    +(st?'<div class="row" style="margin-top:12px"><span class="pill '+(has?'ok':'bad')+'">'+(has?'जिम की लोकेशन सेट है':'जिम की लोकेशन सेट नहीं है')+'</span><button class="btn gold sm" type="button" data-act="setloc">इस जगह को जिम की लोकेशन बनाएँ</button>'
-    +'<div style="min-width:150px"><label for="rad">घेरा (मीटर)</label><select id="rad" data-chg="radius">'+[100,150,250,500].map(r=>opt(r,r+' मीटर',g.radius===r)).join('')+'</select></div></div>'
+    +'<div style="min-width:150px"><label for="rad">घेरा (मीटर)</label><select id="rad" data-chg="radius">'+[100,150,250,500,1000].map(r=>opt(r,r+' मीटर',g.radius===r)).join('')+'</select></div></div>'
+    +'<div class="row" style="margin-top:12px"><div style="min-width:150px"><label>छपे QR पर लोकेशन जाँच</label><div class="chips" role="group" aria-label="लोकेशन जाँच"><button type="button" data-act="loccheck" data-v="on" aria-pressed="'+g.locCheck+'">चालू</button><button type="button" data-act="loccheck" data-v="off" aria-pressed="'+(!g.locCheck)+'">बंद</button></div></div></div>'
+    +'<p class="sm muted" style="margin-top:8px">'+(g.locCheck?'अगर लोकेशन ठीक से नहीं पकड़ रही, तो घेरा बढ़ाएँ (500 या 1000 मीटर) या जाँच बंद कर दें।':'जाँच बंद है: छपा QR कहीं से भी स्कैन हो सकता है, यहाँ तक कि QR की फ़ोटो से भी। इसलिए हाज़िरी पर नज़र रखें।')+'</p>'
     +'<p class="sm muted" style="margin-top:8px">लोकेशन सेट करने के लिए जिम के बीच में खड़े होकर यह बटन दबाएँ और फ़ोन की लोकेशन की अनुमति दें।'+(has?'':' जब तक यह सेट नहीं होगी, किसी की एंट्री नहीं लगेगी।')+'</p>':'')
    +'</section>';
 }
@@ -903,12 +946,18 @@ function vGate(){
    +'<section class="panel"><h2>यह QR सुरक्षित कैसे है</h2><ul class="checks"><li>QR हर 30 सेकंड में बदलता है, इसलिए स्क्रीनशॉट भेजने से एंट्री नहीं होगी।</li><li>स्कैन मेंबर के अपने लॉगिन वाले फ़ोन से होता है, इसलिए दोस्त का नाम नहीं चढ़ेगा।</li><li>QR में जिम की पहचान जुड़ी है, दूसरे जिम का QR यहाँ नहीं चलेगा।</li><li>फ़ीस खत्म हो तो स्कैन पर लाल "अनपेड" दिखता है और ओनर को अलर्ट मिलता है।</li></ul>'
    +'<p class="sm muted" style="margin-top:12px">मेंबर अपने फ़ोन के कैमरा से यह QR स्कैन करें। ऐप खुलेगा और एंट्री अपने आप दर्ज होगी।</p></section></div></div></div>'+printBlock;
 }
+function reqPanel(){
+  const q=S.reqs||[];if(!q.length)return '';
+  return '<section class="panel" style="margin-bottom:20px"><h2>नए जिम के अनुरोध</h2><p class="muted sm" style="margin-bottom:8px">इन ओनर्स ने खुद अनुरोध भेजा है। मंज़ूर करने पर उनका जिम ID और पासवर्ड बन जाएगा।</p><ul class="feed">'
+   +q.map(x=>'<li style="grid-template-columns:minmax(0,1fr)"><span><b>'+esc(x.name)+'</b><br><span class="muted sm">'+esc(x.owner)+' · <span class="num">'+esc(x.phone)+'</span><br>'+esc(x.address)+'</span></span><span class="row"><button class="btn gold sm" type="button" data-act="approvereq" data-id="'+x.id+'">मंज़ूर करें</button><button class="btn alt sm" type="button" data-act="rejectreq" data-id="'+x.id+'">ठुकराएँ</button></span></li>').join('')+'</ul></section>';
+}
 function vAdmin(){
   const open=S.diets.filter(d=>d.status==='नया').length,fee=Number(ui.fee)||0,paying=S.gyms.filter(g=>g.sub==='paid').length,ng=ui.newGym;
   const total=S.gyms.reduce((a,g)=>a+g.count,0);
   return '<div class="ohead"><div><p class="eyebrow">ShinePro360 एडमिन</p><h1>सभी जिम एक जगह</h1><p class="muted">जिम जोड़ें, ID-पासवर्ड दें और डाइट इंक्वायरी देखें। यहाँ मेंबर के नाम, फ़ीस या हाज़िरी नहीं दिखती।</p></div></div>'
    +'<div class="strip"><div><div class="big">'+S.gyms.length+'</div><div class="lab">जिम जुड़े हैं</div></div><div><div class="big">'+total+'</div><div class="lab">कुल मेंबर</div></div><div><div class="big">'+open+'</div><div class="lab">नई डाइट इंक्वायरी</div></div>'
    +'<div><div class="big">'+inr(paying*fee)+'</div><div class="lab">मासिक कमाई: भुगतान वाले '+paying+' जिम × '+inr(fee)+'</div></div></div>'
+   +reqPanel()
    +'<div class="cols"><div class="stack"><section class="panel"><h2>नया जिम जोड़ें</h2><form data-form="addgym" class="frm">'
    +'<div><label for="gn">जिम का नाम</label><input id="gn" name="name" required></div><div><label for="go">ओनर का नाम</label><input id="go" name="owner" required></div>'
    +'<div><label for="gph">ओनर का मोबाइल</label><input id="gph" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required></div><div><label for="gc">क्षमता (एक समय में कितने लोग)</label><input id="gc" name="cap" type="number" min="5" max="500" value="25" required></div>'
@@ -982,6 +1031,14 @@ function toast(t){const e=$('#toast');e.textContent=lang==='en'?tr(t):t;e.hidden
 const ask=t=>confirm(lang==='en'?tr(t):t);
 const num=v=>Math.max(0,Math.round(Number(v)||0));
 const ACT={
+  leave:async()=>{const r=must(await sb.rpc('member_leave'));await loadAll();render();toast(r&&r.result==='out'?'आपका बाहर निकलना दर्ज हो गया':'आप पहले से बाहर हैं')},
+  loccheck:async b=>{must(await sb.rpc('set_loc_check',{p_on:b.dataset.v==='on'}));await refresh();toast('सेव हो गया')},
+  approvereq:async b=>{const q=S.reqs.find(x=>x.id===b.dataset.id);if(!q)return;
+    const r=await fn({action:'create_gym',name:q.name,owner_name:q.owner,owner_phone:q.phone,address:q.address,capacity:25});
+    ui.newGym={name:q.name,code:r.code,pass:r.password,owner:q.owner,phone:q.phone};
+    try{must(await sb.rpc('admin_finish_request',{p_id:q.id,p_gym:r.gym_id,p_ok:true}))}catch(e){}
+    await refresh();toast('जिम जुड़ गया। नीचे से ID-पासवर्ड भेजें')},
+  rejectreq:async b=>{if(!confirm('इस अनुरोध को ठुकराएँ?'))return;must(await sb.rpc('admin_finish_request',{p_id:b.dataset.id,p_gym:null,p_ok:false}));await refresh();toast('अनुरोध ठुकरा दिया')},
   remsent:async b=>{lsSet('sp360-rem-'+b.dataset.id,iso(T0()));setTimeout(render,400)},
   sub:b=>{ui.sub=b.dataset.v;render()},
   filt:b=>{ui.filt=b.dataset.v;render()},
@@ -1033,6 +1090,10 @@ async function doLogin(email,pw,bad,keep){
   ui.err='';ui.lv={};await enter();
 }
 const FORMS={
+  reqgym:async f=>{const d=new FormData(f),v={name:String(d.get('name')).trim(),owner:String(d.get('owner')).trim(),phone:String(d.get('phone')).trim(),address:String(d.get('address')).trim()};
+    const r=must(await sb.rpc('request_gym',{p_name:v.name,p_address:v.address,p_owner:v.owner,p_phone:v.phone}));
+    if(r.result==='ok'){ui.reqDone=v;render();window.scrollTo(0,document.body.scrollHeight)}
+    else toast(r.result==='duplicate'?'इस नंबर का अनुरोध पहले से भेजा हुआ है':r.result==='busy'?'अभी बहुत अनुरोध हैं, कुछ देर बाद कोशिश करें':'जानकारी सही भरें')},
   pubcrowd:async f=>{const code=String(new FormData(f).get('code')).trim();lsSet('sp360-gym',code);const r=await sb.rpc('public_crowd',{p_code:code});if(r.error)throw r.error;ui.pub=r.data;render()},
   'login-owner':f=>{const d=new FormData(f);return doLogin(emailOf.owner(d.get('code')),String(d.get('pass')),'जिम ID या पासवर्ड गलत है।',{code:d.get('code')})},
   'login-member':f=>{const d=new FormData(f),code=String(d.get('code')).trim();lsSet('sp360-gym',code);return doLogin(emailOf.member(d.get('phone'),code),String(d.get('pin')),'मोबाइल नंबर या पिन गलत है।',{code:code,phone:d.get('phone')})},
