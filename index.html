@@ -420,7 +420,11 @@ const EXTRA={
 "बदल गया। अब नए नंबर से लॉगिन होगा, पिन वही रहेगा": "Changed. The member now logs in with the new number; the PIN stays the same.",
 "ओनर बदलें": "Edit owner",
 "ओनर का 10 अंकों का मोबाइल नंबर": "Owner's 10 digit mobile number",
-"ओनर की जानकारी बदल गई": "Owner details changed"
+"ओनर की जानकारी बदल गई": "Owner details changed",
+"फ़ीस याद दिलाएँ": "Send fee reminders",
+"अभी किसी की फ़ीस खत्म या बाकी नहीं है।": "Nobody's fee is expired or pending right now.",
+"हर नाम के आगे WhatsApp दबाएँ। संदेश पहले से लिखा आएगा, बस भेज दें।": "Tap WhatsApp next to a name. The message comes pre-written, just send it.",
+"आज भेजा ✓": "Sent today ✓"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -590,7 +594,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v9';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v10';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -600,7 +604,7 @@ const lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
 const BLANK=()=>({role:'',sess:'',me:'',gyms:[],members:[],off:[],logs:[],trainers:[],diets:[],crowd:null,hourly:Array(24).fill(0)});
 let S=BLANK();
 const ui={sub:'today',filt:'all',q:'',sel:null,cal:{y:new Date().getFullYear(),m:new Date().getMonth()},err:'',lv:{},lmode:lsGet('sp360-mode')||'owner',
-  newGym:null,newPin:null,dietMsg:null,fee:'149',lastScan:null,loading:true,gTok:'',sTok:'',gW:null,gAt:0,gBusy:false,fatal:''};
+  newGym:null,newPin:null,dietMsg:null,fee:'199',lastScan:null,loading:true,gTok:'',sTok:'',gW:null,gAt:0,gBusy:false,fatal:''};
 const gym=id=>S.gyms.find(g=>g.id===id);
 const gOwn=()=>gym(S.sess);
 const appUrl=()=>location.origin+location.pathname;
@@ -797,7 +801,23 @@ function offList(){
   return '<section class="panel" style="margin-top:20px"><h2>बंद मेंबर</h2><p class="muted sm" style="margin-bottom:8px">ये मेंबर स्कैन नहीं कर सकते और सूची व अलर्ट में नहीं गिने जाते। पुराना रिकॉर्ड बचा है।</p><ul class="feed">'
    +S.off.map(m=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span><b>'+esc(m.name)+'</b> <span class="muted sm num">'+esc(m.phone)+'</span></span><span class="row"><button class="btn sm" type="button" data-act="reactivate" data-id="'+m.id+'">फिर चालू करें</button><button class="btn alt sm" type="button" data-act="delmember" data-id="'+m.id+'">हमेशा के लिए हटाएँ</button></span></li>').join('')+'</ul></section>';
 }
-function vMembersP(){return pinBox()+vMembers()+offList()}
+function remMsg(m,f,g){
+  const base='नमस्ते '+m.name+' जी, '+g.name+' की तरफ़ से याद दिलाना है: ';
+  const tail=' कृपया जिम में आकर जमा करा दें। धन्यवाद।';
+  if(f.left<=0)return base+'आपकी फ़ीस '+fd(f.last)+' को खत्म हो गई है'+(f.due?' और ₹'+f.due+' बाकी हैं':'')+'।'+tail;
+  if(f.left<=5)return base+'आपकी फ़ीस '+f.left+' दिन में ('+fd(f.last)+' को) खत्म होगी'+(f.due?' और ₹'+f.due+' बाकी हैं':'')+'।'+tail;
+  return base+'आपकी ₹'+f.due+' फ़ीस बाकी है।'+tail;
+}
+function remList(){
+  const g=gOwn(),day=iso(T0());
+  const rows=S.members.filter(m=>m.gym===g.id).map(m=>({m:m,f:feeInfo(m)})).filter(x=>x.f.left<=5||x.f.due>0).sort((a,b)=>a.f.left-b.f.left);
+  if(!rows.length)return '<section class="panel" style="margin-bottom:16px"><h2>फ़ीस याद दिलाएँ</h2><p class="muted">अभी किसी की फ़ीस खत्म या बाकी नहीं है।</p></section>';
+  return '<section class="panel" style="margin-bottom:16px"><h2>फ़ीस याद दिलाएँ</h2><p class="sm" style="margin-bottom:6px"><b class="num">'+rows.length+'</b></p><p class="muted sm" style="margin-bottom:8px">हर नाम के आगे WhatsApp दबाएँ। संदेश पहले से लिखा आएगा, बस भेज दें।</p><ul class="feed">'
+   +rows.map(x=>{const sent=lsGet('sp360-rem-'+x.m.id)===day;
+     return '<li style="grid-template-columns:minmax(0,1fr) auto"><span><button class="lnk" type="button" data-act="openm" data-id="'+x.m.id+'">'+esc(x.m.name)+'</button><br><span class="pill '+x.f.st+'">'+x.f.lab+'</span></span>'
+      +'<a class="btn '+(sent?'alt':'gold')+' sm" target="_blank" rel="noopener" data-act="remsent" data-id="'+x.m.id+'" href="'+wa(x.m.phone,remMsg(x.m,x.f,g))+'">'+(sent?'आज भेजा ✓':'WhatsApp')+'</a></li>'}).join('')+'</ul></section>';
+}
+function vMembersP(){return pinBox()+remList()+vMembers()+offList()}
 function vLogin(){
   const m=ui.lmode,lv=ui.lv||{};
   const tabs=[['owner','जिम ओनर'],['member','मेंबर'],['admin','एडमिन']];
@@ -962,6 +982,7 @@ function toast(t){const e=$('#toast');e.textContent=lang==='en'?tr(t):t;e.hidden
 const ask=t=>confirm(lang==='en'?tr(t):t);
 const num=v=>Math.max(0,Math.round(Number(v)||0));
 const ACT={
+  remsent:async b=>{lsSet('sp360-rem-'+b.dataset.id,iso(T0()));setTimeout(render,400)},
   sub:b=>{ui.sub=b.dataset.v;render()},
   filt:b=>{ui.filt=b.dataset.v;render()},
   selm:b=>{ui.sel=b.dataset.id;const t=new Date();ui.cal={y:t.getFullYear(),m:t.getMonth()};render()},
