@@ -298,7 +298,7 @@ const EXTRA={
 ": मेंबर का लॉगिन तैयार": ": member login ready",
 "यह पिन अभी एक ही बार दिखेगा। मेंबर को भेज दें। भूल जाए तो नया पिन बनाएँ।": "This PIN is shown only once. Send it to the member. If forgotten, create a new PIN.",
 "बंद करें": "Close",
-"नया पिन बनाएँ": "Create new PIN",
+"नया पिन बनाएँ": "Make a new PIN",
 "नया पिन बन गया": "New PIN created",
 " के ऐप का लॉगिन। लिंक: ": " - app login. Link: ",
 ", पिन: ": ", PIN: ",
@@ -497,7 +497,21 @@ const EXTRA={
 "सेवा चालू": "Service on",
 "बंद:": "Ends:",
 "· हटाना:": "· Delete:",
-"हटाना:": "Delete:"
+"हटाना:": "Delete:",
+"पूरा संदेश कॉपी करें": "Copy the full message",
+"पिन भूल गए?": "Forgot PIN?",
+"पासवर्ड भूल गए?": "Forgot password?",
+"एडमिन को सूचना चली गई। जल्दी के लिए WhatsApp से भी बता दें। नया पासवर्ड वही भेजेगा।": "The admin has been notified. For speed, also tell us on WhatsApp. The admin will send you a new password.",
+"आपके जिम ओनर को सूचना चली गई। वह आपको नया पिन भेज देंगे। नंबर या जिम ID गलत होने पर कोई सूचना नहीं जाती।": "Your gym owner has been notified and will send you a new PIN. If the number or gym ID is wrong, nobody is notified.",
+"अपना जिम ID और जिम में दर्ज अपना मोबाइल नंबर भरें। एडमिन को अनुरोध जाएगा।": "Enter your gym ID and the mobile number registered for your gym. The request goes to the admin.",
+"अपना जिम ID और अपना मोबाइल नंबर भरें। आपके जिम ओनर को अनुरोध जाएगा।": "Enter your gym ID and your mobile number. The request goes to your gym owner.",
+"पिन भूलने के अनुरोध": "Forgot-PIN requests",
+"इन मेंबर्स ने पिन भूलने का अनुरोध भेजा है। नया पिन बनाकर WhatsApp से भेज दें।": "These members asked for a new PIN. Make a new PIN and send it on WhatsApp.",
+"कुछ मेंबर ने पिन भूलने का अनुरोध भेजा है।": "Some members asked for a new PIN.",
+"मेंबर और फ़ीस में जाकर नया पिन बनाएँ।": "Go to Members and fees and make a new PIN.",
+"पासवर्ड भूलने के अनुरोध": "Forgot-password requests",
+"इन ओनर्स ने पासवर्ड भूलने का अनुरोध भेजा है। नया पासवर्ड बनाकर WhatsApp से भेजें।": "These owners asked for a new password. Make one and send it on WhatsApp.",
+"नया पासवर्ड बनाएँ": "Make a new password"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -667,7 +681,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v12';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v13';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -730,10 +744,13 @@ async function loadAll(){
     N.diets=(must(dt)||[]).map(adaptDiet);
     try{N.reqs=(must(await sb.rpc('admin_requests'))||[]).map(q=>({id:q.id,name:q.name,address:q.address,owner:q.owner_name,phone:q.owner_phone,at:q.created_at}))}catch(e){N.reqs=[]}
     try{N.cans=(must(await sb.rpc('admin_cancellations'))||[]).map(c=>({id:c.gym_id,code:c.gym_code,name:c.gym_name,owner:c.owner_name,phone:c.owner_phone,on:c.cancel_on,why:c.cancel_reason,count:Number(c.member_count)}))}catch(e){N.cans=[]}
+    try{N.rr=(must(await sb.rpc('admin_reset_requests'))||[]).map(c=>({id:c.gym_id,code:c.gym_code,name:c.gym_name,owner:c.owner_name,phone:c.owner_phone}))}catch(e){N.rr=[]}
     Object.assign(S,N);return;
   }
   const since=new Date(Date.now()-60*DAY).toISOString();
   const att=async()=>{const all=[];for(let p=0;p<20;p++){const r=await sb.from('attendance').select('member_id,checked_in_at,checked_out_at').gte('checked_in_at',since).order('checked_in_at',{ascending:false}).range(p*1000,p*1000+999);const d=must(r)||[];all.push.apply(all,d);if(d.length<1000)break}return all};
+  let rsq=[];if(N.role==='owner')try{rsq=(must(await sb.rpc('owner_reset_requests'))||[]).map(q=>({id:q.member_id,name:q.member_name,phone:q.member_phone,at:q.created_at}))}catch(e){}
+  N.resets=rsq;
   const [gy,tr,mm,fv,dt,cr,hr,rows]=await Promise.all([
     sb.from('gyms').select('*').limit(1),sb.from('trainers').select('*').order('name'),sb.from('members').select('*').order('name'),
     sb.from('member_fee_status').select('*'),sb.from('diet_inquiries').select('*').order('created_at',{ascending:false}).limit(300),
@@ -868,12 +885,14 @@ function scanBannerR(){
 }
 
 /* ---------- views that are new in the real app ---------- */
+function pinMsg(p,g,url){return 'नमस्ते '+p.name+', '+g.name+' के ऐप का लॉगिन। लिंक: '+url+' जिम ID: '+g.code+', मोबाइल: '+p.phone+', पिन: '+p.pin}
+function gymMsg(ng){return 'नमस्ते '+ng.owner+' जी, आपके जिम '+ng.name+' का ShinePro360 लॉगिन। ऐप: '+appUrl()+' जिम ID: '+ng.code+' पासवर्ड: '+ng.pass}
 function pinBox(){
   const p=ui.newPin;if(!p)return '';const g=gOwn(),url=appUrl()+'?g='+encodeURIComponent(g.code);
   return '<section class="panel" id="pinbox" role="status" style="margin-bottom:16px"><h2>'+esc(p.name)+': मेंबर का लॉगिन तैयार</h2>'
    +'<div class="cred"><span class="muted">मोबाइल</span><b>'+esc(p.phone)+'</b><span></span><span class="muted">पिन</span><b>'+esc(p.pin)+'</b><button class="btn alt sm" type="button" data-act="copy" data-t="'+esc(p.pin)+'">कॉपी</button></div>'
    +'<p class="sm muted" style="margin-top:8px">यह पिन अभी एक ही बार दिखेगा। मेंबर को भेज दें। भूल जाए तो नया पिन बनाएँ।</p>'
-   +'<p class="row" style="margin-top:12px"><a class="btn sm" target="_blank" rel="noopener" href="'+wa(p.phone,'नमस्ते '+p.name+', '+g.name+' के ऐप का लॉगिन। लिंक: '+url+' जिम ID: '+g.code+', मोबाइल: '+p.phone+', पिन: '+p.pin)+'">WhatsApp से भेजें</a><button class="btn alt sm" type="button" data-act="closepin">बंद करें</button></p></section>';
+   +'<p class="row" style="margin-top:12px"><a class="btn sm" target="_blank" rel="noopener" href="'+wa(p.phone,'नमस्ते '+p.name+', '+g.name+' के ऐप का लॉगिन। लिंक: '+url+' जिम ID: '+g.code+', मोबाइल: '+p.phone+', पिन: '+p.pin)+'">WhatsApp से भेजें</a><button class="btn alt sm" type="button" data-act="copy" data-t="'+esc(pinMsg(p,g,url))+'">पूरा संदेश कॉपी करें</button><button class="btn alt sm" type="button" data-act="closepin">बंद करें</button></p></section>';
 }
 function offList(){
   if(!S.off.length)return '';
@@ -896,7 +915,12 @@ function remList(){
      return '<li style="grid-template-columns:minmax(0,1fr) auto"><span><button class="lnk" type="button" data-act="openm" data-id="'+x.m.id+'">'+esc(x.m.name)+'</button><br><span class="pill '+x.f.st+'">'+x.f.lab+'</span></span>'
       +'<a class="btn '+(sent?'alt':'gold')+' sm" target="_blank" rel="noopener" data-act="remsent" data-id="'+x.m.id+'" href="'+wa(x.m.phone,remMsg(x.m,x.f,g))+'">'+(sent?'आज भेजा ✓':'WhatsApp')+'</a></li>'}).join('')+'</ul></section>';
 }
-function vMembersP(){return pinBox()+remList()+vMembers()+offList()}
+function resetPanel(){
+  const q=S.resets||[];if(!q.length)return '';
+  return '<section class="panel" style="margin-bottom:16px"><h2>पिन भूलने के अनुरोध</h2><p class="muted sm" style="margin-bottom:8px">इन मेंबर्स ने पिन भूलने का अनुरोध भेजा है। नया पिन बनाकर WhatsApp से भेज दें।</p><ul class="feed">'
+   +q.map(x=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span><b>'+esc(x.name)+'</b><br><span class="muted sm num">'+esc(x.phone)+'</span></span><button class="btn gold sm" type="button" data-act="resetpin" data-id="'+x.id+'">नया पिन बनाएँ</button></li>').join('')+'</ul></section>';
+}
+function vMembersP(){return pinBox()+resetPanel()+remList()+vMembers()+offList()}
 function vLogin(){
   const m=ui.lmode,lv=ui.lv||{};
   const tabs=[['owner','जिम ओनर'],['member','मेंबर'],['admin','एडमिन']];
@@ -918,9 +942,19 @@ function vLogin(){
   return '<div class="panel" style="max-width:460px"><p class="eyebrow">लॉगिन</p><h1>अपने खाते में लॉगिन करें</h1>'
    +'<div class="sub" role="group" aria-label="लॉगिन का प्रकार" style="margin:12px 0">'+tabs.map(t=>'<button type="button" data-act="lmode" data-v="'+t[0]+'" aria-pressed="'+(m===t[0])+'">'+t[1]+'</button>').join('')+'</div>'
    +'<p class="muted" style="margin:0 0 16px">'+hint+'</p>'
-   +'<form data-form="login-'+m+'" class="frm">'+f+(ui.err?'<p class="err full" role="alert">'+esc(ui.err)+'</p>':'')+'<div class="full"><button class="btn" type="submit">लॉगिन</button></div></form></div>'
+   +'<form data-form="login-'+m+'" class="frm">'+f+(ui.err?'<p class="err full" role="alert">'+esc(ui.err)+'</p>':'')+'<div class="full"><button class="btn" type="submit">लॉगिन</button></div></form>'+forgotHTML(m)+'</div>'
    +'<div class="panel" style="max-width:460px;margin-top:16px"><h2>जिम में अभी भीड़ देखें</h2><p class="muted sm" style="margin-bottom:10px">लॉगिन के बिना भी। सिर्फ़ भीड़ का स्तर दिखता है, किसी का नाम नहीं।</p>'
    +'<form data-form="pubcrowd" class="frm"><div><label for="pg">जिम ID</label><input id="pg" name="code" value="'+esc(lsGet('sp360-gym')||'')+'" autocapitalize="characters" placeholder="SP360-001" required></div><div><button class="btn gold" type="submit">भीड़ देखें</button></div></form>'+pubHTML()+'</div>'+reqHTML();
+}
+function forgotHTML(m){
+  if(m==='admin')return '';
+  const own=m==='owner',lab=own?'पासवर्ड भूल गए?':'पिन भूल गए?';
+  if(ui.forgotDone===m)return '<div role="status" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line,#444)"><b>अनुरोध भेज दिया</b><p class="sm muted" style="margin-top:4px">'+(own?'एडमिन को सूचना चली गई। जल्दी के लिए WhatsApp से भी बता दें। नया पासवर्ड वही भेजेगा।':'आपके जिम ओनर को सूचना चली गई। वह आपको नया पिन भेज देंगे। नंबर या जिम ID गलत होने पर कोई सूचना नहीं जाती।')+'</p>'
+    +(own?'<p style="margin-top:8px"><a class="btn gold sm" target="_blank" rel="noopener" href="'+wa('8318360447','नमस्ते, मैं जिम ID '+(ui.forgotCode||'')+' का ओनर हूँ। मेरा पासवर्ड भूल गया है, नया पासवर्ड भेज दें।')+'">WhatsApp से बताएँ</a></p>':'')+'</div>';
+  if(ui.forgot!==m)return '<p style="margin-top:12px"><button class="lnk" type="button" data-act="forgot">'+lab+'</button></p>';
+  return '<form data-form="forgot" class="frm" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line,#444)"><p class="sm muted full">'+(own?'अपना जिम ID और जिम में दर्ज अपना मोबाइल नंबर भरें। एडमिन को अनुरोध जाएगा।':'अपना जिम ID और अपना मोबाइल नंबर भरें। आपके जिम ओनर को अनुरोध जाएगा।')+'</p>'
+   +'<div><label for="fg">जिम ID</label><input id="fg" name="code" value="'+esc(lsGet('sp360-gym')||'')+'" autocapitalize="characters" required></div><div><label for="fp">मोबाइल नंबर</label><input id="fp" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required></div>'
+   +'<div class="full"><button class="btn gold" type="submit">अनुरोध भेजें</button></div></form>';
 }
 function reqHTML(){
   const d=ui.reqDone;
@@ -998,6 +1032,11 @@ function reqPanel(){
   return '<section class="panel" style="margin-bottom:20px"><h2>नए जिम के अनुरोध</h2><p class="muted sm" style="margin-bottom:8px">इन ओनर्स ने खुद अनुरोध भेजा है। मंज़ूर करने पर उनका जिम ID और पासवर्ड बन जाएगा।</p><ul class="feed">'
    +q.map(x=>'<li style="grid-template-columns:minmax(0,1fr)"><span><b>'+esc(x.name)+'</b><br><span class="muted sm">'+esc(x.owner)+' · <span class="num">'+esc(x.phone)+'</span><br>'+esc(x.address)+'</span></span><span class="row"><button class="btn gold sm" type="button" data-act="approvereq" data-id="'+x.id+'">मंज़ूर करें</button><button class="btn alt sm" type="button" data-act="rejectreq" data-id="'+x.id+'">ठुकराएँ</button></span></li>').join('')+'</ul></section>';
 }
+function rrPanel(){
+  const c=S.rr||[];if(!c.length)return '';
+  return '<section class="panel" style="margin-bottom:20px"><h2>पासवर्ड भूलने के अनुरोध</h2><p class="muted sm" style="margin-bottom:8px">इन ओनर्स ने पासवर्ड भूलने का अनुरोध भेजा है। नया पासवर्ड बनाकर WhatsApp से भेजें।</p><ul class="feed">'
+   +c.map(x=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span><b>'+esc(x.name)+'</b> <span class="muted sm num">'+esc(x.code)+'</span><br><span class="muted sm">'+esc(x.owner)+' · <span class="num">'+esc(x.phone)+'</span></span></span><button class="btn gold sm" type="button" data-act="resetpw" data-id="'+x.id+'">नया पासवर्ड बनाएँ</button></li>').join('')+'</ul></section>';
+}
 function canPanel(){
   const c=S.cans||[];if(!c.length)return '';
   return '<section class="panel" style="margin-bottom:20px"><h2>सेवा बंद करने वाले जिम</h2><p class="muted sm" style="margin-bottom:8px">इन ओनर्स ने सेवा बंद करने का अनुरोध भेजा है। तारीख़ के 15 दिन बाद डेटा हटाएँ।</p><ul class="feed">'
@@ -1013,12 +1052,12 @@ function vAdmin(){
   return '<div class="ohead"><div><p class="eyebrow">ShinePro360 एडमिन</p><h1>सभी जिम एक जगह</h1><p class="muted">जिम जोड़ें, ID-पासवर्ड दें और डाइट इंक्वायरी देखें। यहाँ मेंबर के नाम, फ़ीस या हाज़िरी नहीं दिखती।</p></div></div>'
    +'<div class="strip"><div><div class="big">'+S.gyms.length+'</div><div class="lab">जिम जुड़े हैं</div></div><div><div class="big">'+total+'</div><div class="lab">कुल मेंबर</div></div><div><div class="big">'+open+'</div><div class="lab">नई डाइट इंक्वायरी</div></div>'
    +'<div><div class="big">'+inr(paying*fee)+'</div><div class="lab">मासिक कमाई: भुगतान वाले '+paying+' जिम × '+inr(fee)+'</div></div></div>'
-   +reqPanel()+canPanel()
+   +reqPanel()+rrPanel()+canPanel()
    +'<div class="cols"><div class="stack"><section class="panel"><h2>नया जिम जोड़ें</h2><form data-form="addgym" class="frm">'
    +'<div><label for="gn">जिम का नाम</label><input id="gn" name="name" required></div><div><label for="go">ओनर का नाम</label><input id="go" name="owner" required></div>'
    +'<div><label for="gph">ओनर का मोबाइल</label><input id="gph" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required></div><div><label for="gc">क्षमता (एक समय में कितने लोग)</label><input id="gc" name="cap" type="number" min="5" max="500" value="25" required></div>'
    +'<div class="full"><label for="ga">पता</label><input id="ga" name="address" required></div><div class="full"><button class="btn gold" type="submit">जिम जोड़ें और ID-पासवर्ड बनाएँ</button></div></form></section>'
-   +(ng?'<section class="panel" role="status"><h2>'+esc(ng.name)+': लॉगिन तैयार</h2><div class="cred"><span class="muted">जिम ID</span><b>'+esc(ng.code)+'</b><button class="btn alt sm" type="button" data-act="copy" data-t="'+esc(ng.code)+'">कॉपी</button><span class="muted">पासवर्ड</span><b>'+esc(ng.pass)+'</b><button class="btn alt sm" type="button" data-act="copy" data-t="'+esc(ng.pass)+'">कॉपी</button></div>'
+   +(ng?'<section class="panel" role="status"><h2>'+esc(ng.name)+': लॉगिन तैयार</h2><div class="cred"><span class="muted">जिम ID</span><b>'+esc(ng.code)+'</b><button class="btn alt sm" type="button" data-act="copy" data-t="'+esc(ng.code)+'">कॉपी</button><span class="muted">पासवर्ड</span><b>'+esc(ng.pass)+'</b><button class="btn alt sm" type="button" data-act="copy" data-t="'+esc(ng.pass)+'">कॉपी</button></div><p style="margin-top:10px"><button class="btn alt sm" type="button" data-act="copy" data-t="'+esc(gymMsg(ng))+'">पूरा संदेश कॉपी करें</button></p>'
    +'<p class="sm muted" style="margin-top:8px">यह पासवर्ड अभी एक ही बार दिखेगा। ओनर को भेज दें।</p>'
    +'<p class="row" style="margin-top:12px"><a class="btn sm" target="_blank" rel="noopener" href="'+wa(ng.phone,'नमस्ते '+ng.owner+', ShinePro360 पर आपके जिम '+ng.name+' का लॉगिन तैयार है। जिम ID: '+ng.code+', पासवर्ड: '+ng.pass+' ऐप लिंक: '+appUrl())+'">WhatsApp से भेजें</a></p></section>':'')
    +'<section><h2 style="margin-bottom:8px">जुड़े हुए जिम</h2><div class="tw"><table><thead><tr><th>ID</th><th>जिम</th><th>ओनर</th><th>पता</th><th>मेंबर</th><th>अभी अंदर</th><th>सेवा</th><th></th></tr></thead><tbody>'
@@ -1113,6 +1152,7 @@ function toast(t){const e=$('#toast');e.textContent=lang==='en'?tr(t):t;e.hidden
 const ask=t=>confirm(lang==='en'?tr(t):t);
 const num=v=>Math.max(0,Math.round(Number(v)||0));
 const ACT={
+  forgot:()=>{ui.forgot=ui.lmode;ui.forgotDone=null;render()},
   stopopen:()=>{ui.stopOpen=!ui.stopOpen;render()},
   cancelundo:async()=>{must(await sb.rpc('withdraw_cancel'));ui.stopOpen=false;await refresh();toast('बंद करना रद्द हो गया, सेवा चालू रहेगी')},
   deleteacct:async()=>{const g=gOwn();if(!ui.dlStop){toast('पहले अपना डेटा (CSV फ़ाइलें) डाउनलोड करें');return}
@@ -1134,8 +1174,9 @@ const ACT={
   openm:b=>{ui.sub='members';ACT.selm(b)},
   calnav:b=>{let m=ui.cal.m+Number(b.dataset.v),y=ui.cal.y;if(m<0){m=11;y--}if(m>11){m=0;y++}ui.cal={y:y,m:m};render()},
   lang:b=>setLang(b.dataset.v),
-  lmode:b=>{ui.lmode=b.dataset.v;ui.err='';lsSet('sp360-mode',ui.lmode);render()},
-  copy:b=>{const t=b.dataset.t;try{navigator.clipboard.writeText(t).then(()=>toast('कॉपी हो गया'),()=>toast(t))}catch(e){toast(t)}},
+  lmode:b=>{ui.forgot=null;ui.forgotDone=null;ui.lmode=b.dataset.v;ui.err='';lsSet('sp360-mode',ui.lmode);render()},
+  copy:b=>{const t=b.dataset.t;const fb=()=>{const a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');a.style.cssText='position:fixed;top:0;left:0;opacity:0';document.body.appendChild(a);a.select();a.setSelectionRange(0,t.length);let ok=false;try{ok=document.execCommand('copy')}catch(e){}a.remove();toast(ok?'कॉपी हो गया':t)};
+    if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(()=>toast('कॉपी हो गया'),fb);else fb()},
   forceout:async b=>{const id=b.dataset.id;must(await sb.from('attendance').update({checked_out_at:new Date().toISOString()}).eq('member_id',id).is('checked_out_at',null).select());await refresh();toast('मेंबर को बाहर दर्ज कर दिया')},
   deactivate:async b=>{const m=S.members.find(x=>x.id===b.dataset.id);if(!ask('मेंबर बंद करना है? वह स्कैन नहीं कर पाएगा। बाद में फिर चालू कर सकते हैं।'))return;
     must(await sb.from('members').update({active:false}).eq('id',m.id).select());ui.sel=null;await refresh();toast('मेंबर बंद कर दिया')},
@@ -1155,10 +1196,10 @@ const ACT={
     const g=gOwn();must(await sb.rpc('update_gym_qr',{p_mode:g.qrMode,p_lat:p.lat,p_lng:p.lng,p_radius:null}));await refresh();toast('जिम की लोकेशन सेव हो गई')},
   camclose:()=>camStop(),
   logout:async()=>{camStop();try{await sb.auth.signOut()}catch(e){}S=BLANK();ui.err='';ui.newPin=null;ui.newGym=null;ui.lastScan=null;ui.dietMsg=null;ui.sel=null;ui.gTok='';ui.sTok='';ui.gW=null;ui.lastBackup=null;location.hash='';render()},
-  resetpin:async b=>{const m=S.members.find(x=>x.id===b.dataset.id);const r=await fn({action:'reset_member_pin',member_id:m.id});ui.newPin={name:m.name,phone:m.phone,pin:r.pin};render();toast('नया पिन बन गया');const e=$('#pinbox');if(e)e.scrollIntoView()},
+  resetpin:async b=>{const m=S.members.find(x=>x.id===b.dataset.id);const r=await fn({action:'reset_member_pin',member_id:m.id});ui.newPin={name:m.name,phone:m.phone,pin:r.pin};try{await sb.rpc('owner_clear_reset',{p_member:m.id})}catch(e){}S.resets=(S.resets||[]).filter(x=>x.id!==m.id);render();toast('नया पिन बन गया');const e=$('#pinbox');if(e)e.scrollIntoView()},
   editowner:async b=>{const g=gym(b.dataset.id);const n=prompt('ओनर का नाम',g.owner);if(n===null)return;const p=prompt('ओनर का 10 अंकों का मोबाइल नंबर',g.phone);if(p===null)return;
     await fn({action:'update_gym_owner',gym_id:g.id,owner_name:n.trim(),owner_phone:p.trim()});await refresh();toast('ओनर की जानकारी बदल गई')},
-  resetpw:async b=>{const g=gym(b.dataset.id);const r=await fn({action:'reset_gym_password',gym_id:g.id});ui.newGym={name:g.name,code:g.code,pass:r.password,owner:g.owner,phone:g.phone};render();toast('नया पासवर्ड बन गया')},
+  resetpw:async b=>{const g=gym(b.dataset.id);const r=await fn({action:'reset_gym_password',gym_id:g.id});ui.newGym={name:g.name,code:g.code,pass:r.password,owner:g.owner,phone:g.phone};try{await sb.rpc('admin_clear_reset',{p_gym:g.id})}catch(e){}S.rr=(S.rr||[]).filter(x=>x.id!==g.id);render();toast('नया पासवर्ड बन गया')},
   paidgym:async b=>{const g=gym(b.dataset.id);let v=null;
     if(g.sub!=='paid'){const row=must(await sb.from('gyms').select('paid_until').eq('id',g.id).single());const base=row.paid_until&&pd(row.paid_until)>T0()?pd(row.paid_until):T0();v=iso(addD(base,30))}
     must(await sb.from('gyms').update({paid_until:v}).eq('id',g.id).select());
@@ -1178,6 +1219,10 @@ async function doLogin(email,pw,bad,keep){
   ui.err='';ui.lv={};await enter();
 }
 const FORMS={
+  forgot:async f=>{const d=new FormData(f),m=ui.lmode,code=String(d.get('code')).trim(),phone=String(d.get('phone')).trim();
+    const r=must(await sb.rpc('request_reset',{p_code:code,p_phone:phone,p_kind:m==='owner'?'owner':'member'}));
+    if(r.result==='ok'){ui.forgotDone=m;ui.forgotCode=code;render()}
+    else toast(r.result==='busy'?'अभी बहुत अनुरोध हैं, कुछ देर बाद कोशिश करें':'जानकारी सही भरें')},
   stopreq:async f=>{if(!ui.dlStop){toast('पहले अपना डेटा (CSV फ़ाइलें) डाउनलोड करें');return}
     const d=new FormData(f),why=String(d.get('why'))+(String(d.get('note')).trim()?': '+String(d.get('note')).trim():'');
     must(await sb.rpc('request_cancel',{p_reason:why}));ui.stopOpen=false;await refresh();toast('अनुरोध भेज दिया। सेवा महीने के अंत में बंद होगी')},
@@ -1233,7 +1278,7 @@ function routeNow(){
   const r=(location.hash||'').slice(1),ok=ALLOWED[S.role]||[];
   return ok.indexOf(r)>=0?r:HOME[S.role];
 }
-const ROUTES={login:vLogin,owner:()=>cancelBanner()+vOwner(),gate:vGate,member:vMember,admin:vAdmin};
+const ROUTES={login:vLogin,owner:()=>cancelBanner()+((S.resets||[]).length?'<p class="scan warn" style="margin-bottom:16px" role="status"><b>कुछ मेंबर ने पिन भूलने का अनुरोध भेजा है।</b> <span class="num">'+S.resets.length+'</span><br><span class="sm">मेंबर और फ़ीस में जाकर नया पिन बनाएँ।</span></p>':'')+vOwner(),gate:vGate,member:vMember,admin:vAdmin};
 async function enter(){
   const sess=(await sb.auth.getSession()).data.session;
   if(!sess){ui.loading=false;S=BLANK();render();return}
@@ -1264,6 +1309,8 @@ setInterval(async()=>{
   const a=document.activeElement,r=routeNow();
   if(r!=='gate'&&a&&/^(INPUT|SELECT|TEXTAREA)$/.test(a.tagName))return;
   try{await loadAll()}catch(e){return}
+  const sel=window.getSelection&&String(window.getSelection()||'');
+  if(sel||ui.newPin||ui.newGym)return;
   if(r==='gate'){const c=$('#gcount');if(c)c.textContent=insideOf(S.sess).length}else render();
 },15000);
 async function init(){
