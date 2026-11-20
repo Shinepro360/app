@@ -452,7 +452,52 @@ const EXTRA={
 "WhatsApp से बताएँ": "Tell us on WhatsApp",
 "इस नंबर का अनुरोध पहले से भेजा हुआ है": "A request for this number is already sent",
 "अभी बहुत अनुरोध हैं, कुछ देर बाद कोशिश करें": "Too many requests right now, try again later",
-"जानकारी सही भरें": "Please fill the details correctly"
+"जानकारी सही भरें": "Please fill the details correctly",
+"इस जिम की सेवा बंद हो चुकी है": "This gym's service has ended",
+"अपने जिम ओनर से बात करें।": "Please talk to your gym owner.",
+"आपकी सेवा बंद हो चुकी है। डेटा हटने की तारीख़:": "Your service has ended. Your data will be deleted on:",
+"आपकी सेवा इस तारीख़ को बंद होगी:": "Your service will end on:",
+"अपना डेटा CSV फ़ाइलों में डाउनलोड कर लें। सेटिंग और बैकअप में जाएँ।": "Download your data as CSV files. Go to Settings and backup.",
+"तीनों CSV फ़ाइलें डाउनलोड करें": "Download all three CSV files",
+"डाउनलोड हो गई": "Downloaded",
+"अभी डाउनलोड नहीं हुई": "Not downloaded yet",
+"सेवा बंद करने का अनुरोध": "Request to stop the service",
+"सेवा बंद होने की तारीख़": "Service end date",
+"सेवा इस तारीख़ को बंद होगी": "Service will end on",
+"इसके बाद 15 दिन तक आप डेटा डाउनलोड कर सकते हैं। फिर सारा डेटा हट जाएगा। डेटा हटने की तारीख़:": "After that you can download your data for 15 days. Then all data is deleted. Data deletion date:",
+"बंद करना रद्द करें": "Cancel the stop request",
+"अकाउंट अभी हटाएँ": "Delete account now",
+"अकाउंट हटाने से पहले CSV डाउनलोड करना ज़रूरी है। हटाने पर जिम, मेंबर, हाज़िरी और फ़ीस सब हमेशा के लिए चला जाएगा।": "You must download the CSV files before deleting the account. Deleting removes the gym, members, attendance and fees for ever.",
+"सेवा बंद करना": "Stop the service",
+"सेवा बंद करना चाहते हैं? सेवा आपके चालू महीने के अंत में बंद होगी और आपका डेटा आपके पास रहेगा।": "Want to stop the service? It ends at the end of your current month and you keep your data.",
+"सेवा बंद करना चाहते हैं": "I want to stop the service",
+"पहला कदम:": "Step 1:",
+"अपना डेटा डाउनलोड करें": "Download your data",
+"दूसरा कदम:": "Step 2:",
+"बंद करने का कारण बताएँ": "Tell us why you are stopping",
+"कारण": "Reason",
+"काम नहीं आया": "It was not useful",
+"महँगा लगा": "Too expensive",
+"जिम बंद या बदल रहा है": "Gym is closing or changing",
+"दूसरा ऐप चुना": "Chose another app",
+"कोई और कारण": "Some other reason",
+"और कुछ बताना चाहें तो": "Anything else you want to tell us",
+"महीने के अंत में बंद करें": "Stop at the end of the month",
+"वापस": "Back",
+"बंद करने के बाद भी 15 दिन तक डेटा डाउनलोड कर सकेंगे।": "After stopping you can still download your data for 15 days.",
+"पहले अपना डेटा (CSV फ़ाइलें) डाउनलोड करें": "First download your data (CSV files)",
+"अनुरोध भेज दिया। सेवा महीने के अंत में बंद होगी": "Request sent. The service will stop at the end of the month",
+"बंद करना रद्द हो गया, सेवा चालू रहेगी": "Stop request cancelled, the service continues",
+"जिम ID मेल नहीं खाई": "Gym ID does not match",
+"आपका अकाउंट हट गया": "Your account has been deleted",
+"सेवा बंद करने वाले जिम": "Gyms that are stopping",
+"इन ओनर्स ने सेवा बंद करने का अनुरोध भेजा है। तारीख़ के 15 दिन बाद डेटा हटाएँ।": "These owners asked to stop the service. Delete the data 15 days after the date.",
+"डेटा हटाने का समय आ गया": "Time to delete data",
+"सेवा बंद": "Service ended",
+"सेवा चालू": "Service on",
+"बंद:": "Ends:",
+"· हटाना:": "· Delete:",
+"हटाना:": "Delete:"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -622,7 +667,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v11';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v12';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -684,6 +729,7 @@ async function loadAll(){
     N.gyms=(must(ov)||[]).map(r=>({id:r.gym_id,code:r.gym_code,name:r.gym_name,owner:r.owner_name,phone:r.owner_phone,address:r.address,count:Number(r.member_count),inside:Number(r.inside_now),sub:r.subscription,trialLeft:Number(r.trial_days_left)}));
     N.diets=(must(dt)||[]).map(adaptDiet);
     try{N.reqs=(must(await sb.rpc('admin_requests'))||[]).map(q=>({id:q.id,name:q.name,address:q.address,owner:q.owner_name,phone:q.owner_phone,at:q.created_at}))}catch(e){N.reqs=[]}
+    try{N.cans=(must(await sb.rpc('admin_cancellations'))||[]).map(c=>({id:c.gym_id,code:c.gym_code,name:c.gym_name,owner:c.owner_name,phone:c.owner_phone,on:c.cancel_on,why:c.cancel_reason,count:Number(c.member_count)}))}catch(e){N.cans=[]}
     Object.assign(S,N);return;
   }
   const since=new Date(Date.now()-60*DAY).toISOString();
@@ -693,7 +739,7 @@ async function loadAll(){
     sb.from('member_fee_status').select('*'),sb.from('diet_inquiries').select('*').order('created_at',{ascending:false}).limit(300),
     sb.rpc('crowd_now'),sb.rpc('crowd_hourly'),att()]);
   const g=(must(gy)||[])[0];
-  if(g){const s=subOf(g.trial_start,g.paid_until);N.gyms=[{id:g.id,code:g.code,name:g.name,owner:g.owner_name,phone:g.owner_phone,address:g.address,capacity:g.capacity,hasTrainers:g.has_trainers,qrMode:g.qr_mode||'rotating',fees:g.plan_fees||{},lat:g.lat,lng:g.lng,radius:g.radius_m||150,locCheck:g.loc_check!==false,sub:s.sub,trialLeft:s.trialLeft}];N.sess=g.id;if(g.plan_fees)['1','3','6','12'].forEach(k=>{if(g.plan_fees[k]!=null)PLAN[k]=Number(g.plan_fees[k])})}
+  if(g){const s=subOf(g.trial_start,g.paid_until);N.gyms=[{id:g.id,code:g.code,name:g.name,owner:g.owner_name,phone:g.owner_phone,address:g.address,capacity:g.capacity,hasTrainers:g.has_trainers,qrMode:g.qr_mode||'rotating',fees:g.plan_fees||{},lat:g.lat,lng:g.lng,radius:g.radius_m||150,locCheck:g.loc_check!==false,cancelOn:g.cancel_on||null,sub:s.sub,trialLeft:s.trialLeft}];N.sess=g.id;if(g.plan_fees)['1','3','6','12'].forEach(k=>{if(g.plan_fees[k]!=null)PLAN[k]=Number(g.plan_fees[k])})}
   N.trainers=(must(tr)||[]).map(t=>({id:t.id,gym:t.gym_id,name:t.name,phone:t.phone||'',spec:t.speciality||''}));
   const fee={};(must(fv)||[]).forEach(f=>{fee[f.member_id]=f});
   const allM=(must(mm)||[]).map(m=>{const f=fee[m.id]||{};return{active:m.active!==false,id:m.id,gym:m.gym_id,name:m.name,phone:m.phone,months:f.months||1,total:f.total_fee||0,paid:f.paid||0,start:f.start_date||iso(T0()),lastPaid:f.last_paid_on||f.start_date||iso(T0()),trainer:m.trainer_id||'',msId:f.membership_id||null,inside:false,inTs:0}});
@@ -803,6 +849,7 @@ function scanBannerR(){
   const mk=(h,p)=>'<section class="scan bad" role="status"><div class="scan-h"><span class="mark">✕</span><div><b>'+h+'</b><p>'+p+'</p></div></div></section>';
   if(r.result==='nolocation')return mk('लोकेशन चालू करें','छपे QR से एंट्री के लिए फ़ोन की लोकेशन की अनुमति (Allow) देनी ज़रूरी है। लोकेशन चालू करके QR फिर स्कैन करें।');
   if(r.result==='far')return mk('आप जिम के पास नहीं हैं','आप जिम से लगभग '+r.distance+' मीटर दूर दिख रहे हैं। जिम के अंदर, खुली जगह या खिड़की के पास जाकर फिर स्कैन करें। फ़ोन की लोकेशन "High accuracy" पर रखें। फिर भी न हो तो ओनर से कहें कि वह घेरा बढ़ा दे या लोकेशन जाँच बंद कर दे।');
+  if(r.result==='stopped')return mk('इस जिम की सेवा बंद हो चुकी है','अपने जिम ओनर से बात करें।');
   if(r.result==='nosetup')return mk('जिम की लोकेशन सेट नहीं है','ओनर से कहें कि ऐप में जिम की लोकेशन सेट करें।');
   if(r.result==='inactive')return '<section class="scan bad" role="status"><div class="scan-h"><span class="mark">✕</span><div><b>आपकी सदस्यता बंद है</b><p>एंट्री नहीं हुई। कृपया काउंटर पर जिम से संपर्क करें।</p></div></div></section>';
   if(r.result!=='in'&&r.result!=='out')return '<section class="scan bad" role="status"><div class="scan-h"><span class="mark">✕</span><div><b>यह QR इस जिम का नहीं है</b><p>अपने जिम के गेट की स्क्रीन पर चल रहा QR स्कैन करें।</p></div></div></section>';
@@ -951,13 +998,22 @@ function reqPanel(){
   return '<section class="panel" style="margin-bottom:20px"><h2>नए जिम के अनुरोध</h2><p class="muted sm" style="margin-bottom:8px">इन ओनर्स ने खुद अनुरोध भेजा है। मंज़ूर करने पर उनका जिम ID और पासवर्ड बन जाएगा।</p><ul class="feed">'
    +q.map(x=>'<li style="grid-template-columns:minmax(0,1fr)"><span><b>'+esc(x.name)+'</b><br><span class="muted sm">'+esc(x.owner)+' · <span class="num">'+esc(x.phone)+'</span><br>'+esc(x.address)+'</span></span><span class="row"><button class="btn gold sm" type="button" data-act="approvereq" data-id="'+x.id+'">मंज़ूर करें</button><button class="btn alt sm" type="button" data-act="rejectreq" data-id="'+x.id+'">ठुकराएँ</button></span></li>').join('')+'</ul></section>';
 }
+function canPanel(){
+  const c=S.cans||[];if(!c.length)return '';
+  return '<section class="panel" style="margin-bottom:20px"><h2>सेवा बंद करने वाले जिम</h2><p class="muted sm" style="margin-bottom:8px">इन ओनर्स ने सेवा बंद करने का अनुरोध भेजा है। तारीख़ के 15 दिन बाद डेटा हटाएँ।</p><ul class="feed">'
+   +c.map(x=>{const on=pd(x.on),pg=addD(on,15),td=T0(),late=td>pg,gone=td>on;
+     return '<li style="grid-template-columns:minmax(0,1fr)"><span><b>'+esc(x.name)+'</b> <span class="muted sm num">'+esc(x.code)+'</span><br><span class="muted sm">'+esc(x.owner)+' · <span class="num">'+esc(x.phone)+'</span> · मेंबर: <span class="num">'+x.count+'</span></span>'
+      +'<br><span class="sm">कारण: '+esc(x.why||'-')+'</span><br><span class="pill '+(late?'bad':gone?'warn':'ok')+'">'+(late?'डेटा हटाने का समय आ गया':gone?'सेवा बंद':'सेवा चालू')+'</span> <span class="muted sm">बंद: <span class="num">'+fd(on)+'</span> · हटाना: <span class="num">'+fd(pg)+'</span></span></span>'
+      +'<span class="row"><a class="btn alt sm" target="_blank" rel="noopener" href="'+wa(x.phone,'नमस्ते '+x.owner+' जी, आपके जिम '+x.name+' की ShinePro360 सेवा '+fd(on)+' को बंद होगी। कृपया उससे पहले अपना डेटा CSV फ़ाइल में डाउनलोड कर लें। धन्यवाद।')+'">WhatsApp</a>'
+      +'<button class="btn alt sm" type="button" data-act="delgym" data-id="'+x.id+'">जिम हटाएँ</button></span></li>'}).join('')+'</ul></section>';
+}
 function vAdmin(){
   const open=S.diets.filter(d=>d.status==='नया').length,fee=Number(ui.fee)||0,paying=S.gyms.filter(g=>g.sub==='paid').length,ng=ui.newGym;
   const total=S.gyms.reduce((a,g)=>a+g.count,0);
   return '<div class="ohead"><div><p class="eyebrow">ShinePro360 एडमिन</p><h1>सभी जिम एक जगह</h1><p class="muted">जिम जोड़ें, ID-पासवर्ड दें और डाइट इंक्वायरी देखें। यहाँ मेंबर के नाम, फ़ीस या हाज़िरी नहीं दिखती।</p></div></div>'
    +'<div class="strip"><div><div class="big">'+S.gyms.length+'</div><div class="lab">जिम जुड़े हैं</div></div><div><div class="big">'+total+'</div><div class="lab">कुल मेंबर</div></div><div><div class="big">'+open+'</div><div class="lab">नई डाइट इंक्वायरी</div></div>'
    +'<div><div class="big">'+inr(paying*fee)+'</div><div class="lab">मासिक कमाई: भुगतान वाले '+paying+' जिम × '+inr(fee)+'</div></div></div>'
-   +reqPanel()
+   +reqPanel()+canPanel()
    +'<div class="cols"><div class="stack"><section class="panel"><h2>नया जिम जोड़ें</h2><form data-form="addgym" class="frm">'
    +'<div><label for="gn">जिम का नाम</label><input id="gn" name="name" required></div><div><label for="go">ओनर का नाम</label><input id="go" name="owner" required></div>'
    +'<div><label for="gph">ओनर का मोबाइल</label><input id="gph" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required></div><div><label for="gc">क्षमता (एक समय में कितने लोग)</label><input id="gc" name="cap" type="number" min="5" max="500" value="25" required></div>'
@@ -1013,8 +1069,34 @@ function plansForm(){
    +['1','3','6','12'].map(row).join('')
    +'<div class="full"><button class="btn" type="submit">रेट सेव करें</button></div></form><p class="sm muted" style="margin-top:8px">नया मेंबर जोड़ते या रिन्यू करते समय यही रेट अपने-आप भरे आएँगे। किसी मेंबर को छूट देनी हो तो वहीं फ़ीस बदल सकते हैं।</p></section>';
 }
+function stopState(g){
+  if(!g||!g.cancelOn)return null;
+  const on=pd(g.cancelOn),td=T0(),pg=addD(on,15);
+  return{onTxt:fd(on),purgeTxt:fd(pg),stopped:td>on,purgeLeft:Math.max(0,Math.round((pg-td)/DAY))};
+}
+function cancelBanner(){
+  const s=stopState(gOwn());if(!s)return '';
+  return '<p class="scan warn" style="margin-bottom:16px" role="status"><b>'+(s.stopped?'आपकी सेवा बंद हो चुकी है। डेटा हटने की तारीख़:':'आपकी सेवा इस तारीख़ को बंद होगी:')+'</b> <span class="num">'+(s.stopped?s.purgeTxt:s.onTxt)+'</span><br><span class="sm">अपना डेटा CSV फ़ाइलों में डाउनलोड कर लें। सेटिंग और बैकअप में जाएँ।</span></p>';
+}
+function stopPanel(){
+  const g=gOwn(),s=stopState(g),dl=!!ui.dlStop;
+  const dlBtn='<div class="row" style="margin:10px 0"><button class="btn gold" type="button" data-act="csv" data-v="all">तीनों CSV फ़ाइलें डाउनलोड करें</button>'+(dl?'<span class="pill ok">डाउनलोड हो गई</span>':'<span class="pill bad">अभी डाउनलोड नहीं हुई</span>')+'</div>';
+  if(s)return '<section class="panel" style="max-width:640px;margin-top:20px"><h2>सेवा बंद करने का अनुरोध</h2>'
+   +'<p style="margin-top:8px">'+(s.stopped?'सेवा बंद होने की तारीख़':'सेवा इस तारीख़ को बंद होगी')+': <b class="num">'+s.onTxt+'</b></p><p class="muted sm">इसके बाद 15 दिन तक आप डेटा डाउनलोड कर सकते हैं। फिर सारा डेटा हट जाएगा। डेटा हटने की तारीख़: <b class="num">'+s.purgeTxt+'</b></p>'
+   +dlBtn
+   +'<div class="row"><button class="btn alt sm" type="button" data-act="cancelundo">बंद करना रद्द करें</button><button class="btn alt sm" type="button" data-act="deleteacct">अकाउंट अभी हटाएँ</button></div>'
+   +'<p class="muted sm" style="margin-top:8px">अकाउंट हटाने से पहले CSV डाउनलोड करना ज़रूरी है। हटाने पर जिम, मेंबर, हाज़िरी और फ़ीस सब हमेशा के लिए चला जाएगा।</p></section>';
+  if(!ui.stopOpen)return '<section class="panel" style="max-width:640px;margin-top:20px"><h2>सेवा बंद करना</h2><p class="muted sm" style="margin:6px 0 12px">सेवा बंद करना चाहते हैं? सेवा आपके चालू महीने के अंत में बंद होगी और आपका डेटा आपके पास रहेगा।</p><button class="btn alt sm" type="button" data-act="stopopen">सेवा बंद करना चाहते हैं</button></section>';
+  return '<section class="panel" style="max-width:640px;margin-top:20px"><h2>सेवा बंद करना</h2>'
+   +'<p style="margin-top:8px"><b>पहला कदम:</b> अपना डेटा डाउनलोड करें</p>'+dlBtn
+   +'<p style="margin-top:8px"><b>दूसरा कदम:</b> बंद करने का कारण बताएँ</p>'
+   +'<form data-form="stopreq" class="frm"><div><label for="sw">कारण</label><select id="sw" name="why">'+['काम नहीं आया','महँगा लगा','जिम बंद या बदल रहा है','दूसरा ऐप चुना','कोई और कारण'].map(x=>'<option>'+x+'</option>').join('')+'</select></div>'
+   +'<div><label for="sn">और कुछ बताना चाहें तो</label><input id="sn" name="note"></div>'
+   +'<div class="full row"><button class="btn" type="submit"'+(dl?'':' disabled')+'>महीने के अंत में बंद करें</button><button class="btn alt" type="button" data-act="stopopen">वापस</button></div></form>'
+   +'<p class="muted sm" style="margin-top:8px">बंद करने के बाद भी 15 दिन तक डेटा डाउनलोड कर सकेंगे।</p></section>';
+}
 function vBackup(){
-  return gymForm()+plansForm()+vBackup2();
+  return cancelBanner()+gymForm()+plansForm()+vBackup2()+stopPanel();
 }
 function vBackup2(){
   const g=gOwn(),last=ui.lastBackup||lsGet('sp360-backup-'+g.code),d=T0().getDate(),due=d>=28||d<=2;
@@ -1031,6 +1113,12 @@ function toast(t){const e=$('#toast');e.textContent=lang==='en'?tr(t):t;e.hidden
 const ask=t=>confirm(lang==='en'?tr(t):t);
 const num=v=>Math.max(0,Math.round(Number(v)||0));
 const ACT={
+  stopopen:()=>{ui.stopOpen=!ui.stopOpen;render()},
+  cancelundo:async()=>{must(await sb.rpc('withdraw_cancel'));ui.stopOpen=false;await refresh();toast('बंद करना रद्द हो गया, सेवा चालू रहेगी')},
+  deleteacct:async()=>{const g=gOwn();if(!ui.dlStop){toast('पहले अपना डेटा (CSV फ़ाइलें) डाउनलोड करें');return}
+    const t=prompt((lang==='en'?'This deletes your gym and all its data for ever. To confirm, type your gym ID: ':'आपका जिम और सारा डेटा हमेशा के लिए हट जाएगा। पक्का करने के लिए अपनी जिम ID लिखें: ')+g.code);
+    if(t==null)return;if(t.trim().toUpperCase()!==g.code.toUpperCase()){toast('जिम ID मेल नहीं खाई');return}
+    must(await sb.rpc('owner_delete_my_gym'));await ACT.logout();toast('आपका अकाउंट हट गया')},
   leave:async()=>{const r=must(await sb.rpc('member_leave'));await loadAll();render();toast(r&&r.result==='out'?'आपका बाहर निकलना दर्ज हो गया':'आप पहले से बाहर हैं')},
   loccheck:async b=>{must(await sb.rpc('set_loc_check',{p_on:b.dataset.v==='on'}));await refresh();toast('सेव हो गया')},
   approvereq:async b=>{const q=S.reqs.find(x=>x.id===b.dataset.id);if(!q)return;
@@ -1060,7 +1148,7 @@ const ACT={
   closepin:()=>{ui.newPin=null;render()},
   camscan:()=>camScan(),
   print:()=>window.print(),
-  csv:async b=>{const v=b.dataset.v;await exportCsv(v==='all'?['members','payments','attendance']:[v],!!b.dataset.share)},
+  csv:async b=>{ui.dlStop=true;const v=b.dataset.v;await exportCsv(v==='all'?['members','payments','attendance']:[v],!!b.dataset.share)},
   qrmode:async b=>{const g=gOwn();must(await sb.rpc('update_gym_qr',{p_mode:b.dataset.v,p_lat:null,p_lng:null,p_radius:null}));ui.sTok='';await refresh();if((b.dataset.v==='static'||b.dataset.v==='both')&&g.lat==null)toast('अब जिम की लोकेशन सेट करें।')},
   setloc:async()=>{toast('लोकेशन ली जा रही है…');const p=await getPos();if(!p){toast('लोकेशन नहीं मिली। फ़ोन की लोकेशन चालू करके अनुमति दें।');return}
     if(p.acc>200){toast('लोकेशन साफ़ नहीं मिली। खुली जगह में जाकर फिर कोशिश करें।');return}
@@ -1090,6 +1178,9 @@ async function doLogin(email,pw,bad,keep){
   ui.err='';ui.lv={};await enter();
 }
 const FORMS={
+  stopreq:async f=>{if(!ui.dlStop){toast('पहले अपना डेटा (CSV फ़ाइलें) डाउनलोड करें');return}
+    const d=new FormData(f),why=String(d.get('why'))+(String(d.get('note')).trim()?': '+String(d.get('note')).trim():'');
+    must(await sb.rpc('request_cancel',{p_reason:why}));ui.stopOpen=false;await refresh();toast('अनुरोध भेज दिया। सेवा महीने के अंत में बंद होगी')},
   reqgym:async f=>{const d=new FormData(f),v={name:String(d.get('name')).trim(),owner:String(d.get('owner')).trim(),phone:String(d.get('phone')).trim(),address:String(d.get('address')).trim()};
     const r=must(await sb.rpc('request_gym',{p_name:v.name,p_address:v.address,p_owner:v.owner,p_phone:v.phone}));
     if(r.result==='ok'){ui.reqDone=v;render();window.scrollTo(0,document.body.scrollHeight)}
@@ -1142,7 +1233,7 @@ function routeNow(){
   const r=(location.hash||'').slice(1),ok=ALLOWED[S.role]||[];
   return ok.indexOf(r)>=0?r:HOME[S.role];
 }
-const ROUTES={login:vLogin,owner:vOwner,gate:vGate,member:vMember,admin:vAdmin};
+const ROUTES={login:vLogin,owner:()=>cancelBanner()+vOwner(),gate:vGate,member:vMember,admin:vAdmin};
 async function enter(){
   const sess=(await sb.auth.getSession()).data.session;
   if(!sess){ui.loading=false;S=BLANK();render();return}
