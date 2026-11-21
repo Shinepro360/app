@@ -170,6 +170,25 @@ body{margin:0}
 .pbig{font-family:var(--f-disp);font-weight:600;font-size:36px;line-height:1.1;margin:8px 0 12px}
 .pwrap{max-width:420px}
 @media print{.top,.noprint,.toast,.camov,.pver{display:none!important}body{background:#fff}main.wrap{padding:0}.pwrap{max-width:none;text-align:center;margin:0 auto}.pwrap .qrbox{max-width:480px;margin:0 auto;border:0}.pwrap h1{font-size:44px}.pbig{font-size:56px}}
+.roles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.rc{font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--fg)}
+.rc .ri{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.rc .rt{font-weight:700;font-size:14px}
+.rc-owner .ri{background:var(--warn-bg);color:var(--warn)}.rc-member .ri{background:var(--ok-bg);color:var(--ok)}.rc-admin .ri{background:var(--info-bg);color:var(--info)}
+.rc[aria-pressed=true]{border-color:var(--fg);box-shadow:0 0 0 2px var(--fg) inset}
+.livebox{border:2px solid var(--gold-btn)!important;background:var(--warn-bg)!important}
+.livebox h2{display:flex;align-items:center;gap:8px}
+.livedot{width:12px;height:12px;border-radius:50%;background:var(--bad);animation:lp 1.4s infinite}
+.livetag{font-size:11px;letter-spacing:1px;background:var(--bad);color:#fff;padding:2px 7px;border-radius:99px}
+@keyframes lp{50%{opacity:.25}}
+.entry.ready{background:var(--info-bg);border-color:var(--info)}
+.entry.in{background:var(--ok-bg);border-color:var(--ok)}
+.entry.out{background:var(--bad-bg);border-color:var(--bad)}
+.entry.ready .st{color:var(--info)}.entry.in .st{color:var(--ok)}.entry.out .st{color:var(--bad)}
+.entry.out .dotl{background:var(--bad)}
+:root{--info:#1a4f9c;--info-bg:#dce8fb}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--info:#8db8ff;--info-bg:#162a52}}
+:root[data-theme="dark"]{--info:#8db8ff;--info-bg:#162a52}
 [hidden]{display:none!important}
 .cal button.d{font:inherit;font-size:13px;border:0;text-align:left;cursor:pointer;color:var(--fg);width:100%}
 .cal .d.att{background:var(--ok-bg);color:var(--ok);font-weight:700}
@@ -535,7 +554,13 @@ const EXTRA={
 "आखिरी दिन": "Last day",
 "पिछला महीना": "Previous month",
 "अगला महीना": "Next month",
-"जिम जुड़ा": "Gym joined"
+"जिम जुड़ा": "Gym joined",
+"जिम लाइव भीड़": "Gym live crowd",
+"जिम जाने से पहले देखें कितनी भीड़ है। लॉगिन के बिना भी।": "Check the crowd before you go. No login needed.",
+"लाइव भीड़ देखें": "See live crowd",
+"आप आज जिम से निकल चुके हैं": "You have left the gym today",
+"स्कैन के लिए तैयार": "Ready to scan",
+"जिम जाने से पहले देखें कितनी भीड़ है। लॉगिन के बिना भी। सिर्फ़ भीड़ का स्तर दिखता है, किसी का नाम नहीं।": "Even without login. Only the crowd level is shown, no names."
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -705,7 +730,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v14';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v15';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -946,6 +971,10 @@ function resetPanel(){
    +q.map(x=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span><b>'+esc(x.name)+'</b><br><span class="muted sm num">'+esc(x.phone)+'</span></span><button class="btn gold sm" type="button" data-act="resetpin" data-id="'+x.id+'">नया पिन बनाएँ</button></li>').join('')+'</ul></section>';
 }
 function vMembersP(){return pinBox()+resetPanel()+remList()+vMembers()+offList()}
+const ROLEIC={
+ owner:'<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l2-5h14l2 5"/><path d="M4 10v9h16v-9"/><path d="M9 19v-5h6v5"/></svg>',
+ member:'<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>',
+ admin:'<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>'};
 function vLogin(){
   const m=ui.lmode,lv=ui.lv||{};
   const tabs=[['owner','जिम ओनर'],['member','मेंबर'],['admin','एडमिन']];
@@ -965,11 +994,11 @@ function vLogin(){
     hint='ShinePro360 से मिली जिम ID और पासवर्ड डालें। हर जिम को सिर्फ़ अपना डेटा दिखता है।';
   }
   return '<div class="panel" style="max-width:460px"><p class="eyebrow">लॉगिन</p><h1>अपने खाते में लॉगिन करें</h1>'
-   +'<div class="sub" role="group" aria-label="लॉगिन का प्रकार" style="margin:12px 0">'+tabs.map(t=>'<button type="button" data-act="lmode" data-v="'+t[0]+'" aria-pressed="'+(m===t[0])+'">'+t[1]+'</button>').join('')+'</div>'
+   +'<div class="roles" role="group" aria-label="लॉगिन का प्रकार">'+tabs.map(t=>'<button type="button" class="rc rc-'+t[0]+'" data-act="lmode" data-v="'+t[0]+'" aria-pressed="'+(m===t[0])+'"><span class="ri">'+ROLEIC[t[0]]+'</span><span class="rt">'+t[1]+'</span></button>').join('')+'</div>'
    +'<p class="muted" style="margin:0 0 16px">'+hint+'</p>'
    +'<form data-form="login-'+m+'" class="frm">'+f+(ui.err?'<p class="err full" role="alert">'+esc(ui.err)+'</p>':'')+'<div class="full"><button class="btn" type="submit">लॉगिन</button></div></form>'+forgotHTML(m)+'</div>'
-   +'<div class="panel" style="max-width:460px;margin-top:16px"><h2>जिम में अभी भीड़ देखें</h2><p class="muted sm" style="margin-bottom:10px">लॉगिन के बिना भी। सिर्फ़ भीड़ का स्तर दिखता है, किसी का नाम नहीं।</p>'
-   +'<form data-form="pubcrowd" class="frm"><div><label for="pg">जिम ID</label><input id="pg" name="code" value="'+esc(lsGet('sp360-gym')||'')+'" autocapitalize="characters" placeholder="SP360-001" required></div><div><button class="btn gold" type="submit">भीड़ देखें</button></div></form>'+pubHTML()+'</div>'+reqHTML();
+   +'<div class="panel livebox" style="max-width:460px;margin-top:16px"><h2><i class="livedot" aria-hidden="true"></i>जिम लाइव भीड़ <span class="livetag">LIVE</span></h2><p class="muted sm" style="margin-bottom:10px">जिम जाने से पहले देखें कितनी भीड़ है। लॉगिन के बिना भी। सिर्फ़ भीड़ का स्तर दिखता है, किसी का नाम नहीं।</p>'
+   +'<form data-form="pubcrowd" class="frm"><div><label for="pg">जिम ID</label><input id="pg" name="code" value="'+esc(lsGet('sp360-gym')||'')+'" autocapitalize="characters" placeholder="SP360-001" required></div><div><button class="btn gold" type="submit">लाइव भीड़ देखें</button></div></form>'+pubHTML()+'</div>'+(m==='member'?'':reqHTML());
 }
 function forgotHTML(m){
   if(m==='admin')return '';
@@ -1031,6 +1060,11 @@ function calendar(m){
    +'<div class="legend"><span><i class="sw" style="background:var(--ok-bg);border:1px solid var(--ok)"></i>आए (ऊपर आने का, नीचे जाने का समय)</span><span><i class="sw" style="background:var(--bad-bg);border:1px solid var(--bad)"></i>नहीं आए</span><span><i class="sw" style="background:var(--warn-bg);border:1px solid var(--warn)"></i>फ़ीस खत्म होने के बाद आए</span><span><i class="sw" style="background:var(--plan)"></i>आगे के फ़ीस वाले दिन</span></div>'
    +'<p class="muted sm" style="margin-top:6px">किसी दिन पर दबाएँ, उस दिन का पूरा समय दिखेगा। पिछले 4 महीने का रिकॉर्ड दिखता है।</p>'+det;
 }
+function entryState(m){
+  if(m.inside)return 'in';
+  const t0=T0().getTime();
+  return S.logs.some(l=>l.m===m.id&&l.t==='out'&&l.ts>=t0)?'out':'ready';
+}
 function vMember(){
   const m=S.members.find(x=>x.id===S.me)||S.members[0];
   if(!m)return '<section class="panel"><p class="muted">आपकी जानकारी नहीं मिली। जिम से संपर्क करें।</p></section>';
@@ -1038,7 +1072,7 @@ function vMember(){
   const mine=S.diets.filter(d=>d.mid===m.id).sort((a,b)=>b.ts-a.ts);
   const tr=S.trainers.find(t=>t.id===m.trainer);
   return '<section class="mhero"><p class="by">Powered by ShinePro360</p><h1>'+esc(g.name)+'</h1><p>नमस्ते, '+esc(m.name.split(' ')[0])+'</p></section>'
-   +'<section class="entry"><div class="st"><i class="dotl'+(m.inside?' on':'')+'"></i><span>'+(m.inside?'अभी आप जिम में हैं':'अभी आप जिम में नहीं हैं')+'</span></div>'
+   +'<section class="entry '+entryState(m)+'"><div class="st"><i class="dotl'+(m.inside?' on':'')+'"></i><span>'+(m.inside?'अभी आप जिम में हैं':(entryState(m)==='out'?'आप आज जिम से निकल चुके हैं':'स्कैन के लिए तैयार'))+'</span></div>'
    +'<button class="btn gold" type="button" data-act="camscan">'+(m.inside?'बाहर निकलने के लिए QR स्कैन करें':'एंट्री के लिए QR स्कैन करें')+'</button>'
    +(m.inside?'<button class="btn alt sm" type="button" data-act="leave">QR स्कैन करना भूल गए? बाहर निकल गया दर्ज करें</button>':'')
    +'<p class="sm muted">गेट का QR स्कैन करें। आते और जाते, दोनों समय। ऐप का बटन न चले तो फ़ोन के कैमरा से स्कैन करें।</p></section>'
