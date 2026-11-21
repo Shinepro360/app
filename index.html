@@ -171,6 +171,14 @@ body{margin:0}
 .pwrap{max-width:420px}
 @media print{.top,.noprint,.toast,.camov,.pver{display:none!important}body{background:#fff}main.wrap{padding:0}.pwrap{max-width:none;text-align:center;margin:0 auto}.pwrap .qrbox{max-width:480px;margin:0 auto;border:0}.pwrap h1{font-size:44px}.pbig{font-size:56px}}
 [hidden]{display:none!important}
+.cal button.d{font:inherit;font-size:13px;border:0;text-align:left;cursor:pointer;color:var(--fg);width:100%}
+.cal .d.att{background:var(--ok-bg);color:var(--ok);font-weight:700}
+.cal .d.att.late{background:var(--warn-bg);color:var(--warn)}
+.cal .d.abs{background:var(--bad-bg);color:var(--bad)}
+.cal .d.sel{outline:2px solid var(--fg);outline-offset:-2px}
+.cal .d small{display:block;font-size:10.5px;line-height:1.2;font-weight:600;white-space:nowrap}
+.legend .sw{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.dayd{max-width:440px;margin-top:10px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
 img.logo{width:46px;height:46px;padding:0;background:none;border-radius:50%;display:block;flex:none}
 </style>
 </head>
@@ -511,7 +519,23 @@ const EXTRA={
 "मेंबर और फ़ीस में जाकर नया पिन बनाएँ।": "Go to Members and fees and make a new PIN.",
 "पासवर्ड भूलने के अनुरोध": "Forgot-password requests",
 "इन ओनर्स ने पासवर्ड भूलने का अनुरोध भेजा है। नया पासवर्ड बनाकर WhatsApp से भेजें।": "These owners asked for a new password. Make one and send it on WhatsApp.",
-"नया पासवर्ड बनाएँ": "Make a new password"
+"नया पासवर्ड बनाएँ": "Make a new password",
+"मेरी हाज़िरी कैलेंडर": "My attendance calendar",
+"अंदर": "In",
+"नहीं आए": "Absent",
+"आए (ऊपर आने का, नीचे जाने का समय)": "Came (top: entry time, bottom: exit time)",
+"फ़ीस खत्म होने के बाद आए": "Came after fee expired",
+"आगे के फ़ीस वाले दिन": "Upcoming fee days",
+"आए:": "In:",
+"· गए:": "· Out:",
+"अभी अंदर / दर्ज नहीं": "Still inside / not recorded",
+"इस दिन जिम नहीं आए।": "Did not come to the gym this day.",
+"किसी दिन पर दबाएँ, उस दिन का पूरा समय दिखेगा। पिछले 4 महीने का रिकॉर्ड दिखता है।": "Tap a day to see its full timings. The last 4 months of records are shown.",
+"शुरू": "Start",
+"आखिरी दिन": "Last day",
+"पिछला महीना": "Previous month",
+"अगला महीना": "Next month",
+"जिम जुड़ा": "Gym joined"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -654,7 +678,7 @@ function vToday(){
   const visitors=expd.map(m=>{const f=feeInfo(m);const n=S.logs.filter(l=>l.m===m.id&&l.t==='in'&&l.ts>=f.exp.getTime()).length;return n?{m:m,n:n,f:f}:null}).filter(Boolean);
   const soon=ms.filter(m=>{const f=feeInfo(m);return f.left>0&&f.left<=5});
   const churn=ms.map(m=>({m:m,s:stats(m.id)})).filter(x=>x.s.since!==null&&x.s.since>=7);
-  const feed=S.logs.filter(l=>ids.has(l.m)).sort((a,b)=>b.ts-a.ts).slice(0,9).map(l=>{
+  const feed=S.logs.filter(l=>ids.has(l.m)&&l.ts>=t0).sort((a,b)=>b.ts-a.ts).slice(0,40).map(l=>{
     const m=S.members.find(x=>x.id===l.m),f=feeInfo(m),bad=l.t==='in'&&l.ts>=f.exp.getTime();
     return '<li class="'+(bad?'bad':'')+'"><time>'+ft(l.ts)+'</time><span><b>'+esc(m.name)+'</b> <span class="muted">'+(l.t==='in'?'अंदर आए':'बाहर गए')+(bad?': फ़ीस खत्म, फिर भी आए':'')+'</span></span><span class="pill '+(bad?'bad':l.t==='in'?'ok':'mute')+'">'+(bad?'अनपेड':l.t==='in'?'IN':'OUT')+'</span></li>';
   }).join('');
@@ -681,13 +705,14 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v13';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v14';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
 const lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
 
 /* ---------- state ---------- */
+const LOGDAYS=120;
 const BLANK=()=>({role:'',sess:'',me:'',gyms:[],members:[],off:[],logs:[],trainers:[],diets:[],crowd:null,hourly:Array(24).fill(0)});
 let S=BLANK();
 const ui={sub:'today',filt:'all',q:'',sel:null,cal:{y:new Date().getFullYear(),m:new Date().getMonth()},err:'',lv:{},lmode:lsGet('sp360-mode')||'owner',
@@ -747,7 +772,7 @@ async function loadAll(){
     try{N.rr=(must(await sb.rpc('admin_reset_requests'))||[]).map(c=>({id:c.gym_id,code:c.gym_code,name:c.gym_name,owner:c.owner_name,phone:c.owner_phone}))}catch(e){N.rr=[]}
     Object.assign(S,N);return;
   }
-  const since=new Date(Date.now()-60*DAY).toISOString();
+  const since=new Date(Date.now()-LOGDAYS*DAY).toISOString();
   const att=async()=>{const all=[];for(let p=0;p<20;p++){const r=await sb.from('attendance').select('member_id,checked_in_at,checked_out_at').gte('checked_in_at',since).order('checked_in_at',{ascending:false}).range(p*1000,p*1000+999);const d=must(r)||[];all.push.apply(all,d);if(d.length<1000)break}return all};
   let rsq=[];if(N.role==='owner')try{rsq=(must(await sb.rpc('owner_reset_requests'))||[]).map(q=>({id:q.member_id,name:q.member_name,phone:q.member_phone,at:q.created_at}))}catch(e){}
   N.resets=rsq;
@@ -970,6 +995,42 @@ function pubHTML(){
   const lc={quiet:'ok',moderate:'warn',full:'bad'}[p.level]||'ok',word={ok:'खाली',warn:'ठीक-ठाक',bad:'भरा'}[lc];
   return '<div style="margin-top:14px"><b>'+esc(p.name)+'</b><div class="crowd"><span class="big" style="font-size:48px">'+word+'</span><span class="muted">अभी जिम</span></div>'+(p.count!=null?'<p style="font-size:20px"><b class="num">'+p.count+'</b> / '+p.capacity+' लोग अभी जिम में</p>':'')+'<div class="cap" aria-hidden="true"><i class="'+lc+'" style="width:'+Math.min(100,Number(p.percent)||0)+'%"></i></div></div>';
 }
+
+const hm=ts=>{const d=new Date(ts);return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')};
+function visitsOf(id){
+  const ls=S.logs.filter(l=>l.m===id).sort((a,b)=>a.ts-b.ts),map={};let open=null;
+  ls.forEach(l=>{if(l.t==='in'){open={in:l.ts,out:null};const k=iso(sod(l.ts));(map[k]=map[k]||[]).push(open)}else if(open&&!open.out){open.out=l.ts}});
+  return map;
+}
+function calendar(m){
+  const f=feeInfo(m),s=pd(m.start),vm=visitsOf(m.id),y=ui.cal.y,mo=ui.cal.m,tod=T0(),wStart=new Date(tod.getTime()-(LOGDAYS-1)*DAY);
+  const first=new Date(y,mo,1).getDay(),dim=new Date(y,mo+1,0).getDate();
+  let c=WD.map(w=>'<div class="h">'+w+'</div>').join('');
+  for(let i=0;i<first;i++)c+='<i></i>';
+  for(let d=1;d<=dim;d++){
+    const dt=new Date(y,mo,d),k=iso(dt),vs=vm[k]||[],isT=dt.getTime()===tod.getTime(),inP=dt>=s&&dt<f.exp;
+    let cls='d',inner='<span>'+d+'</span>';
+    if(vs.length){
+      const fi=vs[0].in,lo=vs[vs.length-1].out,late=dt>=f.exp;
+      cls+=' att'+(late?' late':'');
+      inner+='<small>'+hm(fi)+'</small><small>'+(lo?hm(lo):(isT?'अंदर':'–'))+'</small>';
+    }else if(dt<tod&&dt>=s&&dt>=wStart){cls+=' abs';inner+='<small>नहीं आए</small>'}
+    else if(inP)cls+=' in';
+    if(isT)cls+=' today';
+    if(ui.calDay===k)cls+=' sel';
+    const isE=dt.getTime()===f.last.getTime(),isS=dt.getTime()===s.getTime();
+    c+='<button type="button" class="'+cls+'" data-act="calday" data-v="'+k+'" aria-label="'+d+' '+MF[mo]+'">'+inner+(isS?'<em>शुरू</em>':'')+(isE?'<em>आखिरी दिन</em>':'')+'</button>';
+  }
+  let det='';
+  if(ui.calDay){
+    const vs=vm[ui.calDay]||[],dd=pd(ui.calDay);
+    det='<div class="dayd" role="status"><b>'+fd(dd)+'</b>'+(vs.length?'<ul style="margin:6px 0 0;padding-left:18px">'+vs.map(v=>{const mins=v.out?Math.round((v.out-v.in)/60000):null;return '<li>आए: <b class="num">'+ft(v.in)+'</b> · गए: <b class="num">'+(v.out?ft(v.out):'अभी अंदर / दर्ज नहीं')+'</b>'+(mins!=null?' <span class="muted">('+(mins>=60?Math.floor(mins/60)+' घं ':'')+(mins%60)+' मि)</span>':'')+'</li>'}).join('')+'</ul>':'<p class="muted" style="margin-top:4px">इस दिन जिम नहीं आए।</p>')+'</div>';
+  }
+  return '<div class="row sp" style="max-width:440px;margin-bottom:6px"><h3>'+MF[mo]+' '+y+'</h3><div class="row"><button class="btn alt sm" type="button" data-act="calnav" data-v="-1" aria-label="पिछला महीना">‹</button><button class="btn alt sm" type="button" data-act="calnav" data-v="1" aria-label="अगला महीना">›</button></div></div>'
+   +'<div class="cal">'+c+'</div>'
+   +'<div class="legend"><span><i class="sw" style="background:var(--ok-bg);border:1px solid var(--ok)"></i>आए (ऊपर आने का, नीचे जाने का समय)</span><span><i class="sw" style="background:var(--bad-bg);border:1px solid var(--bad)"></i>नहीं आए</span><span><i class="sw" style="background:var(--warn-bg);border:1px solid var(--warn)"></i>फ़ीस खत्म होने के बाद आए</span><span><i class="sw" style="background:var(--plan)"></i>आगे के फ़ीस वाले दिन</span></div>'
+   +'<p class="muted sm" style="margin-top:6px">किसी दिन पर दबाएँ, उस दिन का पूरा समय दिखेगा। पिछले 4 महीने का रिकॉर्ड दिखता है।</p>'+det;
+}
 function vMember(){
   const m=S.members.find(x=>x.id===S.me)||S.members[0];
   if(!m)return '<section class="panel"><p class="muted">आपकी जानकारी नहीं मिली। जिम से संपर्क करें।</p></section>';
@@ -988,6 +1049,7 @@ function vMember(){
    +'<div class="prog" aria-hidden="true"><i style="width:'+used+'%"></i></div>'
    +'<dl class="kv" style="margin-top:14px"><div><dt>वैधता तक</dt><dd>'+fd(f.last)+'</dd></div><div><dt>आखिरी फ़ीस जमा</dt><dd>'+fd(pd(m.lastPaid))+'</dd></div><div><dt>कुल / पेड</dt><dd class="num">'+inr(m.total)+' / '+inr(m.paid)+'</dd></div><div><dt>बाकी</dt><dd class="num">'+inr(f.due)+'</dd></div></dl></section>'
    +'<section class="panel"><h2>मेरी टाइमिंग</h2><p>आमतौर पर <b class="num">'+(s.avgIn==null?'–':ftm(s.avgIn))+'</b> आते हैं और <b class="num">'+(s.avgOut==null?'–':ftm(s.avgOut))+'</b> जाते हैं। पिछले 30 दिन में <b>'+s.d30+'</b> दिन आए।</p></section>'
+   +'<section class="panel"><h2>मेरी हाज़िरी कैलेंडर</h2>'+calendar(m)+'</section>'
    +(g.hasTrainers?'<section class="panel"><h2>मेरा ट्रेनर</h2><p>'+(tr?'<b>'+esc(tr.name)+'</b> <span class="muted">'+esc(tr.spec)+' · '+esc(tr.phone)+'</span>':'<span class="muted">अभी कोई ट्रेनर नहीं दिया गया। काउंटर पर बात करें।</span>')+'</p></section>':'')
    +(isStandalone()?'':'<section class="panel"><h2>होम स्क्रीन पर रखें</h2><p class="muted sm">ऐप की तरह इस्तेमाल करने के लिए ब्राउज़र का ⋮ मेन्यू खोलें और Add to Home screen दबाएँ।</p></section>')
    +'</div><div class="stack">'
@@ -1152,6 +1214,7 @@ function toast(t){const e=$('#toast');e.textContent=lang==='en'?tr(t):t;e.hidden
 const ask=t=>confirm(lang==='en'?tr(t):t);
 const num=v=>Math.max(0,Math.round(Number(v)||0));
 const ACT={
+  calday:b=>{ui.calDay=ui.calDay===b.dataset.v?null:b.dataset.v;render()},
   forgot:()=>{ui.forgot=ui.lmode;ui.forgotDone=null;render()},
   stopopen:()=>{ui.stopOpen=!ui.stopOpen;render()},
   cancelundo:async()=>{must(await sb.rpc('withdraw_cancel'));ui.stopOpen=false;await refresh();toast('बंद करना रद्द हो गया, सेवा चालू रहेगी')},
