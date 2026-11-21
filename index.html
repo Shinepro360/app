@@ -179,6 +179,10 @@ body{margin:0}
 .exg button{font:inherit;min-height:58px;border-radius:12px;border:1.5px solid var(--line-strong);background:var(--surface);color:var(--fg);font-weight:700;text-align:left;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;gap:6px;cursor:pointer}
 .exg button.dn{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
 .bodybox svg{width:100%;max-width:340px;display:block;margin:0 auto}
+.track{margin-top:12px;padding:12px;border:2px solid var(--gold-btn);border-radius:12px;background:var(--warn-bg)}
+.setrow{display:flex;align-items:baseline;gap:8px;margin:10px 0}
+.setn{font-size:34px}
+.exg button.cur{outline:3px solid var(--gold-btn)}
 .hlm{animation:lp 1.2s infinite}
 details.dt{margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}
 details.dt summary{cursor:pointer;font-weight:700;padding:6px 0}
@@ -674,7 +678,20 @@ const EXTRA={
 "5 एक्सरसाइज़": "5 exercises",
 "6 एक्सरसाइज़": "6 exercises",
 "8 एक्सरसाइज़": "8 exercises",
-"10 एक्सरसाइज़": "10 exercises"
+"10 एक्सरसाइज़": "10 exercises",
+"चल रही एक्सरसाइज़": "Exercise in progress",
+"रद्द करें": "Cancel",
+"सेट पूरे": "Sets done",
+"एक सेट हो गया ✓": "One set done ✓",
+"Done ✓ यह एक्सरसाइज़ पूरी": "Done ✓ this exercise complete",
+"ऊपर से एक्सरसाइज़ पर टैप करें, फिर सेट गिनें और Done दबाएँ।": "Tap an exercise above, count your sets, then press Done.",
+"आज का वर्कआउट Done ✓": "Today's workout Done ✓",
+"आज का वर्कआउट पूरा ✓": "Today's workout complete ✓",
+"आज का वर्कआउट पूरा। शाबाश!": "Today's workout complete. Well done!",
+"। कल फिर मिलते हैं!": ". See you tomorrow!",
+"कुल ": "Total ",
+" एक्सरसाइज़ · ": " exercises · ",
+" सेट। कल फिर मिलते हैं!": " sets. See you tomorrow!"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -844,7 +861,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v17';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v18';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -854,7 +871,7 @@ const lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
 const LOGDAYS=120;
 const BLANK=()=>({role:'',sess:'',me:'',gyms:[],members:[],off:[],logs:[],trainers:[],diets:[],crowd:null,hourly:Array(24).fill(0)});
 let S=BLANK();
-const ui={fitOf:{},fitRange:'week',fx:{m:'chest',sets:3,reps:10,kg:0,min:20},sub:'today',filt:'all',q:'',sel:null,cal:{y:new Date().getFullYear(),m:new Date().getMonth()},err:'',lv:{},lmode:lsGet('sp360-mode')||'owner',
+const ui={fitOf:{},fitRange:'week',cur:null,fx:{m:'chest',sets:3,reps:10,kg:0,min:20},sub:'today',filt:'all',q:'',sel:null,cal:{y:new Date().getFullYear(),m:new Date().getMonth()},err:'',lv:{},lmode:lsGet('sp360-mode')||'owner',
   newGym:null,newPin:null,dietMsg:null,fee:'199',lastScan:null,loading:true,gTok:'',sTok:'',gW:null,gAt:0,gBusy:false,fatal:''};
 const gym=id=>S.gyms.find(g=>g.id===id);
 const gOwn=()=>gym(S.sess);
@@ -1193,6 +1210,7 @@ function sumOf(list){
   list.forEach(w=>{sets+=w.sets||0;vol+=(w.sets||0)*(w.reps||0)*Number(w.kg||0);min+=w.min||0;by[w.name]=(by[w.name]||0)+1});
   return{days:new Set(list.map(w=>w.d)).size,n:list.length,sets:sets,vol:Math.round(vol),min:min,top:Object.keys(by).sort((a,b)=>by[b]-by[a]).slice(0,3)};
 }
+const SHOWBODY=false;
 const WRANGE={day:'आज',week:'इस हफ़्ते',month:'इस महीने'};
 function mlevels(W){
   const cut=iso(new Date(T0().getTime()-29*DAY)),pt={};
@@ -1215,6 +1233,15 @@ function bodySVG(gender,lv,hl){
 }
 function stepper(k,label,val,unit,d){
   return '<div class="stp"><span class="sm"><b>'+label+'</b></span><div><button type="button" data-act="fxstep" data-k="'+k+'" data-d="-'+d+'" aria-label="कम">−</button><b class="num stv">'+val+'</b><span class="muted sm">'+unit+'</span><button type="button" data-act="fxstep" data-k="'+k+'" data-d="'+d+'" aria-label="ज़्यादा">+</button></div></div>';
+}
+function trackHTML(cardio){
+  const fx=ui.fx,c=ui.cur,e=c?EXC[c.i]:null;
+  if(!e||e[1]!==fx.m)return '<p class="sm muted" style="margin-top:12px">ऊपर से एक्सरसाइज़ पर टैप करें, फिर सेट गिनें और Done दबाएँ।</p>';
+  return '<div class="track" role="group" aria-label="चल रही एक्सरसाइज़"><div class="row sp"><b style="font-size:19px">'+e[0]+'</b><button class="btn alt sm" type="button" data-act="excancel">रद्द करें</button></div>'
+   +(cardio?stepper('min','समय',fx.min,'मिनट',5)
+    :'<div class="setrow"><span class="muted sm">सेट पूरे</span><b class="num setn">'+c.done+'</b><span class="muted">/ <span class="num">'+fx.sets+'</span></span></div><button class="btn" type="button" data-act="setdone" style="min-height:54px;font-size:18px;width:100%">एक सेट हो गया ✓</button>'
+     +stepper('sets','कुल सेट',fx.sets,'',1)+stepper('reps','रेप्स',fx.reps,'',1)+stepper('kg','वज़न',fx.kg,'किग्रा',2.5))
+   +'<button class="btn gold" type="button" data-act="exdo" data-i="'+c.i+'" style="min-height:54px;font-size:18px;width:100%;margin-top:10px">Done ✓ यह एक्सरसाइज़ पूरी</button></div>';
 }
 function fitView(m,fit,mine){
   if(!fit)return mine?'':'<section class="panel" style="margin-top:16px"><h2>टारगेट और वर्कआउट</h2><p class="muted sm">लोड हो रहा है…</p></section>';
@@ -1242,9 +1269,12 @@ function fitView(m,fit,mine){
     const cardio=fx.m==='cardio';
     pick='<h3 style="margin:16px 0 8px">आज क्या किया? टैप करें</h3><div class="chips" role="group" aria-label="बॉडी का हिस्सा">'+Object.keys(MUS).map(k=>'<button type="button" data-act="fxmuscle" data-v="'+k+'" aria-pressed="'+(fx.m===k)+'">'+MSHORT[k]+'</button>').join('')+'</div>'
      +'<p class="sm" style="margin:10px 0 8px"><span class="muted">इससे बनेगी:</span> <b>'+MUS[fx.m]+'</b></p>'
-     +'<div class="exg">'+EXC.map((e,i)=>{if(e[1]!==fx.m)return '';const c=todayL.filter(w=>w.name===e[0]).length;return '<button type="button" class="'+(c?'dn':'')+'" data-act="exdo" data-i="'+i+'"><span>'+e[0]+'</span><span>'+(c?'✓ <span class="num">'+c+'</span>':'+')+'</span></button>'}).join('')+'</div>'
-     +'<div class="stps">'+(cardio?stepper('min','समय',fx.min,'मिनट',5):stepper('sets','सेट',fx.sets,'',1)+stepper('reps','रेप्स',fx.reps,'',1)+stepper('kg','वज़न',fx.kg,'किग्रा',2.5))+'</div>';
+     +'<div class="exg">'+EXC.map((e,i)=>{if(e[1]!==fx.m)return '';const c=todayL.filter(w=>w.name===e[0]).length;return '<button type="button" class="'+(c?'dn':'')+(ui.cur&&ui.cur.i===i?' cur':'')+'" data-act="exopen" data-i="'+i+'"><span>'+e[0]+'</span><span>'+(c?'✓ <span class="num">'+c+'</span>':'+')+'</span></button>'}).join('')+'</div>'
+     +trackHTML(cardio);
   }
+  const endKey='sp360-dayend-'+ti,ended=!!lsGet(endKey)&&dn>0;
+  const tsets=todayL.reduce((a,w)=>a+(w.sets||0),0);
+  const dayEnd=!mine||!dn?'':(ended?'<p class="scan ok" style="margin-top:12px" role="status"><b>आज का वर्कआउट पूरा ✓</b><br><span class="sm">कुल <span class="num">'+dn+'</span> एक्सरसाइज़ · <span class="num">'+tsets+'</span> सेट। कल फिर मिलते हैं!</span></p>':'<button class="btn" type="button" data-act="dayend" style="width:100%;min-height:54px;font-size:18px;margin-top:12px">आज का वर्कआउट Done ✓</button>');
   const tl=todayL.length?'<h3 style="margin:16px 0 4px">आज की लिस्ट</h3><ul class="feed">'+todayL.map(w=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span><b>'+esc(w.name)+'</b> <span class="muted num">'+(w.sets?w.sets+'×'+(w.reps||'-'):'')+(w.kg?' · '+w.kg+' kg':'')+(w.min?' · '+w.min+' min':'')+'</span></span>'+(mine?'<button class="btn alt sm" type="button" data-act="delwo" data-id="'+w.id+'" aria-label="हटाएँ">✕</button>':'')+'</li>').join('')+'</ul>':'';
   const list=W.filter(w=>rg==='day'?w.d===ti:rg==='week'?w.d>=wk:w.d.slice(0,7)===mo),sm=sumOf(list);
   const chips='<h3 style="margin:18px 0 8px">पूरा हिसाब</h3><div class="chips" role="group" aria-label="समय">'+Object.keys(WRANGE).map(k=>'<button type="button" data-act="fitrange" data-v="'+k+'" aria-pressed="'+(rg===k)+'">'+WRANGE[k]+'</button>').join('')+'</div>';
@@ -1254,9 +1284,9 @@ function fitView(m,fit,mine){
   const lst=rg==='day'?'':Object.keys(byD).sort().reverse().map(d=>'<div style="margin-top:10px"><b class="sm">'+fd(pd(d))+'</b><ul class="feed" style="margin-top:4px">'+byD[d].map(w=>'<li style="grid-template-columns:minmax(0,1fr)"><span><b>'+esc(w.name)+'</b> <span class="muted num">'+(w.sets?w.sets+'×'+(w.reps||'-'):'')+(w.kg?' · '+w.kg+' kg':'')+(w.min?' · '+w.min+' min':'')+'</span></span></li>').join('')+'</ul></div>').join('')||'';
   let setup='';
   if(mine){
-    const open=!g.goal||!g.gender;
+    const open=!g.goal;
     setup='<details class="dt"'+(open?' open':'')+'><summary>मेरा लक्ष्य बदलें</summary><form data-form="savegoal" class="frm" style="margin-top:10px">'
-     +'<div><label for="fg0">मैं हूँ</label><select id="fg0" name="gender">'+opt('m','लड़का',gen==='m')+opt('f','लड़की',gen==='f')+'</select></div>'
+     +(SHOWBODY?'<div><label for="fg0">मैं हूँ</label><select id="fg0" name="gender">'+opt('m','लड़का',gen==='m')+opt('f','लड़की',gen==='f')+'</select></div>':'<input type="hidden" name="gender" value="'+gen+'">')
      +'<div><label for="fg1">मेरा लक्ष्य</label><select id="fg1" name="goal">'+Object.keys(GOALS).map(k=>opt(k,GOALS[k],(g.goal||'fit')===k)).join('')+'</select></div>'
      +'<div><label for="fg2">रोज़ कितनी एक्सरसाइज़</label><select id="fg2" name="daily">'+[2,3,4,5,6,8,10].map(d=>opt(d,d+' एक्सरसाइज़',daily===d)).join('')+'</select></div><div></div>'
      +'<div><label for="fg3">अभी का वज़न (किग्रा)</label><input id="fg3" name="weight" type="number" step="0.1" min="20" max="300" inputmode="decimal" value="'+(cur==null?'':cur)+'"></div>'
@@ -1271,7 +1301,7 @@ function fitView(m,fit,mine){
   }else{
     setup='<form data-form="ownernote" data-id="'+m.id+'" class="frm" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)"><div class="full"><label for="on1">मेंबर के लिए सलाह / नोट (मेंबर को अपने ऐप में दिखेगा)</label><textarea id="on1" name="note" rows="2" maxlength="300">'+esc(g.owner_note||'')+'</textarea></div><div class="full"><button class="btn alt" type="submit">नोट सेव करें</button></div></form>';
   }
-  return '<section class="panel" style="margin-top:16px"><h2>'+(mine?'मेरा टारगेट और वर्कआउट':'टारगेट और वर्कआउट')+'</h2>'+today+gl+body+pick+tl+chips+sumBox+lst+setup+'</section>';
+  return '<section class="panel" style="margin-top:16px"><h2>'+(mine?'मेरा टारगेट और वर्कआउट':'टारगेट और वर्कआउट')+'</h2>'+today+gl+(SHOWBODY?body:'')+pick+tl+dayEnd+chips+sumBox+lst+setup+'</section>';
 }
 function ownerFit(m){return fitView(m,ui.fitOf[m.id],false)}
 async function loadOwnerFit(id){try{ui.fitOf[id]=must(await sb.rpc('fitness_of',{p_member:id}))}catch(e){}}
@@ -1486,9 +1516,13 @@ const ACT={
   fitrange:b=>{ui.fitRange=b.dataset.v;render()},
   fxmuscle:b=>{ui.fx.m=b.dataset.v;render()},
   fxstep:b=>{const k=b.dataset.k,d=Number(b.dataset.d),lim={sets:[1,20],reps:[1,100],kg:[0,300],min:[5,300]}[k];ui.fx[k]=Math.min(lim[1],Math.max(lim[0],Math.round((ui.fx[k]+d)*10)/10));render()},
-  exdo:async b=>{const e=EXC[Number(b.dataset.i)],c=e[1]==='cardio',x=ui.fx;
-    must(await sb.rpc('add_workout',{p_date:iso(T0()),p_name:e[0],p_sets:c?null:x.sets,p_reps:c?null:x.reps,p_kg:c||!x.kg?null:x.kg,p_min:c?x.min:null}));
-    S.fit=must(await sb.rpc('my_fitness'));render();toast(e[0]+' ✓')},
+  exopen:b=>{ui.cur={i:Number(b.dataset.i),done:0};render();const t=$('.track');if(t)t.scrollIntoView({block:'nearest'})},
+  excancel:()=>{ui.cur=null;render()},
+  setdone:()=>{if(ui.cur){ui.cur.done=Math.min(ui.cur.done+1,ui.fx.sets);render()}},
+  dayend:()=>{lsSet('sp360-dayend-'+iso(T0()),'1');render();toast('आज का वर्कआउट पूरा। शाबाश!')},
+  exdo:async b=>{const e=EXC[Number(b.dataset.i)],c=e[1]==='cardio',x=ui.fx,ds=ui.cur&&ui.cur.i===Number(b.dataset.i)&&ui.cur.done?ui.cur.done:x.sets;
+    must(await sb.rpc('add_workout',{p_date:iso(T0()),p_name:e[0],p_sets:c?null:ds,p_reps:c?null:x.reps,p_kg:c||!x.kg?null:x.kg,p_min:c?x.min:null}));
+    S.fit=must(await sb.rpc('my_fitness'));ui.cur=null;lsSet('sp360-dayend-'+iso(T0()),'');render();toast(e[0]+' ✓')},
   delwo:async b=>{must(await sb.rpc('del_workout',{p_id:b.dataset.id}));S.fit=must(await sb.rpc('my_fitness'));render();toast('हटा दिया')},
   openm:b=>{ui.sub='members';ACT.selm(b)},
   calnav:b=>{let m=ui.cal.m+Number(b.dataset.v),y=ui.cal.y;if(m<0){m=11;y--}if(m>11){m=0;y++}ui.cal={y:y,m:m};render()},
