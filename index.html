@@ -170,6 +170,18 @@ body{margin:0}
 .pbig{font-family:var(--f-disp);font-weight:600;font-size:36px;line-height:1.1;margin:8px 0 12px}
 .pwrap{max-width:420px}
 @media print{.top,.noprint,.toast,.camov,.pver{display:none!important}body{background:#fff}main.wrap{padding:0}.pwrap{max-width:none;text-align:center;margin:0 auto}.pwrap .qrbox{max-width:480px;margin:0 auto;border:0}.pwrap h1{font-size:44px}.pbig{font-size:56px}}
+.stp{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0}
+.stp>div{display:flex;align-items:center;gap:10px}
+.stp button{font:inherit;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line-strong);background:transparent;color:var(--fg);font-size:22px;cursor:pointer}
+.stv{min-width:36px;text-align:center;font-size:19px}
+.stps{margin-top:12px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.exg{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.exg button{font:inherit;min-height:58px;border-radius:12px;border:1.5px solid var(--line-strong);background:var(--surface);color:var(--fg);font-weight:700;text-align:left;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;gap:6px;cursor:pointer}
+.exg button.dn{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.bodybox svg{width:100%;max-width:340px;display:block;margin:0 auto}
+.hlm{animation:lp 1.2s infinite}
+details.dt{margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}
+details.dt summary{cursor:pointer;font-weight:700;padding:6px 0}
 textarea{font:inherit;color:var(--fg);background:var(--surface);border:1.5px solid var(--line-strong);border-radius:6px;padding:8px 10px;width:100%;resize:vertical}
 .roles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
 .rc{font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--fg)}
@@ -606,7 +618,63 @@ const EXTRA={
 "नोट सेव हो गया": "Note saved",
 "हटा दिया": "Removed",
 "सेट और रेप्स, या मिनट भरें": "Enter sets and reps, or minutes",
-"समय": "Period"
+"समय": "Time",
+"आज की एक्सरसाइज़": "Today's exercises",
+"लगातार": "Streak:",
+"🔥 लगातार": "🔥 Streak:",
+"आज का लक्ष्य पूरा! शाबाश!": "Today's goal done! Well done!",
+"🎉 आज का लक्ष्य पूरा! शाबाश!": "🎉 Today's goal done! Well done!",
+"नीचे से जो एक्सरसाइज़ करें, उस पर टैप करते जाएँ।": "Tap each exercise below as you do it.",
+"लक्ष्य:": "Goal:",
+"आपकी बॉडी": "Your body",
+"सामने": "Front",
+"पीछे": "Back",
+"हरा गहरा और बड़ा = उस मसल पर पिछले 30 दिन में ज़्यादा काम। पीला घेरा = अभी चुनी हुई मसल। (यह सिर्फ़ मोटिवेशन के लिए चित्र है।)": "Darker, bigger green = more work on that muscle in the last 30 days. Yellow ring = the muscle selected now. (The picture is only for motivation.)",
+"आज क्या किया? टैप करें": "What did you do today? Tap",
+"इससे बनेगी:": "This builds:",
+"छाती": "Chest",
+"पीठ": "Back",
+"कंधे": "Shoulders",
+"बाइसेप": "Biceps",
+"ट्राइसेप": "Triceps",
+"कलाई": "Wrist",
+"पेट": "Abs",
+"जाँघ": "Thigh",
+"जाँघ पीछे": "Hamstrings",
+"कूल्हे": "Glutes",
+"पिंडली": "Calves",
+"कार्डियो": "Cardio",
+"बाइसेप (बाँह का आगे)": "Biceps (front of arm)",
+"ट्राइसेप (बाँह का पीछे)": "Triceps (back of arm)",
+"कलाई / फोरआर्म": "Wrist / forearm",
+"पेट (एब्स)": "Abs",
+"जाँघ का आगे": "Front thigh",
+"जाँघ का पीछे": "Back thigh",
+"पूरा शरीर (स्टैमिना)": "Whole body (stamina)",
+"आज की लिस्ट": "Today's list",
+"पूरा हिसाब": "Full record",
+"मेरा लक्ष्य बदलें": "Change my goal",
+"अपनी कोई और एक्सरसाइज़ जोड़ें": "Add another exercise of your own",
+"मैं हूँ": "I am",
+"लड़का": "Boy",
+"लड़की": "Girl",
+"रोज़ कितनी एक्सरसाइज़": "Exercises per day",
+"एक्सरसाइज़ का नाम": "Exercise name",
+"जोड़ें": "Add",
+"वज़न": "Weight",
+"मिनट": "min",
+"कम": "Less",
+"ज़्यादा": "More",
+"पहले migration 11 चलाएँ": "Run migration 11 first",
+"बॉडी का हिस्सा": "Body part",
+"शरीर का चित्र: कौन सी मसल पर काम हो रहा है": "Body picture: which muscle is being worked",
+"2 एक्सरसाइज़": "2 exercises",
+"3 एक्सरसाइज़": "3 exercises",
+"4 एक्सरसाइज़": "4 exercises",
+"5 एक्सरसाइज़": "5 exercises",
+"6 एक्सरसाइज़": "6 exercises",
+"8 एक्सरसाइज़": "8 exercises",
+"10 एक्सरसाइज़": "10 exercises"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -776,7 +844,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v16';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v17';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -786,7 +854,7 @@ const lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
 const LOGDAYS=120;
 const BLANK=()=>({role:'',sess:'',me:'',gyms:[],members:[],off:[],logs:[],trainers:[],diets:[],crowd:null,hourly:Array(24).fill(0)});
 let S=BLANK();
-const ui={fitOf:{},fitRange:'week',sub:'today',filt:'all',q:'',sel:null,cal:{y:new Date().getFullYear(),m:new Date().getMonth()},err:'',lv:{},lmode:lsGet('sp360-mode')||'owner',
+const ui={fitOf:{},fitRange:'week',fx:{m:'chest',sets:3,reps:10,kg:0,min:20},sub:'today',filt:'all',q:'',sel:null,cal:{y:new Date().getFullYear(),m:new Date().getMonth()},err:'',lv:{},lmode:lsGet('sp360-mode')||'owner',
   newGym:null,newPin:null,dietMsg:null,fee:'199',lastScan:null,loading:true,gTok:'',sTok:'',gW:null,gAt:0,gBusy:false,fatal:''};
 const gym=id=>S.gyms.find(g=>g.id===id);
 const gOwn=()=>gym(S.sess);
@@ -1110,7 +1178,15 @@ function calendar(m){
 }
 /* ---------- body goal + workout log ---------- */
 const GOALS={lose:'वज़न घटाना',gain:'वज़न / मसल बढ़ाना',fit:'फ़िट रहना',strength:'स्ट्रेंथ बढ़ाना'};
-const EXN=['Bench press','Incline press','Squat','Deadlift','Shoulder press','Biceps curl','Triceps pushdown','Pull-up','Lat pulldown','Leg press','Plank','Treadmill','Cycling','Skipping'];
+const MUS={chest:'छाती',back:'पीठ',shoulders:'कंधे',biceps:'बाइसेप (बाँह का आगे)',triceps:'ट्राइसेप (बाँह का पीछे)',forearms:'कलाई / फोरआर्म',abs:'पेट (एब्स)',quads:'जाँघ का आगे',hamstrings:'जाँघ का पीछे',glutes:'कूल्हे',calves:'पिंडली',cardio:'पूरा शरीर (स्टैमिना)'};
+const MSHORT={chest:'छाती',back:'पीठ',shoulders:'कंधे',biceps:'बाइसेप',triceps:'ट्राइसेप',forearms:'कलाई',abs:'पेट',quads:'जाँघ',hamstrings:'जाँघ पीछे',glutes:'कूल्हे',calves:'पिंडली',cardio:'कार्डियो'};
+const EXC=[['Bench press','chest'],['Incline press','chest'],['Push-up','chest'],['Chest fly','chest'],
+ ['Pull-up','back'],['Lat pulldown','back'],['Seated row','back'],['Deadlift','back'],
+ ['Shoulder press','shoulders'],['Lateral raise','shoulders'],['Biceps curl','biceps'],['Hammer curl','biceps'],
+ ['Triceps pushdown','triceps'],['Dips','triceps'],['Wrist curl','forearms'],
+ ['Plank','abs'],['Crunches','abs'],['Leg raise','abs'],['Squat','quads'],['Leg press','quads'],['Lunges','quads'],
+ ['Leg curl','hamstrings'],['Hip thrust','glutes'],['Calf raise','calves'],['Treadmill','cardio'],['Cycling','cardio'],['Skipping','cardio']];
+const EXM={};EXC.forEach(e=>{EXM[e[0]]=e[1]});
 function wkStart(d){const x=new Date(d);x.setDate(x.getDate()-((x.getDay()+6)%7));x.setHours(0,0,0,0);return x}
 function sumOf(list){
   const by={};let sets=0,vol=0,min=0;
@@ -1118,47 +1194,84 @@ function sumOf(list){
   return{days:new Set(list.map(w=>w.d)).size,n:list.length,sets:sets,vol:Math.round(vol),min:min,top:Object.keys(by).sort((a,b)=>by[b]-by[a]).slice(0,3)};
 }
 const WRANGE={day:'आज',week:'इस हफ़्ते',month:'इस महीने'};
+function mlevels(W){
+  const cut=iso(new Date(T0().getTime()-29*DAY)),pt={};
+  W.forEach(w=>{const m=EXM[w.name];if(m&&m!=='cardio'&&w.d>=cut)pt[m]=(pt[m]||0)+(w.sets||1)});
+  const lv={};Object.keys(pt).forEach(m=>{const p=pt[m];lv[m]=p>=30?5:p>=20?4:p>=12?3:p>=6?2:1});return lv;
+}
+function bodySVG(gender,lv,hl){
+  const f=gender==='f',S=f?18:23,W=f?11:14,H=f?17:15,lvl=id=>lv[id]||0;
+  const z=(id,cx,cy,rx,ry)=>{const l=lvl(id),k=1+.08*l,fill=l?'var(--ok)':'var(--line-strong)',op=l?(.3+.14*l):.35,on=hl===id;
+    return '<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+(rx*k).toFixed(1)+'" ry="'+(ry*k).toFixed(1)+'" fill="'+fill+'" fill-opacity="'+op+'"'+(on?' stroke="var(--gold-btn)" stroke-width="2.4" class="hlm"':'')+'/>'};
+  const sym=(id,dx,cy,rx,ry)=>z(id,50-dx,cy,rx,ry)+z(id,50+dx,cy,rx,ry);
+  const base=(back)=>'<g fill="var(--surface-2)" stroke="var(--line-strong)" stroke-width="1"><circle cx="50" cy="15" r="10"/><rect x="45" y="22" width="10" height="9" rx="3"/>'
+   +'<polygon points="'+(50-S)+',32 '+(50+S)+',32 '+(50+W)+',95 '+(50+H)+',112 '+(50-H)+',112 '+(50-W)+',95"/></g>'
+   +'<g stroke="var(--surface-2)" stroke-linecap="round" fill="none"><path d="M'+(50-S-3)+' 36V64M'+(50+S+3)+' 36V64" stroke-width="9"/><path d="M'+(50-S-5)+' 66V92M'+(50+S+5)+' 66V92" stroke-width="8"/>'
+   +'<path d="M'+(50-(f?10:9))+' 114V152M'+(50+(f?10:9))+' 114V152" stroke-width="17"/><path d="M'+(50-8)+' 154V190M'+(50+8)+' 154V190" stroke-width="11"/></g>';
+  const front=base()+sym('shoulders',S-3,38,7,7)+sym('chest',9,48,9,7.5)+sym('biceps',S+3,50,4.5,9)+sym('forearms',S+5,78,4,10)+z('abs',50,76,8,17)+sym('quads',f?10:9,132,7.5,18)+sym('calves',8,172,5,13);
+  const back=base()+sym('shoulders',S-3,38,7,7)+z('back',50,58,S-5,22)+sym('triceps',S+3,50,4.5,9)+sym('glutes',7.5,118,8,7)+sym('hamstrings',f?10:9,140,7,15)+sym('calves',8,172,5,13);
+  return '<svg viewBox="0 0 200 208" role="img" aria-label="शरीर का चित्र: कौन सी मसल पर काम हो रहा है"><g>'+front+'</g><g transform="translate(100 0)">'+back+'</g>'
+   +'<text x="50" y="205" text-anchor="middle" font-size="9" fill="var(--muted)">सामने</text><text x="150" y="205" text-anchor="middle" font-size="9" fill="var(--muted)">पीछे</text></svg>';
+}
+function stepper(k,label,val,unit,d){
+  return '<div class="stp"><span class="sm"><b>'+label+'</b></span><div><button type="button" data-act="fxstep" data-k="'+k+'" data-d="-'+d+'" aria-label="कम">−</button><b class="num stv">'+val+'</b><span class="muted sm">'+unit+'</span><button type="button" data-act="fxstep" data-k="'+k+'" data-d="'+d+'" aria-label="ज़्यादा">+</button></div></div>';
+}
 function fitView(m,fit,mine){
   if(!fit)return mine?'':'<section class="panel" style="margin-top:16px"><h2>टारगेट और वर्कआउट</h2><p class="muted sm">लोड हो रहा है…</p></section>';
-  const g=fit.goal||{},ws=fit.weights||[],W=fit.workouts||[],tod=T0(),ti=iso(tod),wk=iso(wkStart(tod)),mo=ti.slice(0,7),rg=ui.fitRange||'week';
-  const list=W.filter(w=>rg==='day'?w.d===ti:rg==='week'?w.d>=wk:w.d.slice(0,7)===mo),sm=sumOf(list);
-  const vm=visitsOf(m.id),came=Object.keys(vm).filter(k=>k>=wk).length;
+  const g=fit.goal||{},ws=fit.weights||[],W=fit.workouts||[],tod=T0(),ti=iso(tod),wk=iso(wkStart(tod)),mo=ti.slice(0,7),rg=ui.fitRange||'week',fx=ui.fx;
+  const gen=g.gender==='f'?'f':'m',daily=g.daily_ex||4,lv=mlevels(W);
+  const todayL=W.filter(w=>w.d===ti),dn=todayL.length,pct=Math.min(100,Math.round(dn/daily*100));
+  const cnt={};W.forEach(w=>{cnt[w.d]=(cnt[w.d]||0)+1});
+  let streak=0;{let d=new Date(tod);if((cnt[ti]||0)<daily)d=new Date(d.getTime()-DAY);while((cnt[iso(d)]||0)>=daily){streak++;d=new Date(d.getTime()-DAY)}}
   const cur=ws.length?Number(ws[ws.length-1].kg):null,st=ws.length?Number(ws[0].kg):null,tg=g.target_weight==null?null:Number(g.target_weight);
   let prog='';
   if(cur!=null&&tg!=null&&st!=null){
-    const dir=tg<st?-1:1,tot=Math.abs(st-tg),done=Math.max(0,(cur-st)*dir),pct=tot?Math.min(100,Math.round(done/tot*100)):(cur===tg?100:0);
-    prog='<div style="margin-top:10px"><div class="row sp sm"><b><span class="num">'+st+'</span> → <span class="num">'+cur+'</span> किग्रा</b><span class="muted">लक्ष्य <span class="num">'+tg+'</span> किग्रा</span></div><div class="cap" aria-hidden="true"><i class="ok" style="width:'+pct+'%"></i></div><p class="sm muted" style="margin-top:4px">लक्ष्य का <span class="num">'+pct+'</span>% पूरा</p></div>';
-  }else if(cur!=null)prog='<p class="sm" style="margin-top:10px">अभी का वज़न: <b class="num">'+cur+'</b> किग्रा</p>';
-  let wkp='';
-  if(g.week_days){const p=Math.min(100,Math.round(came/g.week_days*100));
-    wkp='<div style="margin-top:12px"><div class="row sp sm"><b>इस हफ़्ते जिम आए: <span class="num">'+came+'</span> / <span class="num">'+g.week_days+'</span> दिन</b></div><div class="cap" aria-hidden="true"><i class="'+(came>=g.week_days?'ok':'warn')+'" style="width:'+p+'%"></i></div></div>'}
-  const goalBox='<div class="row sp"><div><div class="muted sm">लक्ष्य</div><b>'+(g.goal?GOALS[g.goal]:'अभी तय नहीं')+'</b></div>'+(g.week_days?'<div><div class="muted sm">हफ़्ते में</div><b><span class="num">'+g.week_days+'</span> दिन</b></div>':'')+'</div>'+prog+wkp
+    const dir=tg<st?-1:1,tot=Math.abs(st-tg),done=Math.max(0,(cur-st)*dir),p=tot?Math.min(100,Math.round(done/tot*100)):(cur===tg?100:0);
+    prog='<div style="margin-top:14px"><div class="row sp sm"><b><span class="num">'+st+'</span> → <span class="num">'+cur+'</span> किग्रा</b><span class="muted">लक्ष्य <span class="num">'+tg+'</span> किग्रा</span></div><div class="cap" aria-hidden="true"><i class="ok" style="width:'+p+'%"></i></div><p class="sm muted" style="margin-top:4px">लक्ष्य का <span class="num">'+p+'</span>% पूरा</p></div>';
+  }else if(cur!=null)prog='<p class="sm" style="margin-top:14px">अभी का वज़न: <b class="num">'+cur+'</b> किग्रा</p>';
+  const today='<div class="row sp"><div><div class="muted sm">आज की एक्सरसाइज़</div><div class="crowd"><span class="big num">'+dn+'</span><span class="muted">/ <span class="num">'+daily+'</span></span></div></div>'+(streak?'<div class="pill ok">🔥 लगातार <span class="num">'+streak+'</span> दिन</div>':'')+'</div>'
+   +'<div class="cap" aria-hidden="true"><i class="'+(dn>=daily?'ok':'warn')+'" style="width:'+pct+'%"></i></div>'
+   +(dn>=daily?'<p class="scan ok" style="margin-top:10px" role="status"><b>🎉 आज का लक्ष्य पूरा! शाबाश!</b></p>':(mine?'<p class="sm muted" style="margin-top:6px">नीचे से जो एक्सरसाइज़ करें, उस पर टैप करते जाएँ।</p>':''));
+  const gl='<p class="sm" style="margin-top:12px"><span class="muted">लक्ष्य:</span> <b>'+(g.goal?GOALS[g.goal]:'अभी तय नहीं')+'</b></p>'+prog
    +(g.owner_note?'<p class="scan warn" style="margin-top:12px" role="status"><b>जिम ओनर की सलाह:</b><br>'+esc(g.owner_note)+'</p>':'');
-  let forms='';
+  const hlm=fx.m==='cardio'?'':fx.m;
+  const body='<div class="bodybox"><h3 style="margin:14px 0 4px">आपकी बॉडी</h3>'+bodySVG(gen,lv,hlm)
+   +'<p class="sm muted" style="margin-top:4px">हरा गहरा और बड़ा = उस मसल पर पिछले 30 दिन में ज़्यादा काम। पीला घेरा = अभी चुनी हुई मसल। (यह सिर्फ़ मोटिवेशन के लिए चित्र है।)</p></div>';
+  let pick='';
   if(mine){
-    forms='<form data-form="savegoal" class="frm" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)"><div><label for="fg1">मेरा लक्ष्य</label><select id="fg1" name="goal">'+Object.keys(GOALS).map(k=>opt(k,GOALS[k],(g.goal||'fit')===k)).join('')+'</select></div>'
-     +'<div><label for="fg2">हफ़्ते में कितने दिन आना है</label><select id="fg2" name="days">'+[1,2,3,4,5,6,7].map(d=>opt(d,d+' दिन',(g.week_days||4)===d)).join('')+'</select></div>'
-     +'<div><label for="fg3">अभी का वज़न (किग्रा)</label><input id="fg3" name="weight" type="number" step="0.1" min="20" max="300" inputmode="decimal" value="'+(cur==null?'':cur)+'"></div>'
-     +'<div><label for="fg4">लक्ष्य वज़न (किग्रा)</label><input id="fg4" name="target" type="number" step="0.1" min="20" max="300" inputmode="decimal" value="'+(tg==null?'':tg)+'"></div>'
-     +'<div class="full"><button class="btn alt" type="submit">लक्ष्य सेव करें</button></div></form>';
-  }else{
-    forms='<form data-form="ownernote" data-id="'+m.id+'" class="frm" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)"><div class="full"><label for="on1">मेंबर के लिए सलाह / नोट (मेंबर को अपने ऐप में दिखेगा)</label><textarea id="on1" name="note" rows="2" maxlength="300">'+esc(g.owner_note||'')+'</textarea></div><div class="full"><button class="btn alt" type="submit">नोट सेव करें</button></div></form>';
+    const cardio=fx.m==='cardio';
+    pick='<h3 style="margin:16px 0 8px">आज क्या किया? टैप करें</h3><div class="chips" role="group" aria-label="बॉडी का हिस्सा">'+Object.keys(MUS).map(k=>'<button type="button" data-act="fxmuscle" data-v="'+k+'" aria-pressed="'+(fx.m===k)+'">'+MSHORT[k]+'</button>').join('')+'</div>'
+     +'<p class="sm" style="margin:10px 0 8px"><span class="muted">इससे बनेगी:</span> <b>'+MUS[fx.m]+'</b></p>'
+     +'<div class="exg">'+EXC.map((e,i)=>{if(e[1]!==fx.m)return '';const c=todayL.filter(w=>w.name===e[0]).length;return '<button type="button" class="'+(c?'dn':'')+'" data-act="exdo" data-i="'+i+'"><span>'+e[0]+'</span><span>'+(c?'✓ <span class="num">'+c+'</span>':'+')+'</span></button>'}).join('')+'</div>'
+     +'<div class="stps">'+(cardio?stepper('min','समय',fx.min,'मिनट',5):stepper('sets','सेट',fx.sets,'',1)+stepper('reps','रेप्स',fx.reps,'',1)+stepper('kg','वज़न',fx.kg,'किग्रा',2.5))+'</div>';
   }
-  const chips='<div class="chips" role="group" aria-label="समय" style="margin:14px 0 10px">'+Object.keys(WRANGE).map(k=>'<button type="button" data-act="fitrange" data-v="'+k+'" aria-pressed="'+(rg===k)+'">'+WRANGE[k]+'</button>').join('')+'</div>';
-  const sumBox='<dl class="kv"><div><dt>वर्कआउट के दिन</dt><dd class="num">'+sm.days+'</dd></div><div><dt>कुल एक्सरसाइज़</dt><dd class="num">'+sm.n+'</dd></div><div><dt>कुल सेट</dt><dd class="num">'+sm.sets+'</dd></div><div><dt>कार्डियो (मिनट)</dt><dd class="num">'+sm.min+'</dd></div></dl>'
+  const tl=todayL.length?'<h3 style="margin:16px 0 4px">आज की लिस्ट</h3><ul class="feed">'+todayL.map(w=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span><b>'+esc(w.name)+'</b> <span class="muted num">'+(w.sets?w.sets+'×'+(w.reps||'-'):'')+(w.kg?' · '+w.kg+' kg':'')+(w.min?' · '+w.min+' min':'')+'</span></span>'+(mine?'<button class="btn alt sm" type="button" data-act="delwo" data-id="'+w.id+'" aria-label="हटाएँ">✕</button>':'')+'</li>').join('')+'</ul>':'';
+  const list=W.filter(w=>rg==='day'?w.d===ti:rg==='week'?w.d>=wk:w.d.slice(0,7)===mo),sm=sumOf(list);
+  const chips='<h3 style="margin:18px 0 8px">पूरा हिसाब</h3><div class="chips" role="group" aria-label="समय">'+Object.keys(WRANGE).map(k=>'<button type="button" data-act="fitrange" data-v="'+k+'" aria-pressed="'+(rg===k)+'">'+WRANGE[k]+'</button>').join('')+'</div>';
+  const sumBox='<dl class="kv" style="margin-top:10px"><div><dt>वर्कआउट के दिन</dt><dd class="num">'+sm.days+'</dd></div><div><dt>कुल एक्सरसाइज़</dt><dd class="num">'+sm.n+'</dd></div><div><dt>कुल सेट</dt><dd class="num">'+sm.sets+'</dd></div><div><dt>कार्डियो (मिनट)</dt><dd class="num">'+sm.min+'</dd></div></dl>'
    +(sm.top.length?'<p class="sm" style="margin-top:8px"><span class="muted">सबसे ज़्यादा:</span> '+sm.top.map(esc).join(', ')+'</p>':'');
   const byD={};list.forEach(w=>{(byD[w.d]=byD[w.d]||[]).push(w)});
-  const lst=Object.keys(byD).sort().reverse().map(d=>'<div style="margin-top:10px"><b class="sm">'+fd(pd(d))+'</b><ul class="feed" style="margin-top:4px">'+byD[d].map(w=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span><b>'+esc(w.name)+'</b> <span class="muted num">'+(w.sets?w.sets+'×'+(w.reps||'-'):'')+(w.kg?' · '+w.kg+' kg':'')+(w.min?' · '+w.min+' min':'')+'</span></span>'+(mine?'<button class="btn alt sm" type="button" data-act="delwo" data-id="'+w.id+'" aria-label="हटाएँ">✕</button>':'')+'</li>').join('')+'</ul></div>').join('')||'<p class="muted sm" style="margin-top:10px">इस समय का कोई वर्कआउट दर्ज नहीं।</p>';
-  let add='';
+  const lst=rg==='day'?'':Object.keys(byD).sort().reverse().map(d=>'<div style="margin-top:10px"><b class="sm">'+fd(pd(d))+'</b><ul class="feed" style="margin-top:4px">'+byD[d].map(w=>'<li style="grid-template-columns:minmax(0,1fr)"><span><b>'+esc(w.name)+'</b> <span class="muted num">'+(w.sets?w.sets+'×'+(w.reps||'-'):'')+(w.kg?' · '+w.kg+' kg':'')+(w.min?' · '+w.min+' min':'')+'</span></span></li>').join('')+'</ul></div>').join('')||'';
+  let setup='';
   if(mine){
-    add='<form data-form="addwo" class="frm" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)"><h3 class="full">वर्कआउट जोड़ें</h3>'
+    const open=!g.goal||!g.gender;
+    setup='<details class="dt"'+(open?' open':'')+'><summary>मेरा लक्ष्य बदलें</summary><form data-form="savegoal" class="frm" style="margin-top:10px">'
+     +'<div><label for="fg0">मैं हूँ</label><select id="fg0" name="gender">'+opt('m','लड़का',gen==='m')+opt('f','लड़की',gen==='f')+'</select></div>'
+     +'<div><label for="fg1">मेरा लक्ष्य</label><select id="fg1" name="goal">'+Object.keys(GOALS).map(k=>opt(k,GOALS[k],(g.goal||'fit')===k)).join('')+'</select></div>'
+     +'<div><label for="fg2">रोज़ कितनी एक्सरसाइज़</label><select id="fg2" name="daily">'+[2,3,4,5,6,8,10].map(d=>opt(d,d+' एक्सरसाइज़',daily===d)).join('')+'</select></div><div></div>'
+     +'<div><label for="fg3">अभी का वज़न (किग्रा)</label><input id="fg3" name="weight" type="number" step="0.1" min="20" max="300" inputmode="decimal" value="'+(cur==null?'':cur)+'"></div>'
+     +'<div><label for="fg4">लक्ष्य वज़न (किग्रा)</label><input id="fg4" name="target" type="number" step="0.1" min="20" max="300" inputmode="decimal" value="'+(tg==null?'':tg)+'"></div>'
+     +'<div class="full"><button class="btn alt" type="submit">सेव करें</button></div></form></details>'
+     +'<details class="dt"><summary>अपनी कोई और एक्सरसाइज़ जोड़ें</summary><form data-form="addwo" class="frm" style="margin-top:10px">'
      +'<div><label for="aw1">तारीख़</label><input id="aw1" name="date" type="date" value="'+ti+'" max="'+ti+'" min="'+iso(new Date(tod.getTime()-119*DAY))+'" required></div>'
-     +'<div><label for="aw2">एक्सरसाइज़</label><input id="aw2" name="name" list="exl" maxlength="60" required><datalist id="exl">'+EXN.map(x=>'<option value="'+x+'">').join('')+'</datalist></div>'
+     +'<div><label for="aw2">एक्सरसाइज़ का नाम</label><input id="aw2" name="name" maxlength="60" required></div>'
      +'<div><label for="aw3">सेट</label><input id="aw3" name="sets" type="number" min="1" max="99" inputmode="numeric"></div><div><label for="aw4">रेप्स</label><input id="aw4" name="reps" type="number" min="1" max="999" inputmode="numeric"></div>'
      +'<div><label for="aw5">वज़न (किग्रा)</label><input id="aw5" name="kg" type="number" step="0.5" min="0" max="999" inputmode="decimal"></div><div><label for="aw6">या मिनट (कार्डियो)</label><input id="aw6" name="min" type="number" min="1" max="600" inputmode="numeric"></div>'
-     +'<div class="full"><button class="btn gold" type="submit">वर्कआउट जोड़ें</button></div></form>';
+     +'<div class="full"><button class="btn gold" type="submit">जोड़ें</button></div></form></details>';
+  }else{
+    setup='<form data-form="ownernote" data-id="'+m.id+'" class="frm" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)"><div class="full"><label for="on1">मेंबर के लिए सलाह / नोट (मेंबर को अपने ऐप में दिखेगा)</label><textarea id="on1" name="note" rows="2" maxlength="300">'+esc(g.owner_note||'')+'</textarea></div><div class="full"><button class="btn alt" type="submit">नोट सेव करें</button></div></form>';
   }
-  return '<section class="panel" style="margin-top:16px"><h2>'+(mine?'मेरा टारगेट और वर्कआउट':'टारगेट और वर्कआउट')+'</h2>'+goalBox+forms+chips+sumBox+lst+add+'</section>';
+  return '<section class="panel" style="margin-top:16px"><h2>'+(mine?'मेरा टारगेट और वर्कआउट':'टारगेट और वर्कआउट')+'</h2>'+today+gl+body+pick+tl+chips+sumBox+lst+setup+'</section>';
 }
 function ownerFit(m){return fitView(m,ui.fitOf[m.id],false)}
 async function loadOwnerFit(id){try{ui.fitOf[id]=must(await sb.rpc('fitness_of',{p_member:id}))}catch(e){}}
@@ -1371,6 +1484,11 @@ const ACT={
   filt:b=>{ui.filt=b.dataset.v;render()},
   selm:b=>{ui.sel=b.dataset.id;const t=new Date();ui.cal={y:t.getFullYear(),m:t.getMonth()};render();loadOwnerFit(ui.sel).then(render)},
   fitrange:b=>{ui.fitRange=b.dataset.v;render()},
+  fxmuscle:b=>{ui.fx.m=b.dataset.v;render()},
+  fxstep:b=>{const k=b.dataset.k,d=Number(b.dataset.d),lim={sets:[1,20],reps:[1,100],kg:[0,300],min:[5,300]}[k];ui.fx[k]=Math.min(lim[1],Math.max(lim[0],Math.round((ui.fx[k]+d)*10)/10));render()},
+  exdo:async b=>{const e=EXC[Number(b.dataset.i)],c=e[1]==='cardio',x=ui.fx;
+    must(await sb.rpc('add_workout',{p_date:iso(T0()),p_name:e[0],p_sets:c?null:x.sets,p_reps:c?null:x.reps,p_kg:c||!x.kg?null:x.kg,p_min:c?x.min:null}));
+    S.fit=must(await sb.rpc('my_fitness'));render();toast(e[0]+' ✓')},
   delwo:async b=>{must(await sb.rpc('del_workout',{p_id:b.dataset.id}));S.fit=must(await sb.rpc('my_fitness'));render();toast('हटा दिया')},
   openm:b=>{ui.sub='members';ACT.selm(b)},
   calnav:b=>{let m=ui.cal.m+Number(b.dataset.v),y=ui.cal.y;if(m<0){m=11;y--}if(m>11){m=0;y++}ui.cal={y:y,m:m};render()},
@@ -1421,7 +1539,8 @@ async function doLogin(email,pw,bad,keep){
 }
 const FORMS={
   savegoal:async f=>{const d=new FormData(f),n=k=>{const v=parseFloat(d.get(k));return isFinite(v)?v:null};
-    must(await sb.rpc('save_goal',{p_goal:String(d.get('goal')),p_target:n('target'),p_days:n('days'),p_weight:n('weight')}));S.fit=must(await sb.rpc('my_fitness'));render();toast('लक्ष्य सेव हो गया')},
+    must(await sb.rpc('save_goal',{p_goal:String(d.get('goal')),p_target:n('target'),p_days:null,p_weight:n('weight')}));
+    try{must(await sb.rpc('save_profile',{p_gender:String(d.get('gender')),p_daily:n('daily')}))}catch(e){toast('पहले migration 11 चलाएँ');return}S.fit=must(await sb.rpc('my_fitness'));render();toast('लक्ष्य सेव हो गया')},
   addwo:async f=>{const d=new FormData(f),n=k=>{const v=parseFloat(d.get(k));return isFinite(v)?v:null},nm=String(d.get('name')).trim();
     if(!nm||!(n('min')||(n('sets')&&n('reps')))){toast('सेट और रेप्स, या मिनट भरें');return}
     must(await sb.rpc('add_workout',{p_date:String(d.get('date')),p_name:nm,p_sets:n('sets'),p_reps:n('reps'),p_kg:n('kg'),p_min:n('min')}));S.fit=must(await sb.rpc('my_fitness'));render();toast('वर्कआउट जुड़ गया')},
