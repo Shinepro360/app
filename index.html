@@ -170,6 +170,21 @@ body{margin:0}
 .pbig{font-family:var(--f-disp);font-weight:600;font-size:36px;line-height:1.1;margin:8px 0 12px}
 .pwrap{max-width:420px}
 @media print{.top,.noprint,.toast,.camov,.pver{display:none!important}body{background:#fff}main.wrap{padding:0}.pwrap{max-width:none;text-align:center;margin:0 auto}.pwrap .qrbox{max-width:480px;margin:0 auto;border:0}.pwrap h1{font-size:44px}.pbig{font-size:56px}}
+.carewrap{display:block}
+.care.on{border-color:var(--ok);background:var(--ok-bg)}
+.care .ck.on{background:var(--ok);color:#fff;border-color:var(--ok);font-size:14px}
+.cpl{margin:6px 0 0;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--surface-2)}
+.cprod{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.cprod:last-of-type{border-bottom:0}
+.cpt{width:64px;height:64px;border-radius:10px;object-fit:cover;flex:none;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:28px}
+.cpi{display:flex;flex-direction:column;flex:1;min-width:0}
+.cpi .pill{align-self:flex-start}
+.cprice{font-weight:800;color:var(--ok)}
+.qty{display:flex;align-items:center;gap:8px;flex:none}
+.qty button{font:inherit;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--line-strong);background:var(--surface);color:var(--fg);font-size:20px;cursor:pointer}
+.qty b{min-width:22px;text-align:center}
+ul.cl{list-style:none;margin:6px 0;padding:0}
+ul.cl li{display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-bottom:1px dashed var(--line)}
 .carg{display:grid;grid-template-columns:1fr;gap:10px}
 .care{font:inherit;display:flex;align-items:center;gap:12px;text-align:left;width:100%;padding:12px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;min-height:68px}
 .care .ci{font-size:30px;width:48px;height:48px;border-radius:12px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;flex:none}
@@ -370,7 +385,7 @@ const EXTRA={
 "मोबाइल": "Mobile",
 ": मेंबर का लॉगिन तैयार": ": member login ready",
 "यह पिन अभी एक ही बार दिखेगा। मेंबर को भेज दें। भूल जाए तो नया पिन बनाएँ।": "This PIN is shown only once. Send it to the member. If forgotten, create a new PIN.",
-"बंद करें": "Close",
+"बंद करें": "Turn off",
 "नया पिन बनाएँ": "Make a new PIN",
 "नया पिन बन गया": "New PIN created",
 " के ऐप का लॉगिन। लिंक: ": " - app login. Link: ",
@@ -775,7 +790,39 @@ const EXTRA={
 "जैसे: कितनी मात्रा, कौन सा दिन ठीक रहेगा": "e.g. quantity, which day suits you",
 "भेजी: ": "Sent: ",
 " · भेजी: ": " · Sent: ",
-" · चाहिए: ": " · Needed: "
+" · चाहिए: ": " · Needed: ",
+"ShinePro360 से जिम की सफ़ाई का सामान और सर्विस मँगवाएँ। जो चाहिए उस पर टैप करें, प्रोडक्ट और मात्रा चुनें, फिर नीचे से भेजें। हम आपको कॉल करेंगे।": "Order gym cleaning products and service from ShinePro360. Tap what you need, choose products and quantity, then send below. We will call you.",
+" लीटर": " L",
+" ग्राम": " g",
+" किलो": " kg",
+" पीस": " pcs",
+"लीटर": "Litre",
+"ग्राम": "Gram",
+"किलो": "Kg",
+"पीस": "Pieces",
+"कुल (अंदाज़न):": "Total (approx):",
+") × ": ") × ",
+"अभी इस हिस्से में प्रोडक्ट नहीं जुड़े हैं। आप सीधे पूछताछ भेज सकते हैं।": "No products added here yet. You can send an enquiry directly.",
+"✓ इसकी पूछताछ जुड़ी है": "✓ Enquiry for this is added",
+"इसकी पूछताछ भी भेजें": "Also send an enquiry for this",
+"जिम केयर: प्रोडक्ट मैनेज करें": "Gym care: manage products",
+"यहाँ जो प्रोडक्ट जोड़ेंगे वो जिम ओनर को \"जिम केयर प्रोडक्ट\" में फ़ोटो, मात्रा और रेट के साथ दिखेंगे।": "Products added here will show to gym owners in \"Gym Care Products\" with photo, quantity and rate.",
+"किस हिस्से में": "Which category",
+"प्रोडक्ट का नाम": "Product name",
+"मात्रा": "Quantity",
+"इकाई": "Unit",
+"रेट (₹)": "Rate (₹)",
+"फ़ोटो": "Photo",
+"फ़ोटो (नई चुनें तो बदलेगी)": "Photo (choose new to replace)",
+"प्रोडक्ट जोड़ें": "Add product",
+"बदलाव सेव करें": "Save changes",
+"बदलें": "Edit",
+"चालू करें": "Turn on",
+"अभी कोई प्रोडक्ट नहीं जोड़ा।": "No product added yet.",
+"प्रोडक्ट सेव हो गया": "Product saved",
+"फ़ोटो के बिना जोड़ें?": "Add without a photo?",
+"इस प्रोडक्ट को हटाना है?": "Delete this product?",
+"फ़ोटो नहीं खुली, दूसरी चुनें": "Photo could not open, choose another"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -945,7 +992,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v22';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v23';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -1207,28 +1254,85 @@ const CARE=[['cleaner','🧴','जिम क्लीनिंग प्रो�
  ['plates','🏋️','डम्बल / प्लेट्स पॉलिश','डम्बल और प्लेट्स को नया जैसा चमकाने के लिए'],
  ['glass','🪟','ग्लास क्लीनर','शीशे और मिरर की सफ़ाई के लिए'],
  ['service','🧹','जिम सर्विस (हमारी टीम)','हमारी टीम आपके जिम आकर साफ़-सफ़ाई करेगी']];
-const CNAME={};CARE.forEach(c=>{CNAME[c[0]]=c[2]});
+const CNAME={},CICON={};CARE.forEach(c=>{CNAME[c[0]]=c[2];CICON[c[0]]=c[1]});
 const CST={new:['नया','warn'],contacted:['बात हुई','mute'],done:['पूरा','ok'],cancelled:['रद्द','bad']};
+const UNITS=[['ml','ml'],['ltr','लीटर'],['g','ग्राम'],['kg','किलो'],['pcs','पीस']];
 function careItems(a){return (a||[]).map(k=>CNAME[k]||k).join(', ')}
+function unitLbl(u){const x=UNITS.find(e=>e[0]===u);return x?x[1]:u}
+function sizeHTML(q,u){return '<span class="num">'+Number(q)+'</span> '+unitLbl(u)}
+async function loadCP(force){
+  if(!force&&ui.cp&&Date.now()-ui.cpAt<300000)return;
+  try{ui.cp=must(await sb.rpc('care_products_list'))||[];ui.cpAt=Date.now()}catch(e){if(!ui.cp)ui.cp=[]}
+}
+function ensureCP(){
+  if(ui.cpLoading)return;
+  if(!ui.cp||Date.now()-ui.cpAt>300000){ui.cpLoading=1;loadCP(true).then(()=>{ui.cpLoading=0;render()},()=>{ui.cpLoading=0})}
+}
+function compressImg(file){return new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{
+  const k=Math.min(1,480/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*k));c.height=Math.max(1,Math.round(im.height*k));
+  const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);
+  let d=c.toDataURL('image/jpeg',.72);if(d.length>200000)d=c.toDataURL('image/jpeg',.5);res(d)};im.onerror=rej;im.src=fr.result};fr.onerror=rej;fr.readAsDataURL(file)})}
+function linesHTML(L){
+  if(!L||!L.length)return '';let t=0;
+  return '<ul class="cl">'+L.map(l=>{const a=Number(l.price)*Number(l.n);t+=a;return '<li><span>'+esc(l.name)+' <span class="muted sm">('+sizeHTML(l.qty,l.unit)+')</span> × <b class="num">'+l.n+'</b></span><b class="num">'+inr(a)+'</b></li>'}).join('')
+   +'</ul><p class="sm" style="text-align:right"><b>कुल (अंदाज़न): <span class="num">'+inr(t)+'</span></b></p>';
+}
+function cartLines(){const c=ui.cart||{};return Object.keys(c).filter(k=>c[k]>0).map(k=>({pid:k,qty:c[k]}))}
+function pThumb(p,cls){return p.photo?'<img class="'+cls+'" src="'+p.photo+'" alt="'+esc(p.name)+'" loading="lazy">':'<span class="'+cls+' ph" aria-hidden="true">'+(CICON[p.cat]||'🧴')+'</span>'}
 function vCare(){
-  const g=gOwn(),sel=ui.careSel||{},n=Object.keys(sel).filter(k=>sel[k]).length,ord=S.care||[];
-  return '<section class="panel carebox"><h2>जिम केयर प्रोडक्ट और सर्विस</h2><p class="muted sm" style="margin-bottom:12px">ShinePro360 से जिम की सफ़ाई का सामान और सर्विस मँगवाएँ। जो चाहिए उस पर टैप करें, फिर नीचे से भेजें। हम आपको कॉल करेंगे।</p>'
-   +'<div class="carg">'+CARE.map(c=>'<button type="button" class="care" data-act="caretog" data-v="'+c[0]+'" aria-pressed="'+(!!sel[c[0]])+'"><span class="ci" aria-hidden="true">'+c[1]+'</span><span class="cb"><b>'+c[2]+'</b><span class="muted sm">'+c[3]+'</span></span><span class="ck" aria-hidden="true">'+(sel[c[0]]?'✓':'')+'</span></button>').join('')+'</div>'
-   +'<form data-form="careorder" class="frm" style="margin-top:14px"><p class="full sm"><b>चुने हुए: <span class="num">'+n+'</span></b></p>'
+  ensureCP();
+  const g=gOwn(),sel=ui.careSel||{},cart=ui.cart||{},ord=S.care||[],P=ui.cp||[],open=ui.careOpen;
+  const lines=cartLines(),n=lines.length+Object.keys(sel).filter(k=>sel[k]).length;
+  let total=0;lines.forEach(l=>{const p=P.find(x=>x.id===l.pid);if(p)total+=Number(p.price)*l.qty});
+  const cards=CARE.map(c=>{
+    const ps=P.filter(p=>p.cat===c[0]),cnt=ps.reduce((a,p)=>a+(cart[p.id]||0),0)+(sel[c[0]]?1:0),isOpen=open===c[0];
+    let body='';
+    if(isOpen){
+      body='<div class="cpl">'+(ps.length?ps.map(p=>'<div class="cprod">'+pThumb(p,'cpt')+'<div class="cpi"><b>'+esc(p.name)+'</b><span class="muted sm">'+sizeHTML(p.qty,p.unit)+'</span><span class="cprice num">'+inr(p.price)+'</span></div>'
+          +'<div class="qty"><button type="button" data-act="cartq" data-id="'+p.id+'" data-d="-1" aria-label="कम">−</button><b class="num">'+(cart[p.id]||0)+'</b><button type="button" data-act="cartq" data-id="'+p.id+'" data-d="1" aria-label="ज़्यादा">+</button></div></div>').join('')
+        :'<p class="muted sm" style="margin:6px 0">अभी इस हिस्से में प्रोडक्ट नहीं जुड़े हैं। आप सीधे पूछताछ भेज सकते हैं।</p>')
+        +'<button type="button" class="btn alt sm" data-act="caretog" data-v="'+c[0]+'" aria-pressed="'+(!!sel[c[0]])+'" style="margin-top:8px">'+(sel[c[0]]?'✓ इसकी पूछताछ जुड़ी है':'इसकी पूछताछ भी भेजें')+'</button></div>';
+    }
+    return '<div class="carewrap"><button type="button" class="care'+(cnt?' on':'')+'" data-act="careopen" data-v="'+c[0]+'" aria-expanded="'+isOpen+'"><span class="ci" aria-hidden="true">'+c[1]+'</span><span class="cb"><b>'+c[2]+'</b><span class="muted sm">'+c[3]+'</span></span>'
+      +(cnt?'<span class="ck on num">'+cnt+'</span>':'<span class="ck" aria-hidden="true">'+(isOpen?'▴':'▾')+'</span>')+'</button>'+body+'</div>';
+  }).join('');
+  return '<section class="panel carebox"><h2>जिम केयर प्रोडक्ट और सर्विस</h2><p class="muted sm" style="margin-bottom:12px">ShinePro360 से जिम की सफ़ाई का सामान और सर्विस मँगवाएँ। जो चाहिए उस पर टैप करें, प्रोडक्ट और मात्रा चुनें, फिर नीचे से भेजें। हम आपको कॉल करेंगे।</p>'
+   +'<div class="carg">'+cards+'</div>'
+   +'<form data-form="careorder" class="frm" style="margin-top:14px"><div class="full"><p class="sm"><b>चुने हुए: <span class="num">'+n+'</span></b></p>'
+   +(lines.length?'<ul class="cl">'+lines.map(l=>{const p=P.find(x=>x.id===l.pid);return p?'<li><span>'+esc(p.name)+' <span class="muted sm">('+sizeHTML(p.qty,p.unit)+')</span> × <b class="num">'+l.qty+'</b></span><b class="num">'+inr(Number(p.price)*l.qty)+'</b></li>':''}).join('')+'</ul><p class="sm" style="text-align:right"><b>कुल (अंदाज़न): <span class="num">'+inr(total)+'</span></b></p>':'')+'</div>'
    +'<div><label for="co1">कब चाहिए (अगर ज़रूरी हो)</label><input id="co1" name="date" type="date" min="'+iso(T0())+'"></div>'
    +'<div><label for="co2">आपका मोबाइल नंबर</label><input id="co2" name="phone" inputmode="numeric" maxlength="10" value="'+esc(g.phone||'')+'" required></div>'
    +'<div class="full"><label for="co3">कोई बात (ऑप्शनल)</label><textarea id="co3" name="note" rows="2" maxlength="300" placeholder="जैसे: कितनी मात्रा, कौन सा दिन ठीक रहेगा"></textarea></div>'
    +'<div class="full"><button class="btn gold" type="submit">ऑर्डर / पूछताछ भेजें</button></div></form></section>'
-   +(ord.length?'<section class="panel" style="margin-top:16px"><h2>मेरी पूछताछ</h2><ul class="feed">'+ord.map(o=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span><b>'+esc(careItems(o.items))+'</b><br><span class="muted sm">'+(o.wanted_on?'<span class="num">'+fd(pd(o.wanted_on))+'</span> · ':'')+'भेजी: <span class="num">'+fd(new Date(o.created_at))+'</span></span></span><span class="pill '+CST[o.status][1]+'">'+CST[o.status][0]+'</span></li>').join('')+'</ul></section>':'');
+   +(ord.length?'<section class="panel" style="margin-top:16px"><h2>मेरी पूछताछ</h2><ul class="feed">'+ord.map(o=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span><b>'+esc(careItems(o.items))+'</b>'+(o.lines?linesHTML(o.lines):'')+'<br><span class="muted sm">'+(o.wanted_on?'<span class="num">'+fd(pd(o.wanted_on))+'</span> · ':'')+'भेजी: <span class="num">'+fd(new Date(o.created_at))+'</span></span></span><span class="pill '+CST[o.status][1]+'">'+CST[o.status][0]+'</span></li>').join('')+'</ul></section>':'');
 }
 function carePanel(){
   const c=S.acare||[];if(!c.length)return '';
   const nw=c.filter(o=>o.status==='new').length;
   return '<section class="panel carebox" style="margin-bottom:20px"><h2>जिम केयर ऑर्डर '+(nw?'<span class="livetag">'+nw+' नए</span>':'')+'</h2><ul class="feed">'
-   +c.map(o=>'<li style="grid-template-columns:minmax(0,1fr)"><span><b>'+esc(o.gym_name)+'</b> <span class="muted sm num">'+esc(o.gym_code)+'</span> <span class="pill '+CST[o.status][1]+'">'+CST[o.status][0]+'</span><br><span class="sm">'+esc(careItems(o.items))+'</span><br><span class="muted sm">'+esc(o.owner_name||'')+' · <span class="num">'+esc(o.phone)+'</span>'+(o.wanted_on?' · चाहिए: <span class="num">'+fd(pd(o.wanted_on))+'</span>':'')+'</span>'+(o.note?'<br><span class="sm">"'+esc(o.note)+'"</span>':'')
+   +c.map(o=>'<li style="grid-template-columns:minmax(0,1fr)"><span><b>'+esc(o.gym_name)+'</b> <span class="muted sm num">'+esc(o.gym_code)+'</span> <span class="pill '+CST[o.status][1]+'">'+CST[o.status][0]+'</span><br><span class="sm">'+esc(careItems(o.items))+'</span>'+(o.lines?linesHTML(o.lines):'')+'<br><span class="muted sm">'+esc(o.owner_name||'')+' · <span class="num">'+esc(o.phone)+'</span>'+(o.wanted_on?' · चाहिए: <span class="num">'+fd(pd(o.wanted_on))+'</span>':'')+'</span>'+(o.note?'<br><span class="sm">"'+esc(o.note)+'"</span>':'')
      +'<span class="row" style="margin-top:8px"><a class="btn sm" href="tel:'+esc(o.phone)+'">कॉल</a><a class="btn alt sm" target="_blank" rel="noopener" href="'+wa(o.phone,'नमस्ते '+(o.owner_name||'')+' जी, ShinePro360 से बोल रहे हैं। आपका जिम केयर ऑर्डर/पूछताछ मिली: '+careItems(o.items)+'। हम आपसे बात करना चाहते हैं।')+'">WhatsApp</a>'
      +(o.status==='new'?'<button class="btn alt sm" type="button" data-act="careset" data-id="'+o.id+'" data-v="contacted">बात हो गई</button>':'')+(o.status!=='done'?'<button class="btn gold sm" type="button" data-act="careset" data-id="'+o.id+'" data-v="done">पूरा हुआ</button>':'')+(o.status!=='cancelled'&&o.status!=='done'?'<button class="btn alt sm" type="button" data-act="careset" data-id="'+o.id+'" data-v="cancelled">रद्द</button>':'')+'</span></span></li>').join('')+'</ul></section>';
 }
+function cpPanel(){
+  ensureCP();
+  const P=ui.cp||[],ed=ui.cpEdit?P.find(p=>p.id===ui.cpEdit):null,v=ed||{cat:'floor',name:'',qty:'',unit:'ltr',price:''};
+  const form='<form data-form="cpsave" class="frm"><div><label for="cp1">किस हिस्से में</label><select id="cp1" name="cat">'+CARE.map(c=>opt(c[0],c[2],v.cat===c[0])).join('')+'</select></div>'
+   +'<div><label for="cp2">प्रोडक्ट का नाम</label><input id="cp2" name="name" maxlength="80" value="'+esc(v.name)+'" required></div>'
+   +'<div><label for="cp3">मात्रा</label><input id="cp3" name="qty" type="number" step="any" min="0.01" inputmode="decimal" value="'+esc(v.qty)+'" required></div>'
+   +'<div><label for="cp4">इकाई</label><select id="cp4" name="unit">'+UNITS.map(u=>opt(u[0],u[1],v.unit===u[0])).join('')+'</select></div>'
+   +'<div><label for="cp5">रेट (₹)</label><input id="cp5" name="price" type="number" step="any" min="0" inputmode="decimal" value="'+esc(v.price)+'" required></div>'
+   +'<div><label for="cpf">फ़ोटो'+(ed?' (नई चुनें तो बदलेगी)':'')+'</label><input id="cpf" type="file" accept="image/*"></div>'
+   +'<div class="full"><img id="cpprev" class="cpt" alt="फ़ोटो का नमूना" '+(ui.cpPhoto||(ed&&ed.photo)?'src="'+(ui.cpPhoto||ed.photo)+'"':'hidden')+' style="width:96px;height:96px"></div>'
+   +'<div class="full row"><button class="btn gold" type="submit">'+(ed?'बदलाव सेव करें':'प्रोडक्ट जोड़ें')+'</button>'+(ed?'<button class="btn alt" type="button" data-act="cpcancel">रद्द करें</button>':'')+'</div></form>';
+  const list=CARE.map(c=>{const ps=P.filter(p=>p.cat===c[0]);if(!ps.length)return '';
+    return '<h3 style="margin:14px 0 4px">'+c[1]+' '+c[2]+'</h3><ul class="feed">'+ps.map(p=>'<li style="grid-template-columns:minmax(0,1fr)"><span class="cprod" style="border:0;padding:0">'+pThumb(p,'cpt')+'<span class="cpi"><b>'+esc(p.name)+'</b> <span class="pill '+(p.active?'ok':'mute')+'">'+(p.active?'चालू':'बंद')+'</span><span class="muted sm">'+sizeHTML(p.qty,p.unit)+' · <b class="num">'+inr(p.price)+'</b></span></span></span>'
+      +'<span class="row" style="margin-top:6px"><button class="btn alt sm" type="button" data-act="cpedit" data-id="'+p.id+'">बदलें</button><button class="btn alt sm" type="button" data-act="cptog" data-id="'+p.id+'">'+(p.active?'बंद करें':'चालू करें')+'</button><button class="btn alt sm" type="button" data-act="cpdel" data-id="'+p.id+'">हटाएँ</button></span></li>').join('')+'</ul>'}).join('');
+  return '<section class="panel carebox" style="margin-bottom:20px"><h2>जिम केयर: प्रोडक्ट मैनेज करें</h2><p class="muted sm" style="margin-bottom:10px">यहाँ जो प्रोडक्ट जोड़ेंगे वो जिम ओनर को "जिम केयर प्रोडक्ट" में फ़ोटो, मात्रा और रेट के साथ दिखेंगे।</p>'+form+(list||'<p class="muted sm" style="margin-top:12px">अभी कोई प्रोडक्ट नहीं जोड़ा।</p>')+'</section>';
+}
+document.addEventListener('change',async e=>{const t=e.target;
+  if(t&&t.id==='cpf'&&t.files&&t.files[0]){try{ui.cpPhoto=await compressImg(t.files[0]);ui.cpDirty=true;const pv=$('#cpprev');if(pv){pv.src=ui.cpPhoto;pv.hidden=false}}catch(x){toast('फ़ोटो नहीं खुली, दूसरी चुनें')}}});
+document.addEventListener('input',e=>{const f=e.target&&e.target.closest&&e.target.closest('form[data-form=cpsave]');if(f)ui.cpDirty=true});
 function heroHTML(){
   return '<div class="hero"><img class="hlogo" src="'+(document.querySelector('img.logo')?document.querySelector('img.logo').src:'')+'" alt=""><div><h1>जिम का सारा हिसाब,<br><span>अब एक QR में।</span></h1><p>हाज़िरी · फ़ीस · लाइव भीड़ · जिम की सफ़ाई, सब एक जगह।</p></div></div>';
 }
@@ -1549,7 +1653,7 @@ function vAdmin(){
   return '<div class="ohead"><div><p class="eyebrow">ShinePro360 एडमिन</p><h1>सभी जिम एक जगह</h1><p class="muted">जिम जोड़ें, ID-पासवर्ड दें और डाइट इंक्वायरी देखें। यहाँ मेंबर के नाम, फ़ीस या हाज़िरी नहीं दिखती।</p></div></div>'
    +'<div class="strip"><div><div class="big">'+S.gyms.length+'</div><div class="lab">जिम जुड़े हैं</div></div><div><div class="big">'+total+'</div><div class="lab">कुल मेंबर</div></div><div><div class="big">'+open+'</div><div class="lab">नई डाइट इंक्वायरी</div></div>'
    +'<div><div class="big">'+inr(paying*fee)+'</div><div class="lab">मासिक कमाई: भुगतान वाले '+paying+' जिम × '+inr(fee)+'</div></div></div>'
-   +carePanel()+reqPanel()+rrPanel()+canPanel()
+   +carePanel()+cpPanel()+reqPanel()+rrPanel()+canPanel()
    +'<div class="cols"><div class="stack"><section class="panel"><h2>नया जिम जोड़ें</h2><form data-form="addgym" class="frm">'
    +'<div><label for="gn">जिम का नाम</label><input id="gn" name="name" required></div><div><label for="go">ओनर का नाम</label><input id="go" name="owner" required></div>'
    +'<div><label for="gph">ओनर का मोबाइल</label><input id="gph" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required></div><div><label for="gc">क्षमता (एक समय में कितने लोग)</label><input id="gc" name="cap" type="number" min="5" max="500" value="25" required></div>'
@@ -1669,6 +1773,12 @@ const ACT={
   sub:b=>{ui.sub=b.dataset.v;render()},
   filt:b=>{ui.filt=b.dataset.v;render()},
   selm:b=>{ui.sel=b.dataset.id;const t=new Date();ui.cal={y:t.getFullYear(),m:t.getMonth()};render();loadOwnerFit(ui.sel).then(render)},
+  careopen:b=>{ui.careOpen=ui.careOpen===b.dataset.v?null:b.dataset.v;render()},
+  cartq:b=>{ui.cart=ui.cart||{};const id=b.dataset.id,q=Math.max(0,Math.min(99,(ui.cart[id]||0)+Number(b.dataset.d)));if(q)ui.cart[id]=q;else delete ui.cart[id];render()},
+  cpedit:b=>{ui.cpEdit=b.dataset.id;ui.cpPhoto=null;ui.cpDirty=true;render();const f=$('form[data-form=cpsave]');if(f)f.scrollIntoView({block:'center'})},
+  cpcancel:()=>{ui.cpEdit=null;ui.cpPhoto=null;ui.cpDirty=false;render()},
+  cptog:async b=>{const p=(ui.cp||[]).find(x=>x.id===b.dataset.id);if(!p)return;must(await sb.rpc('admin_care_product_toggle',{p_id:p.id,p_active:!p.active}));await loadCP(true);render()},
+  cpdel:async b=>{if(!confirm('इस प्रोडक्ट को हटाना है?'))return;must(await sb.rpc('admin_care_product_delete',{p_id:b.dataset.id}));await loadCP(true);render();toast('हटा दिया')},
   caretog:b=>{ui.careSel=ui.careSel||{};ui.careSel[b.dataset.v]=!ui.careSel[b.dataset.v];render()},
   careset:async b=>{must(await sb.rpc('admin_care_set',{p_id:b.dataset.id,p_status:b.dataset.v}));await loadAll();render();toast('अपडेट हो गया')},
   fitrange:b=>{ui.fitRange=b.dataset.v;render()},
@@ -1733,10 +1843,14 @@ async function doLogin(email,pw,bad,keep){
   ui.err='';ui.lv={};await enter();
 }
 const FORMS={
-  careorder:async f=>{const d=new FormData(f),items=Object.keys(ui.careSel||{}).filter(k=>ui.careSel[k]);
-    if(!items.length){toast('ऊपर से कम से कम एक चुनें');return}
-    const r=must(await sb.rpc('owner_care_order',{p_items:items,p_note:String(d.get('note')||''),p_date:d.get('date')||null,p_phone:String(d.get('phone')||'').trim()}));
-    if(r&&r.result==='ok'){ui.careSel={};await loadAll();render();toast('भेज दिया। हम जल्दी कॉल करेंगे')}
+  cpsave:async f=>{const d=new FormData(f),n=k=>{const v=parseFloat(d.get(k));return isFinite(v)?v:null};
+    if(!ui.cpEdit&&!ui.cpPhoto&&!confirm('फ़ोटो के बिना जोड़ें?'))return;
+    must(await sb.rpc('admin_care_product_save',{p_id:ui.cpEdit||null,p_cat:String(d.get('cat')),p_name:String(d.get('name')).trim(),p_qty:n('qty'),p_unit:String(d.get('unit')),p_price:n('price'),p_photo:ui.cpPhoto||null,p_active:true}));
+    ui.cpEdit=null;ui.cpPhoto=null;ui.cpDirty=false;await loadCP(true);render();toast('प्रोडक्ट सेव हो गया')},
+  careorder:async f=>{const d=new FormData(f),items=Object.keys(ui.careSel||{}).filter(k=>ui.careSel[k]),lines=cartLines();
+    if(!items.length&&!lines.length){toast('ऊपर से कम से कम एक चुनें');return}
+    const r=must(await sb.rpc('owner_care_order',{p_lines:lines,p_items:items,p_note:String(d.get('note')||''),p_date:d.get('date')||null,p_phone:String(d.get('phone')||'').trim()}));
+    if(r&&r.result==='ok'){ui.careSel={};ui.cart={};ui.careOpen=null;await loadAll();render();toast('भेज दिया। हम जल्दी कॉल करेंगे')}
     else if(r&&r.result==='busy')toast('आपकी 5 पूछताछ अभी बाकी हैं। पहले उन पर बात हो जाने दें')
     else toast('जानकारी जाँचें: मोबाइल 10 अंक का हो')},
   savegoal:async f=>{const d=new FormData(f),n=k=>{const v=parseFloat(d.get(k));return isFinite(v)?v:null};
@@ -1838,7 +1952,7 @@ setInterval(async()=>{
   ui.pollN=(ui.pollN||0)+1;
   try{await loadAll(ui.pollN%20!==0)}catch(e){return}
   const sel=window.getSelection&&String(window.getSelection()||'');
-  if(sel||ui.newPin||ui.newGym)return;
+  if(sel||ui.newPin||ui.newGym||ui.cpDirty)return;
   if(r==='gate'){const c=$('#gcount');if(c)c.textContent=insideOf(S.sess).length}else render();
 },15000);
 async function checkUpdate(){
