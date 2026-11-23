@@ -170,6 +170,10 @@ body{margin:0}
 .pbig{font-family:var(--f-disp);font-weight:600;font-size:36px;line-height:1.1;margin:8px 0 12px}
 .pwrap{max-width:420px}
 @media print{.top,.noprint,.toast,.camov,.pver{display:none!important}body{background:#fff}main.wrap{padding:0}.pwrap{max-width:none;text-align:center;margin:0 auto}.pwrap .qrbox{max-width:480px;margin:0 auto;border:0}.pwrap h1{font-size:44px}.pbig{font-size:56px}}
+.lang,.lnk,[data-act=calnav],.chips button{min-height:40px;min-width:40px}
+.lnk{display:inline-flex;align-items:center}
+.cal .d small,.cal .d em{font-size:11px!important}
+.upd{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:50;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:12px;background:var(--fg);color:var(--bg);box-shadow:0 6px 20px rgba(0,0,0,.3)}
 .stp{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0}
 .stp>div{display:flex;align-items:center;gap:10px}
 .stp button{font:inherit;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line-strong);background:transparent;color:var(--fg);font-size:22px;cursor:pointer}
@@ -691,7 +695,20 @@ const EXTRA={
 "। कल फिर मिलते हैं!": ". See you tomorrow!",
 "कुल ": "Total ",
 " एक्सरसाइज़ · ": " exercises · ",
-" सेट। कल फिर मिलते हैं!": " sets. See you tomorrow!"
+" सेट। कल फिर मिलते हैं!": " sets. See you tomorrow!",
+"🏆 लक्ष्य पूरा!": "🏆 Goal achieved!",
+"नया लक्ष्य लगाएँ": "Set a new goal",
+"ठीक है": "OK",
+"🏅 उपलब्धियाँ": "🏅 Achievements",
+"एक्सरसाइज़ · ": "exercises · ",
+" दिन · ": " days · ",
+" सेट": " sets",
+" की रिपोर्ट": " report",
+"दिन वर्कआउट · रोज़ का लक्ष्य ": " days of workout · daily goal met on ",
+" दिन पूरा · ": " days · ",
+"वज़न:": "Weight:",
+"नया वर्शन आ गया है।": "A new version is available.",
+"अपडेट करें": "Update"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -861,7 +878,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v18';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v20';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -917,7 +934,7 @@ function adaptDiet(d){
   return{id:d.id,gym:d.gym_id,mid:d.member_id,name:d.member_name||'',phone:d.member_phone||'',w:Number(d.weight_kg),h:Number(d.height_cm),goal:d.goal,pref:d.food_pref,
     bmi:Number(d.bmi),cat:CATH[d.category]||d.category||'',type:TYPEH[d.suggested_type]||d.suggested_type||'',ts:Date.parse(d.created_at),status:DSTAT[si<0?0:si]};
 }
-async function loadAll(){
+async function loadAll(light){
   const N=BLANK();N.role=S.role;N.sess=S.sess;N.me=S.me;
   if(S.role==='admin'){
     const [ov,dt]=await Promise.all([sb.rpc('admin_gym_overview'),sb.from('diet_inquiries').select('*').order('created_at',{ascending:false}).limit(500)]);
@@ -928,7 +945,7 @@ async function loadAll(){
     try{N.rr=(must(await sb.rpc('admin_reset_requests'))||[]).map(c=>({id:c.gym_id,code:c.gym_code,name:c.gym_name,owner:c.owner_name,phone:c.owner_phone}))}catch(e){N.rr=[]}
     Object.assign(S,N);return;
   }
-  const since=new Date(Date.now()-LOGDAYS*DAY).toISOString();
+  const lt=!!light&&S.logs&&S.logs.length>0,sinceMs=lt?Date.now()-2*DAY:Date.now()-LOGDAYS*DAY,since=new Date(sinceMs).toISOString();
   const att=async()=>{const all=[];for(let p=0;p<20;p++){const r=await sb.from('attendance').select('member_id,checked_in_at,checked_out_at').gte('checked_in_at',since).order('checked_in_at',{ascending:false}).range(p*1000,p*1000+999);const d=must(r)||[];all.push.apply(all,d);if(d.length<1000)break}return all};
   let rsq=[];if(N.role==='owner')try{rsq=(must(await sb.rpc('owner_reset_requests'))||[]).map(q=>({id:q.member_id,name:q.member_name,phone:q.member_phone,at:q.created_at}))}catch(e){}
   N.resets=rsq;
@@ -942,6 +959,7 @@ async function loadAll(){
   const fee={};(must(fv)||[]).forEach(f=>{fee[f.member_id]=f});
   const allM=(must(mm)||[]).map(m=>{const f=fee[m.id]||{};return{active:m.active!==false,id:m.id,gym:m.gym_id,name:m.name,phone:m.phone,months:f.months||1,total:f.total_fee||0,paid:f.paid||0,start:f.start_date||iso(T0()),lastPaid:f.last_paid_on||f.start_date||iso(T0()),trainer:m.trainer_id||'',msId:f.membership_id||null,inside:false,inTs:0}});
   N.members=allM.filter(m=>m.active);N.off=allM.filter(m=>!m.active);
+  if(lt)N.logs=S.logs.filter(l=>l.ts<sinceMs);
   const byId={};N.members.forEach(m=>{byId[m.id]=m});const cut=Date.now()-6*36e5;
   rows.forEach(a=>{const tin=Date.parse(a.checked_in_at);N.logs.push({m:a.member_id,t:'in',ts:tin});
     if(a.checked_out_at)N.logs.push({m:a.member_id,t:'out',ts:Date.parse(a.checked_out_at)});
@@ -949,7 +967,12 @@ async function loadAll(){
   N.diets=(must(dt)||[]).map(adaptDiet);
   N.crowd=cr.error?null:cr.data;
   if(!hr.error)(hr.data||[]).forEach(r=>{if(r.hr>=0&&r.hr<24)N.hourly[r.hr]=Number(r.avg_people)});
-  if(N.role==='member'){try{N.fit=must(await sb.rpc('my_fitness'))}catch(e){N.fit=null}}
+  if(N.role==='member'){try{N.fit=must(await sb.rpc('my_fitness'));
+    const gg=N.fit&&N.fit.goal;
+    if(gg&&gg.target_weight!=null&&gg.goal_start_kg!=null&&N.fit.weights&&N.fit.weights.length){
+      const cw=Number(N.fit.weights[N.fit.weights.length-1].kg),st=Number(gg.goal_start_kg),tg=Number(gg.target_weight);
+      if(st!==tg&&((tg<st&&cw<=tg)||(tg>st&&cw>=tg))){try{const a=must(await sb.rpc('claim_goal'));if(a){ui.award=a;N.fit=must(await sb.rpc('my_fitness'))}}catch(e){}}}
+  }catch(e){N.fit=null}}
   if(N.role==='owner'&&ui.sel)await loadOwnerFit(ui.sel);
   Object.assign(S,N);
 }
@@ -1256,7 +1279,7 @@ function fitView(m,fit,mine){
     const dir=tg<st?-1:1,tot=Math.abs(st-tg),done=Math.max(0,(cur-st)*dir),p=tot?Math.min(100,Math.round(done/tot*100)):(cur===tg?100:0);
     prog='<div style="margin-top:14px"><div class="row sp sm"><b><span class="num">'+st+'</span> → <span class="num">'+cur+'</span> किग्रा</b><span class="muted">लक्ष्य <span class="num">'+tg+'</span> किग्रा</span></div><div class="cap" aria-hidden="true"><i class="ok" style="width:'+p+'%"></i></div><p class="sm muted" style="margin-top:4px">लक्ष्य का <span class="num">'+p+'</span>% पूरा</p></div>';
   }else if(cur!=null)prog='<p class="sm" style="margin-top:14px">अभी का वज़न: <b class="num">'+cur+'</b> किग्रा</p>';
-  const today='<div class="row sp"><div><div class="muted sm">आज की एक्सरसाइज़</div><div class="crowd"><span class="big num">'+dn+'</span><span class="muted">/ <span class="num">'+daily+'</span></span></div></div>'+(streak?'<div class="pill ok">🔥 लगातार <span class="num">'+streak+'</span> दिन</div>':'')+'</div>'
+  const today=(mine?awardHTML()+monthReport(W,ws,daily):'')+'<div class="row sp"><div><div class="muted sm">आज की एक्सरसाइज़</div><div class="crowd"><span class="big num">'+dn+'</span><span class="muted">/ <span class="num">'+daily+'</span></span></div></div>'+(streak?'<div class="pill ok">🔥 लगातार <span class="num">'+streak+'</span> दिन</div>':'')+'</div>'
    +'<div class="cap" aria-hidden="true"><i class="'+(dn>=daily?'ok':'warn')+'" style="width:'+pct+'%"></i></div>'
    +(dn>=daily?'<p class="scan ok" style="margin-top:10px" role="status"><b>🎉 आज का लक्ष्य पूरा! शाबाश!</b></p>':(mine?'<p class="sm muted" style="margin-top:6px">नीचे से जो एक्सरसाइज़ करें, उस पर टैप करते जाएँ।</p>':''));
   const gl='<p class="sm" style="margin-top:12px"><span class="muted">लक्ष्य:</span> <b>'+(g.goal?GOALS[g.goal]:'अभी तय नहीं')+'</b></p>'+prog
@@ -1284,7 +1307,7 @@ function fitView(m,fit,mine){
   const lst=rg==='day'?'':Object.keys(byD).sort().reverse().map(d=>'<div style="margin-top:10px"><b class="sm">'+fd(pd(d))+'</b><ul class="feed" style="margin-top:4px">'+byD[d].map(w=>'<li style="grid-template-columns:minmax(0,1fr)"><span><b>'+esc(w.name)+'</b> <span class="muted num">'+(w.sets?w.sets+'×'+(w.reps||'-'):'')+(w.kg?' · '+w.kg+' kg':'')+(w.min?' · '+w.min+' min':'')+'</span></span></li>').join('')+'</ul></div>').join('')||'';
   let setup='';
   if(mine){
-    const open=!g.goal;
+    const open=!g.goal||ui.openGoal;
     setup='<details class="dt"'+(open?' open':'')+'><summary>मेरा लक्ष्य बदलें</summary><form data-form="savegoal" class="frm" style="margin-top:10px">'
      +(SHOWBODY?'<div><label for="fg0">मैं हूँ</label><select id="fg0" name="gender">'+opt('m','लड़का',gen==='m')+opt('f','लड़की',gen==='f')+'</select></div>':'<input type="hidden" name="gender" value="'+gen+'">')
      +'<div><label for="fg1">मेरा लक्ष्य</label><select id="fg1" name="goal">'+Object.keys(GOALS).map(k=>opt(k,GOALS[k],(g.goal||'fit')===k)).join('')+'</select></div>'
@@ -1301,7 +1324,34 @@ function fitView(m,fit,mine){
   }else{
     setup='<form data-form="ownernote" data-id="'+m.id+'" class="frm" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)"><div class="full"><label for="on1">मेंबर के लिए सलाह / नोट (मेंबर को अपने ऐप में दिखेगा)</label><textarea id="on1" name="note" rows="2" maxlength="300">'+esc(g.owner_note||'')+'</textarea></div><div class="full"><button class="btn alt" type="submit">नोट सेव करें</button></div></form>';
   }
-  return '<section class="panel" style="margin-top:16px"><h2>'+(mine?'मेरा टारगेट और वर्कआउट':'टारगेट और वर्कआउट')+'</h2>'+today+gl+(SHOWBODY?body:'')+pick+tl+dayEnd+chips+sumBox+lst+setup+'</section>';
+  return '<section class="panel" style="margin-top:16px"><h2>'+(mine?'मेरा टारगेट और वर्कआउट':'टारगेट और वर्कआउट')+'</h2>'+today+gl+(SHOWBODY?body:'')+pick+tl+dayEnd+chips+sumBox+lst+awardsList(fit)+setup+'</section>';
+}
+async function reloadFit(){
+  S.fit=must(await sb.rpc('my_fitness'));
+  const gg=S.fit&&S.fit.goal,ws=S.fit&&S.fit.weights||[];
+  if(gg&&gg.target_weight!=null&&gg.goal_start_kg!=null&&ws.length){
+    const cw=Number(ws[ws.length-1].kg),st=Number(gg.goal_start_kg),tg=Number(gg.target_weight);
+    if(st!==tg&&((tg<st&&cw<=tg)||(tg>st&&cw>=tg))){try{const a=must(await sb.rpc('claim_goal'));if(a){ui.award=a;S.fit=must(await sb.rpc('my_fitness'))}}catch(e){}}}
+}
+function awardHTML(){
+  const a=ui.award;if(!a)return '';
+  return '<div class="scan ok award" role="status" style="margin-top:12px"><div style="font-size:30px;font-weight:800">🏆 लक्ष्य पूरा!</div><p style="margin:6px 0"><b><span class="num">'+a.from+'</span> → <span class="num">'+a.to+'</span> किग्रा</b></p>'
+   +'<p class="sm"><span class="num">'+a.days+'</span> दिन · <span class="num">'+a.workouts+'</span> एक्सरसाइज़ · <span class="num">'+a.sets+'</span> सेट'+(a.top?'<br>सबसे ज़्यादा: <b>'+esc(a.top)+'</b>':'')+'</p>'
+   +'<div class="row" style="margin-top:10px"><button class="btn gold" type="button" data-act="newgoal">नया लक्ष्य लगाएँ</button><button class="btn alt" type="button" data-act="awardok">ठीक है</button></div></div>';
+}
+function awardsList(fit){
+  const A=(fit&&fit.awards)||[];if(!A.length)return '';
+  return '<h3 style="margin:18px 0 6px">🏅 उपलब्धियाँ</h3><ul class="feed">'+A.map(a=>'<li style="grid-template-columns:minmax(0,1fr)"><span><b class="num">'+a.from+' → '+a.to+'</b> किग्रा <span class="muted num">· '+a.days+' दिन · '+a.workouts+' एक्सरसाइज़ · '+fd(pd(a.d))+'</span></span></li>').join('')+'</ul>';
+}
+function monthReport(W,ws,daily){
+  const t=T0(),pm=new Date(t.getFullYear(),t.getMonth()-1,1),key=iso(pm).slice(0,7);
+  if(t.getDate()>7||lsGet('sp360-mrep-'+key))return '';
+  const L=W.filter(w=>w.d.slice(0,7)===key);if(!L.length)return '';
+  const sm=sumOf(L),cnt={};L.forEach(w=>{cnt[w.d]=(cnt[w.d]||0)+1});
+  const met=Object.keys(cnt).filter(d=>cnt[d]>=daily).length,wm=ws.filter(w=>w.d.slice(0,7)===key);
+  const wc=wm.length>1?'<p class="sm" style="margin-top:4px">वज़न: <b><span class="num">'+wm[0].kg+'</span> → <span class="num">'+wm[wm.length-1].kg+'</span> किग्रा</b></p>':'';
+  return '<div class="scan warn" role="status" style="margin-top:12px"><b>📅 '+MF[pm.getMonth()]+' की रिपोर्ट</b><p class="sm" style="margin-top:4px"><span class="num">'+sm.days+'</span> दिन वर्कआउट · रोज़ का लक्ष्य <span class="num">'+met+'</span> दिन पूरा · <span class="num">'+sm.n+'</span> एक्सरसाइज़ · <span class="num">'+sm.sets+'</span> सेट'+(sm.top.length?'<br>सबसे ज़्यादा: <b>'+sm.top.map(esc).join(', ')+'</b>':'')+'</p>'+wc
+   +'<p style="margin-top:8px"><button class="btn alt sm" type="button" data-act="mrepok" data-v="'+key+'">ठीक है</button></p></div>';
 }
 function ownerFit(m){return fitView(m,ui.fitOf[m.id],false)}
 async function loadOwnerFit(id){try{ui.fitOf[id]=must(await sb.rpc('fitness_of',{p_member:id}))}catch(e){}}
@@ -1514,6 +1564,9 @@ const ACT={
   filt:b=>{ui.filt=b.dataset.v;render()},
   selm:b=>{ui.sel=b.dataset.id;const t=new Date();ui.cal={y:t.getFullYear(),m:t.getMonth()};render();loadOwnerFit(ui.sel).then(render)},
   fitrange:b=>{ui.fitRange=b.dataset.v;render()},
+  newgoal:()=>{ui.award=null;ui.openGoal=true;render();const e=$('details.dt');if(e)e.scrollIntoView({block:'center'})},
+  awardok:()=>{ui.award=null;render()},
+  mrepok:b=>{lsSet('sp360-mrep-'+b.dataset.v,'1');render()},
   fxmuscle:b=>{ui.fx.m=b.dataset.v;render()},
   fxstep:b=>{const k=b.dataset.k,d=Number(b.dataset.d),lim={sets:[1,20],reps:[1,100],kg:[0,300],min:[5,300]}[k];ui.fx[k]=Math.min(lim[1],Math.max(lim[0],Math.round((ui.fx[k]+d)*10)/10));render()},
   exopen:b=>{ui.cur={i:Number(b.dataset.i),done:0};render();const t=$('.track');if(t)t.scrollIntoView({block:'nearest'})},
@@ -1522,8 +1575,8 @@ const ACT={
   dayend:()=>{lsSet('sp360-dayend-'+iso(T0()),'1');render();toast('आज का वर्कआउट पूरा। शाबाश!')},
   exdo:async b=>{const e=EXC[Number(b.dataset.i)],c=e[1]==='cardio',x=ui.fx,ds=ui.cur&&ui.cur.i===Number(b.dataset.i)&&ui.cur.done?ui.cur.done:x.sets;
     must(await sb.rpc('add_workout',{p_date:iso(T0()),p_name:e[0],p_sets:c?null:ds,p_reps:c?null:x.reps,p_kg:c||!x.kg?null:x.kg,p_min:c?x.min:null}));
-    S.fit=must(await sb.rpc('my_fitness'));ui.cur=null;lsSet('sp360-dayend-'+iso(T0()),'');render();toast(e[0]+' ✓')},
-  delwo:async b=>{must(await sb.rpc('del_workout',{p_id:b.dataset.id}));S.fit=must(await sb.rpc('my_fitness'));render();toast('हटा दिया')},
+    await reloadFit();ui.cur=null;lsSet('sp360-dayend-'+iso(T0()),'');render();toast(e[0]+' ✓')},
+  delwo:async b=>{must(await sb.rpc('del_workout',{p_id:b.dataset.id}));await reloadFit();render();toast('हटा दिया')},
   openm:b=>{ui.sub='members';ACT.selm(b)},
   calnav:b=>{let m=ui.cal.m+Number(b.dataset.v),y=ui.cal.y;if(m<0){m=11;y--}if(m>11){m=0;y++}ui.cal={y:y,m:m};render()},
   lang:b=>setLang(b.dataset.v),
@@ -1574,10 +1627,10 @@ async function doLogin(email,pw,bad,keep){
 const FORMS={
   savegoal:async f=>{const d=new FormData(f),n=k=>{const v=parseFloat(d.get(k));return isFinite(v)?v:null};
     must(await sb.rpc('save_goal',{p_goal:String(d.get('goal')),p_target:n('target'),p_days:null,p_weight:n('weight')}));
-    try{must(await sb.rpc('save_profile',{p_gender:String(d.get('gender')),p_daily:n('daily')}))}catch(e){toast('पहले migration 11 चलाएँ');return}S.fit=must(await sb.rpc('my_fitness'));render();toast('लक्ष्य सेव हो गया')},
+    try{must(await sb.rpc('save_profile',{p_gender:String(d.get('gender')),p_daily:n('daily')}))}catch(e){toast('पहले migration 11 चलाएँ');return}await reloadFit();render();toast('लक्ष्य सेव हो गया')},
   addwo:async f=>{const d=new FormData(f),n=k=>{const v=parseFloat(d.get(k));return isFinite(v)?v:null},nm=String(d.get('name')).trim();
     if(!nm||!(n('min')||(n('sets')&&n('reps')))){toast('सेट और रेप्स, या मिनट भरें');return}
-    must(await sb.rpc('add_workout',{p_date:String(d.get('date')),p_name:nm,p_sets:n('sets'),p_reps:n('reps'),p_kg:n('kg'),p_min:n('min')}));S.fit=must(await sb.rpc('my_fitness'));render();toast('वर्कआउट जुड़ गया')},
+    must(await sb.rpc('add_workout',{p_date:String(d.get('date')),p_name:nm,p_sets:n('sets'),p_reps:n('reps'),p_kg:n('kg'),p_min:n('min')}));await reloadFit();render();toast('वर्कआउट जुड़ गया')},
   ownernote:async f=>{const id=f.dataset.id;must(await sb.rpc('owner_set_note',{p_member:id,p_note:String(new FormData(f).get('note'))}));await loadOwnerFit(id);render();toast('नोट सेव हो गया')},
   forgot:async f=>{const d=new FormData(f),m=ui.lmode,code=String(d.get('code')).trim(),phone=String(d.get('phone')).trim();
     const r=must(await sb.rpc('request_reset',{p_code:code,p_phone:phone,p_kind:m==='owner'?'owner':'member'}));
@@ -1668,11 +1721,20 @@ setInterval(async()=>{
   if(!S.role||document.hidden||cam)return;
   const a=document.activeElement,r=routeNow();
   if(r!=='gate'&&a&&/^(INPUT|SELECT|TEXTAREA)$/.test(a.tagName))return;
-  try{await loadAll()}catch(e){return}
+  ui.pollN=(ui.pollN||0)+1;
+  try{await loadAll(ui.pollN%20!==0)}catch(e){return}
   const sel=window.getSelection&&String(window.getSelection()||'');
   if(sel||ui.newPin||ui.newGym)return;
   if(r==='gate'){const c=$('#gcount');if(c)c.textContent=insideOf(S.sess).length}else render();
 },15000);
+async function checkUpdate(){
+  try{
+    const r=await fetch(location.pathname,{cache:'no-store'}),t=await r.text(),mm=t.match(/VER='(v\d+)'/);
+    if(mm&&mm[1]!==VER&&!$('.upd')){const d=document.createElement('div');d.className='upd';d.setAttribute('role','status');
+      d.innerHTML='<span>नया वर्शन आ गया है।</span><button class="btn gold sm" type="button" id="updgo">अपडेट करें</button>';
+      document.body.appendChild(d);$('#updgo').onclick=()=>{location.replace(location.pathname+'?u='+Date.now())}}
+  }catch(e){}
+}
 async function init(){
   locStatic();
   const qs=new URLSearchParams(location.search),t=qs.get('t'),g=qs.get('g');
@@ -1683,6 +1745,7 @@ async function init(){
   render();
   try{await enter()}catch(e){ui.loading=false;ui.err=errH(e&&e.message);render()}
 }
+setTimeout(checkUpdate,4000);setInterval(checkUpdate,600000);
 
 init();
 })();
