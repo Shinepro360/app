@@ -298,6 +298,27 @@ main.wrap{padding-inline:28px}
 .frm{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
 }
 @media (min-width:1500px){.wrap{max-width:1440px}}
+
+.hero{padding:14px;max-width:none}
+.hero:after{display:none}
+.feat{margin-top:0}
+.feat .ft{font:inherit;text-align:left;cursor:pointer;position:relative;background:rgba(255,255,255,.1);border:1px solid rgba(240,193,90,.5);border-radius:12px;padding:10px 12px;color:#fff;min-height:84px}
+.feat .ft:hover{background:rgba(255,255,255,.18)}
+.feat .ft.on{background:rgba(240,193,90,.25);border-color:#f0c15a;box-shadow:0 0 0 2px #f0c15a inset}
+.feat .fc{position:absolute;right:10px;top:10px;font-size:10px;font-style:normal;color:#f0c15a}
+.fdet{margin-top:12px;padding:12px 14px;border-radius:12px;background:#fff;color:#12254a;position:relative;z-index:1}
+.fdet p{margin:0 0 10px;font-size:14px;line-height:1.5;color:#12254a}
+.fhint{margin:12px 0 0;font-size:12px;color:#f0c15a;text-align:center;position:relative;z-index:1}
+.reqbtn{font:inherit;display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:14px;border-radius:14px;border:2px dashed var(--gold-btn);background:var(--surface);color:var(--fg);cursor:pointer;min-height:64px}
+.reqbtn b{display:block}.reqbtn small{color:var(--muted);font-size:12px}.reqbtn .fi{font-size:24px;width:44px;height:44px;border-radius:12px;background:var(--warn-bg);display:flex;align-items:center;justify-content:center;flex:none}.reqbtn .fc{margin-left:auto;font-size:11px;font-style:normal}
+.lh{font-size:24px;margin:2px 0 8px}
+.lc{display:flex;flex-direction:column;gap:16px;min-width:0}
+.lc>*{max-width:none!important;margin:0!important}
+.lgrid{display:contents}
+.lc1{order:1}.lc2{order:2}
+@media (max-width:999px){main.wrap:has(.lc){display:flex;flex-direction:column;gap:16px;max-width:460px}.lc{display:contents}.lc1>.lp{order:1}.lc2>.hero{order:2}.lc1>.livebox{order:3}.lc2>.reqbtn,.lc2>.panel{order:4}main.wrap:has(.lc)>.pver{order:9}}
+@media (min-width:1000px){main.wrap:has(.lc)>.pver{grid-column:1/-1}}
+@media (min-width:1000px){main.wrap:has(.lc){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start;padding-top:28px}.lc1{order:0}.lc2{order:0}.feat{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -478,7 +499,7 @@ const EXTRA={
 "ऐप की तरह इस्तेमाल करने के लिए ब्राउज़र का ⋮ मेन्यू खोलें और Add to Home screen दबाएँ।": "To use it like an app, open the browser menu (three dots) and tap Add to Home screen.",
 "जिम में अभी भीड़ देखें": "See the gym crowd now",
 "लॉगिन के बिना भी। सिर्फ़ भीड़ का स्तर दिखता है, किसी का नाम नहीं।": "Even without login. Only the crowd level is shown, no names.",
-"भीड़ देखें": "See crowd",
+"भीड़ देखें": "Check crowd",
 "यह जिम ID नहीं मिली।": "This gym ID was not found.",
 "बाहर करें": "Mark out",
 "मेंबर को बाहर दर्ज कर दिया": "Member marked as out",
@@ -872,7 +893,18 @@ const EXTRA={
 "जाने से पहले देखें": "Check before you go",
 "सफ़ाई प्रोडक्ट और सर्विस": "Cleaning products & service",
 "रोज़ का लक्ष्य और स्ट्रीक": "Daily goal & streak",
-"सलाह और इंक्वायरी": "Tips & enquiries"
+"सलाह और इंक्वायरी": "Tips & enquiries",
+"किसी भी सुविधा पर टैप करके जानें": "Tap any feature to learn more",
+"मेंबर लॉगिन": "Member login",
+"ओनर लॉगिन": "Owner login",
+"जिम के गेट पर लगा QR अपने फ़ोन से स्कैन करें। आना और जाना अपने आप दर्ज होता है। कैलेंडर में आपके आए और न आए दिन दिखते हैं।": "Scan the QR at the gym gate with your phone. Entry and exit are recorded automatically. The calendar shows the days you came and missed.",
+"फ़ीस कब खत्म होगी, कितनी बाकी है, सब एक जगह। ओनर को खत्म होने वाली फ़ीस वालों की लिस्ट मिलती है और एक टैप में WhatsApp रिमाइंडर जाता है।": "When the fee ends and how much is due, all in one place. Owners get a list of expiring fees and send a WhatsApp reminder in one tap.",
+"जिम जाने से पहले देखें कि अभी कितनी भीड़ है। लॉगिन की ज़रूरत नहीं, सिर्फ़ जिम ID डालें। किसी का नाम नहीं दिखता।": "Check how crowded the gym is before you go. No login needed, just enter the gym ID. No names are shown.",
+"फ़्लोर पॉलिश, इक्विपमेंट क्लीनर, ग्लास क्लीनर जैसे प्रोडक्ट और जिम की सफ़ाई सर्विस। ओनर यहीं से चुनकर ऑर्डर करता है।": "Products like floor polish, equipment cleaner and glass cleaner, plus gym cleaning service. Owners pick and order from here.",
+"रोज़ की एक्सरसाइज़ टैप करके दर्ज करें, सेट गिनें, स्ट्रीक बनाएँ और हफ़्ते या महीने की रिपोर्ट देखें। ओनर भी देख सकता है।": "Log daily exercises with a tap, count sets, build a streak and see weekly or monthly reports. Owners can see it too.",
+"अपना वज़न, ऊँचाई और लक्ष्य भरें। डाइटिशियन की टीम आपसे बात करेगी। यह डॉक्टरी सलाह नहीं है।": "Enter your weight, height and goal. The dietitian team will talk to you. This is not medical advice.",
+"पहला महीना मुफ़्त। टैप करके अनुरोध भेजें": "First month free. Tap to send a request",
+"छिपाएँ": "Hide"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -1042,7 +1074,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v24';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v25';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -1383,10 +1415,18 @@ function cpPanel(){
 document.addEventListener('change',async e=>{const t=e.target;
   if(t&&t.id==='cpf'&&t.files&&t.files[0]){try{ui.cpPhoto=await compressImg(t.files[0]);ui.cpDirty=true;const pv=$('#cpprev');if(pv){pv.src=ui.cpPhoto;pv.hidden=false}}catch(x){toast('फ़ोटो नहीं खुली, दूसरी चुनें')}}});
 document.addEventListener('input',e=>{const f=e.target&&e.target.closest&&e.target.closest('form[data-form=cpsave]');if(f)ui.cpDirty=true});
+const FEAT=[
+ ['att','🕒','हाज़िरी','QR स्कैन, बस एक टैप','जिम के गेट पर लगा QR अपने फ़ोन से स्कैन करें। आना और जाना अपने आप दर्ज होता है। कैलेंडर में आपके आए और न आए दिन दिखते हैं।','member','मेंबर लॉगिन'],
+ ['fee','💳','फ़ीस','रिमाइंडर अपने आप','फ़ीस कब खत्म होगी, कितनी बाकी है, सब एक जगह। ओनर को खत्म होने वाली फ़ीस वालों की लिस्ट मिलती है और एक टैप में WhatsApp रिमाइंडर जाता है।','owner','ओनर लॉगिन'],
+ ['live','👥','लाइव भीड़','जाने से पहले देखें','जिम जाने से पहले देखें कि अभी कितनी भीड़ है। लॉगिन की ज़रूरत नहीं, सिर्फ़ जिम ID डालें। किसी का नाम नहीं दिखता।','live','भीड़ देखें'],
+ ['care','🧴','जिम केयर','सफ़ाई प्रोडक्ट और सर्विस','फ़्लोर पॉलिश, इक्विपमेंट क्लीनर, ग्लास क्लीनर जैसे प्रोडक्ट और जिम की सफ़ाई सर्विस। ओनर यहीं से चुनकर ऑर्डर करता है।','owner','ओनर लॉगिन'],
+ ['wo','🏋️','वर्कआउट','रोज़ का लक्ष्य और स्ट्रीक','रोज़ की एक्सरसाइज़ टैप करके दर्ज करें, सेट गिनें, स्ट्रीक बनाएँ और हफ़्ते या महीने की रिपोर्ट देखें। ओनर भी देख सकता है।','member','मेंबर लॉगिन'],
+ ['diet','🥗','डाइट','सलाह और इंक्वायरी','अपना वज़न, ऊँचाई और लक्ष्य भरें। डाइटिशियन की टीम आपसे बात करेगी। यह डॉक्टरी सलाह नहीं है।','member','मेंबर लॉगिन']
+];
 function heroHTML(){
-  const lg=document.querySelector('img.logo');
-  const F=[['🕒','हाज़िरी','QR स्कैन, बस एक टैप'],['💳','फ़ीस','रिमाइंडर अपने आप'],['👥','लाइव भीड़','जाने से पहले देखें'],['🧴','जिम केयर','सफ़ाई प्रोडक्ट और सर्विस'],['🏋️','वर्कआउट','रोज़ का लक्ष्य और स्ट्रीक'],['🥗','डाइट','सलाह और इंक्वायरी']];
-  return '<div class="hero"><div class="hh"><img class="hlogo" src="'+(lg?lg.src:'')+'" alt=""><div><b>ShinePro360</b><small>Gym Support &amp; Service</small></div></div><div class="feat">'+F.map(f=>'<div><span class="fi" aria-hidden="true">'+f[0]+'</span><b>'+f[1]+'</b><small>'+f[2]+'</small></div>').join('')+'</div></div>';
+  const o=ui.feat,f=FEAT.find(x=>x[0]===o);
+  return '<div class="hero"><div class="feat" role="group" aria-label="सुविधाएँ">'+FEAT.map(x=>'<button type="button" class="ft'+(o===x[0]?' on':'')+'" data-act="feat" data-v="'+x[0]+'" aria-expanded="'+(o===x[0])+'"><span class="fi" aria-hidden="true">'+x[1]+'</span><b>'+x[2]+'</b><small>'+x[3]+'</small><i class="fc" aria-hidden="true">'+(o===x[0]?'▲':'▼')+'</i></button>').join('')+'</div>'
+   +(f?'<div class="fdet" role="region"><p>'+f[4]+'</p><button type="button" class="btn gold sm" data-act="fgo" data-v="'+f[5]+'">'+f[6]+'</button></div>':'<p class="fhint">किसी भी सुविधा पर टैप करके जानें</p>')+'</div>';
 }
 function vLogin(){
   const m=ui.lmode,lv=ui.lv||{};
@@ -1406,12 +1446,12 @@ function vLogin(){
      +'<div class="full"><label for="lpw">पासवर्ड</label><input id="lpw" name="pass" type="password" autocomplete="current-password" required></div>';
     hint='ShinePro360 से मिली जिम ID और पासवर्ड डालें। हर जिम को सिर्फ़ अपना डेटा दिखता है।';
   }
-  return '<div class="lgrid">'+heroHTML()+'<div class="panel lp" style="max-width:460px"><p class="eyebrow">लॉगिन</p><h1>अपने खाते में लॉगिन करें</h1>'
-   +'<div class="roles" role="group" aria-label="लॉगिन का प्रकार">'+tabs.map(t=>'<button type="button" class="rc rc-'+t[0]+'" data-act="lmode" data-v="'+t[0]+'" aria-pressed="'+(m===t[0])+'"><span class="ri">'+ROLEIC[t[0]]+'</span><span class="rt">'+t[1]+'</span></button>').join('')+'</div>'
+  return '<div class="lgrid"><div class="lc lc1"><div class="panel lp" style="max-width:460px">'+'<div class="roles" role="group" aria-label="लॉगिन का प्रकार">'+tabs.map(t=>'<button type="button" class="rc rc-'+t[0]+'" data-act="lmode" data-v="'+t[0]+'" aria-pressed="'+(m===t[0])+'"><span class="ri">'+ROLEIC[t[0]]+'</span><span class="rt">'+t[1]+'</span></button>').join('')+'</div>'
+   +'<h1 class="lh">अपने खाते में लॉगिन करें</h1>'
    +'<p class="muted" style="margin:0 0 16px">'+hint+'</p>'
    +'<form data-form="login-'+m+'" class="frm">'+f+(ui.err?'<p class="err full" role="alert">'+esc(ui.err)+'</p>':'')+'<div class="full"><button class="btn" type="submit">लॉगिन</button></div></form>'+forgotHTML(m)+'</div>'
    +'<div class="panel livebox" style="max-width:460px;margin-top:16px"><h2><i class="livedot" aria-hidden="true"></i>जिम लाइव भीड़ <span class="livetag">LIVE</span></h2><p class="muted sm" style="margin-bottom:10px">जिम जाने से पहले देखें कितनी भीड़ है। लॉगिन के बिना भी। सिर्फ़ भीड़ का स्तर दिखता है, किसी का नाम नहीं।</p>'
-   +'<form data-form="pubcrowd" class="frm"><div><label for="pg">जिम ID</label><input id="pg" name="code" value="'+esc(lsGet('sp360-gym')||'')+'" autocapitalize="characters" placeholder="SP360-001" required></div><div><button class="btn gold" type="submit">लाइव भीड़ देखें</button></div></form>'+pubHTML()+'</div>'+(m==='member'?'':reqHTML())+'</div>';
+   +'<form data-form="pubcrowd" class="frm"><div><label for="pg">जिम ID</label><input id="pg" name="code" value="'+esc(lsGet('sp360-gym')||'')+'" autocapitalize="characters" placeholder="SP360-001" required></div><div><button class="btn gold" type="submit">लाइव भीड़ देखें</button></div></form>'+pubHTML()+'</div></div><div class="lc lc2">'+heroHTML()+(m==='member'?'':reqHTML())+'</div></div>';
 }
 function forgotHTML(m){
   if(m==='admin')return '';
@@ -1426,7 +1466,8 @@ function forgotHTML(m){
 function reqHTML(){
   const d=ui.reqDone;
   if(d)return '<div class="panel" style="max-width:460px;margin-top:16px" role="status"><h2>अनुरोध भेज दिया</h2><p class="muted sm" style="margin-top:6px">एडमिन मंज़ूर करेगा तो आपको जिम ID और पासवर्ड मिल जाएगा। जल्दी के लिए नीचे WhatsApp से भी बता दें।</p><p style="margin-top:12px"><a class="btn gold sm" target="_blank" rel="noopener" href="'+wa('8318360447','नमस्ते, मैंने ShinePro360 पर जिम जोड़ने का अनुरोध भेजा है। जिम: '+d.name+', ओनर: '+d.owner+', मोबाइल: '+d.phone)+'">WhatsApp से बताएँ</a></p></div>';
-  return '<div class="panel" style="max-width:460px;margin-top:16px"><h2>अपना जिम जोड़ना चाहते हैं?</h2><p class="muted sm" style="margin-bottom:10px">अपनी जानकारी भेजें। एडमिन मंज़ूर करेगा तो आपको जिम ID और पासवर्ड मिलेगा। पहला महीना मुफ़्त।</p>'
+  if(!ui.reqOpen)return '<button type="button" class="reqbtn" data-act="reqopen" aria-expanded="false"><span class="fi" aria-hidden="true">➕</span><span><b>अपना जिम जोड़ना चाहते हैं?</b><small>पहला महीना मुफ़्त। टैप करके अनुरोध भेजें</small></span><i class="fc" aria-hidden="true">▼</i></button>';
+  return '<div class="panel" style="max-width:460px;margin-top:16px"><h2>अपना जिम जोड़ना चाहते हैं? <button type="button" class="lnk" data-act="reqopen" style="font-size:13px">छिपाएँ</button></h2><p class="muted sm" style="margin-bottom:10px">अपनी जानकारी भेजें। एडमिन मंज़ूर करेगा तो आपको जिम ID और पासवर्ड मिलेगा। पहला महीना मुफ़्त।</p>'
    +'<form data-form="reqgym" class="frm"><div><label for="rq1">जिम का नाम</label><input id="rq1" name="name" required></div><div><label for="rq2">ओनर का नाम</label><input id="rq2" name="owner" required></div>'
    +'<div><label for="rq3">मोबाइल नंबर</label><input id="rq3" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required></div><div><label for="rq4">पता</label><input id="rq4" name="address" required></div>'
    +'<div class="full"><button class="btn gold" type="submit">अनुरोध भेजें</button></div></form></div>';
@@ -1850,6 +1891,9 @@ const ACT={
   openm:b=>{ui.sub='members';ACT.selm(b)},
   calnav:b=>{let m=ui.cal.m+Number(b.dataset.v),y=ui.cal.y;if(m<0){m=11;y--}if(m>11){m=0;y++}ui.cal={y:y,m:m};render()},
   lang:b=>setLang(b.dataset.v),
+  feat:b=>{ui.feat=ui.feat===b.dataset.v?null:b.dataset.v;render()},
+  reqopen:b=>{ui.reqOpen=!ui.reqOpen;render();if(ui.reqOpen){const i=$('#rq1');if(i)i.focus()}},
+  fgo:b=>{const v=b.dataset.v;if(v==='live'){const i=$('#pg');if(i){i.scrollIntoView({block:'center',behavior:'smooth'});i.focus()}return}ui.forgot=null;ui.forgotDone=null;ui.lmode=v;ui.err='';lsSet('sp360-mode',v);render();window.scrollTo({top:0,behavior:'smooth'})},
   lmode:b=>{ui.forgot=null;ui.forgotDone=null;ui.lmode=b.dataset.v;ui.err='';lsSet('sp360-mode',ui.lmode);render()},
   copy:b=>{const t=b.dataset.t;const fb=()=>{const a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');a.style.cssText='position:fixed;top:0;left:0;opacity:0';document.body.appendChild(a);a.select();a.setSelectionRange(0,t.length);let ok=false;try{ok=document.execCommand('copy')}catch(e){}a.remove();toast(ok?'कॉपी हो गया':t)};
     if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(()=>toast('कॉपी हो गया'),fb);else fb()},
