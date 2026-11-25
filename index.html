@@ -386,6 +386,18 @@ body:has(.odash) .upd,body:has(.odash) .toast{bottom:92px}
 .odash .sub button[aria-pressed=true]{background:var(--head-bg);color:#fff}
 }
 @media (min-width:1000px){.sub [data-v=more]{display:none}.backl{display:none}}
+
+.mnav{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px}
+.mnav button{font:inherit;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:56px;padding:6px 2px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer}
+.mnav button span{font-size:22px;line-height:1}.mnav button b{font-size:12px;font-weight:600}
+.mnav button[aria-pressed=true]{background:var(--head-bg);color:#fff;border-color:var(--head-bg)}
+@media (max-width:999px){
+body:has(.mnav){padding-bottom:88px}
+body:has(.mnav) .upd,body:has(.mnav) .toast{bottom:92px}
+.mnav{position:fixed;left:0;right:0;bottom:0;z-index:30;gap:0;margin:0;padding:6px 6px calc(6px + env(safe-area-inset-bottom));background:var(--surface);border-top:1px solid var(--line-strong);box-shadow:0 -4px 16px rgba(18,37,74,.12)}
+.mnav button{border:0;border-radius:12px;background:transparent}
+.mnav button[aria-pressed=true]{background:var(--head-bg);color:#fff}
+}
 </style>
 </head>
 <body>
@@ -1131,7 +1143,10 @@ const EXTRA={
 "गेट QR खोलें और प्रिंट करें": "Open and print the gate QR",
 "QR खोलें": "Open QR",
 "एक स्कैन टेस्ट करें": "Do one test scan",
-"मेंबर की डाइट इंक्वायरी (1 नई)": "Member diet inquiries (1 new)"
+"मेंबर की डाइट इंक्वायरी (1 नई)": "Member diet inquiries (1 new)",
+"होम": "Home",
+"मेंबर मेन्यू": "Member menu",
+"अभी वर्कआउट नहीं मिला।": "No workout found yet."
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -1301,7 +1316,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v27';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v28';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -2083,7 +2098,22 @@ function entryState(m){
   const t0=T0().getTime();
   return S.logs.some(l=>l.m===m.id&&l.t==='out'&&l.ts>=t0)?'out':'ready';
 }
-function vMember(){const h=vMember0();return h.replace(/(<section class="entry[\s\S]*?<\/section>)/,'$1'+storeBox())}
+const MTABS=[['home','🏠','होम'],['work','💪','वर्कआउट'],['diet','🥗','डाइट'],['store','🛍️','स्टोर']];
+function vMember(){
+  const h=vMember0(),tab=MTABS.some(t=>t[0]===ui.mtab)?ui.mtab:'home';
+  const grab=(a,b)=>{const i=h.indexOf(a),j=h.indexOf(b);return i<0||j<0?'':h.slice(i+a.length,j)};
+  const W=grab('<!--W-->','<!--/W-->'),D=grab('<!--D-->','<!--/D-->');
+  const head=h.slice(0,h.indexOf('<div class="cols">'));
+  const home=h.slice(h.indexOf('<div class="cols">')).replace('<!--W-->'+W+'<!--/W-->','').replace('<!--D-->'+D+'<!--/D-->','').replace('<div class="stack"></div>','');
+  const nav='<nav class="mnav" aria-label="मेंबर मेन्यू">'+MTABS.map(t=>'<button type="button" data-act="mtab" data-v="'+t[0]+'" aria-pressed="'+(t[0]===tab)+'"><span aria-hidden="true">'+t[1]+'</span><b>'+t[2]+'</b></button>').join('')+'</nav>';
+  const m0=head.slice(0,head.indexOf('<section class="entry'));
+  let body;
+  if(tab==='home')body=head+home;
+  else if(tab==='work')body=m0+'<div class="stack">'+(W||'<section class="panel"><p class="muted">अभी वर्कआउट नहीं मिला।</p></section>')+'</div>';
+  else if(tab==='diet')body=m0+'<div class="stack">'+D+'</div>';
+  else body=m0+vStore('member');
+  return nav+body;
+}
 function vMember0(){
   const m=S.members.find(x=>x.id===S.me)||S.members[0];
   if(!m)return '<section class="panel"><p class="muted">आपकी जानकारी नहीं मिली। जिम से संपर्क करें।</p></section>';
@@ -2102,17 +2132,17 @@ function vMember0(){
    +'<div class="prog" aria-hidden="true"><i style="width:'+used+'%"></i></div>'
    +'<dl class="kv" style="margin-top:14px"><div><dt>वैधता तक</dt><dd>'+fd(f.last)+'</dd></div><div><dt>आखिरी फ़ीस जमा</dt><dd>'+fd(pd(m.lastPaid))+'</dd></div><div><dt>कुल / पेड</dt><dd class="num">'+inr(m.total)+' / '+inr(m.paid)+'</dd></div><div><dt>बाकी</dt><dd class="num">'+inr(f.due)+'</dd></div></dl></section>'
    +'<section class="panel"><h2>मेरी टाइमिंग</h2><p>आमतौर पर <b class="num">'+(s.avgIn==null?'–':ftm(s.avgIn))+'</b> आते हैं और <b class="num">'+(s.avgOut==null?'–':ftm(s.avgOut))+'</b> जाते हैं। पिछले 30 दिन में <b>'+s.d30+'</b> दिन आए।</p></section>'
-   +'<section class="panel"><h2>मेरी हाज़िरी कैलेंडर</h2>'+calendar(m)+'</section>'+fitView(m,S.fit,true).replace('<section class="panel" style="margin-top:16px">','<section class="panel">')
+   +'<section class="panel"><h2>मेरी हाज़िरी कैलेंडर</h2>'+calendar(m)+'</section>'+'<!--W-->'+fitView(m,S.fit,true).replace('<section class="panel" style="margin-top:16px">','<section class="panel">')+'<!--/W-->'
    +(g.hasTrainers?'<section class="panel"><h2>मेरा ट्रेनर</h2><p>'+(tr?'<b>'+esc(tr.name)+'</b> <span class="muted">'+esc(tr.spec)+' · '+esc(tr.phone)+'</span>':'<span class="muted">अभी कोई ट्रेनर नहीं दिया गया। काउंटर पर बात करें।</span>')+'</p></section>':'')
    +(isStandalone()?'':'<section class="panel"><h2>होम स्क्रीन पर रखें</h2><p class="muted sm">ऐप की तरह इस्तेमाल करने के लिए ब्राउज़र का ⋮ मेन्यू खोलें और Add to Home screen दबाएँ।</p></section>')
-   +'</div><div class="stack">'
+   +'</div><div class="stack"><!--D-->'
    +'<section class="panel"><h2>डाइटिशियन चाहिए?</h2><p class="muted sm" style="margin-bottom:10px">वज़न और ऊँचाई भरें। आपके लक्ष्य के हिसाब से डाइटिशियन का प्रकार सुझाया जाएगा और ShinePro360 की टीम आपसे बात करेगी। यह डॉक्टरी सलाह नहीं है।</p>'
    +'<form data-form="diet" data-id="'+m.id+'" class="frm"><div><label for="dw">वज़न (kg)</label><input id="dw" name="w" type="number" min="25" max="250" step="0.1" required></div><div><label for="dh">ऊँचाई (cm)</label><input id="dh" name="h" type="number" min="100" max="230" required></div>'
    +'<div><label for="dg">लक्ष्य</label><select id="dg" name="goal">'+Object.keys(GOAL).map(k=>opt(k,GOAL[k],k==='loss')).join('')+'</select></div><div><label for="df">खान-पान</label><select id="df" name="pref">'+Object.keys(PREF).map(k=>opt(k,PREF[k],k==='veg')).join('')+'</select></div>'
    +'<label class="full row" style="font-weight:400;color:var(--fg);cursor:pointer"><input type="checkbox" name="ok" required> मेरा नाम और नंबर ShinePro360 व डाइटिशियन को देने की सहमति है।</label>'
    +'<div class="full"><button class="btn" type="submit">डाइट इंक्वायरी भेजें</button></div></form>'
    +(ui.dietMsg?'<p class="scan ok" style="margin-top:12px" role="status">'+ui.dietMsg+'</p>':'')
-   +(mine.length?'<h3 style="margin-top:14px">मेरी इंक्वायरी</h3><ul class="feed">'+mine.map(d=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span>'+esc(d.type)+'<br><span class="muted sm">'+fd(new Date(d.ts))+'</span></span><span class="pill '+(d.status==='नया'?'warn':'mute')+'">'+d.status+'</span></li>').join('')+'</ul>':'')+'</section></div></div>';
+   +(mine.length?'<h3 style="margin-top:14px">मेरी इंक्वायरी</h3><ul class="feed">'+mine.map(d=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span>'+esc(d.type)+'<br><span class="muted sm">'+fd(new Date(d.ts))+'</span></span><span class="pill '+(d.status==='नया'?'warn':'mute')+'">'+d.status+'</span></li>').join('')+'</ul>':'')+'</section><!--/D--></div></div>';
 }
 function qrSettings(){
   const g=gOwn(),md=g.qrMode,st=(md==='static'||md==='both'),has=g.lat!=null&&g.lng!=null;
@@ -2285,6 +2315,7 @@ const ACT={
   rejectreq:async b=>{if(!confirm('इस अनुरोध को ठुकराएँ?'))return;must(await sb.rpc('admin_finish_request',{p_id:b.dataset.id,p_gym:null,p_ok:false}));await refresh();toast('अनुरोध ठुकरा दिया')},
   remsent:async b=>{lsSet('sp360-rem-'+b.dataset.id,iso(T0()));setTimeout(render,400)},
   sub:b=>{ui.sub=b.dataset.v;render()},
+  mtab:b=>{ui.mtab=b.dataset.v;render();try{window.scrollTo(0,0)}catch(e){}},
   filt:b=>{ui.filt=b.dataset.v;render()},
   selm:b=>{ui.sel=b.dataset.id;const t=new Date();ui.cal={y:t.getFullYear(),m:t.getMonth()};render();loadOwnerFit(ui.sel).then(render)},
   careopen:b=>{ui.careOpen=ui.careOpen===b.dataset.v?null:b.dataset.v;render()},
