@@ -319,6 +319,39 @@ main.wrap{padding-inline:28px}
 @media (max-width:999px){main.wrap:has(.lc){display:flex;flex-direction:column;gap:16px;max-width:460px}.lc{display:contents}.lc1>.lp{order:1}.lc2>.hero{order:2}.lc1>.livebox{order:3}.lc2>.reqbtn,.lc2>.panel{order:4}main.wrap:has(.lc)>.pver{order:9}}
 @media (min-width:1000px){main.wrap:has(.lc)>.pver{grid-column:1/-1}}
 @media (min-width:1000px){main.wrap:has(.lc){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start;padding-top:28px}.lc1{order:0}.lc2{order:0}.feat{grid-template-columns:repeat(2,1fr)}}
+
+.roles{grid-template-columns:repeat(4,1fr)!important;gap:6px!important}
+.rc{padding:10px 2px!important;font-size:13px}
+.rc svg{width:26px;height:26px}
+.sub [data-v=store]::before{content:"🛍️"}
+.skinds{margin:8px 0}
+.chips{margin:6px 0}
+.chips button{min-height:36px}
+.spg2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}
+.spc{font:inherit;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px;padding:8px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg)}
+.spc.on{border-color:var(--gold-btn);box-shadow:0 0 0 2px var(--gold-btn) inset}
+.spc b{font-size:14px;line-height:1.25}
+.spi{position:relative;display:block;aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:var(--surface-2)}
+.spimg{width:100%;height:100%;object-fit:cover;display:block}
+.spimg.ph{display:flex;align-items:center;justify-content:center;font-size:44px}
+.spg{position:absolute;left:6px;top:6px;font-style:normal;font-size:11px;font-weight:700;background:var(--head-bg);color:#fff;border-radius:99px;padding:2px 8px}
+.spp{font-size:17px;font-weight:800}
+.spd{margin:12px 0;padding:14px;border-radius:14px;border:2px solid var(--gold-btn);background:var(--surface)}
+.spdh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;font-size:17px}
+.spph{display:flex;gap:8px;overflow-x:auto;margin:6px 0}
+.spph img{height:150px;width:auto;max-width:80%;border-radius:10px;object-fit:cover;flex:none}
+.vch{display:flex;flex-wrap:wrap;gap:8px}
+.vch button{font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;min-width:64px;padding:6px 12px;border-radius:12px;border:2px solid var(--line-strong);background:transparent;color:var(--fg)}
+.vch button[aria-pressed=true]{background:var(--head-bg);color:#fff;border-color:var(--gold-btn)}
+.vch button span{font-size:12px}
+.scart{margin-top:16px;padding:12px;border-radius:14px;background:var(--surface-2)}
+.scart .cl li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center}
+.spdet summary{cursor:pointer;font-weight:700;margin:14px 0 6px;min-height:40px;display:flex;align-items:center}
+@media (min-width:700px){.spg2{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1000px){.spg2{grid-template-columns:repeat(4,minmax(0,1fr))}.cols .spg2{grid-template-columns:repeat(2,minmax(0,1fr))}.obody .spg2{grid-template-columns:repeat(4,minmax(0,1fr))}.storebox{break-inside:auto!important}}
+.rc-vendor .ri{background:#efe3fb;color:#6b2fa3}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .rc-vendor .ri{background:#3a2a52;color:#d7b8f5}}
+:root[data-theme=dark] .rc-vendor .ri{background:#3a2a52;color:#d7b8f5}
 </style>
 </head>
 <body>
@@ -904,7 +937,143 @@ const EXTRA={
 "रोज़ की एक्सरसाइज़ टैप करके दर्ज करें, सेट गिनें, स्ट्रीक बनाएँ और हफ़्ते या महीने की रिपोर्ट देखें। ओनर भी देख सकता है।": "Log daily exercises with a tap, count sets, build a streak and see weekly or monthly reports. Owners can see it too.",
 "अपना वज़न, ऊँचाई और लक्ष्य भरें। डाइटिशियन की टीम आपसे बात करेगी। यह डॉक्टरी सलाह नहीं है।": "Enter your weight, height and goal. The dietitian team will talk to you. This is not medical advice.",
 "पहला महीना मुफ़्त। टैप करके अनुरोध भेजें": "First month free. Tap to send a request",
-"छिपाएँ": "Hide"
+"छिपाएँ": "Hide",
+"वेंडर": "Vendor",
+"जिम स्टोर": "Gym Store",
+"इक्विपमेंट, वेयर, इंटीरियर": "Equipment, wear, interior",
+"सुविधाएँ": "Features",
+"जिम के गेट पर QR स्क्रीन लगाएँ। मेंबर अपने फ़ोन से स्कैन करते हैं और आना-जाना अपने आप दर्ज होता है।": "Put the QR screen at the gym gate. Members scan it with their phones and entry and exit are recorded automatically.",
+"फ़ीस कब खत्म होगी और कितनी बाकी है, सब एक जगह। खत्म होने वाली फ़ीस की लिस्ट मिलती है और एक टैप में WhatsApp रिमाइंडर जाता है।": "When a fee ends and how much is due, all in one place. You get a list of expiring fees and send a WhatsApp reminder in one tap.",
+"जिम इक्विपमेंट सप्लायर, जिम इंटीरियर वाले और जिम वेयर बनाने वाले सीधे अपने प्रोडक्ट फ़ोटो के साथ दिखाते हैं। ओनर देखकर ऑर्डर या पूछताछ भेजता है।": "Gym equipment suppliers, interior designers and gym wear makers show their products with photos. The owner browses and sends an order or enquiry.",
+"मेंबर की रोज़ की एक्सरसाइज़, सेट और स्ट्रीक ओनर भी देख सकता है और हर मेंबर को नोट भेज सकता है।": "The owner can see each member's daily exercises, sets and streak, and leave a note for any member.",
+"कब तक चालू है": "Valid until when",
+"जिम वेयर": "Gym Wear",
+"लड़के और लड़कियों के कपड़े": "Clothes for boys and girls",
+"आपकी फ़ीस कब तक चालू है और कितनी बाकी है, सब आपके फ़ोन पर दिखता है।": "Until when your fee is active and how much is due, all on your phone.",
+"रोज़ की एक्सरसाइज़ टैप करके दर्ज करें, सेट गिनें, स्ट्रीक बनाएँ और हफ़्ते या महीने की रिपोर्ट देखें।": "Log daily exercises with a tap, count sets, build a streak and see weekly or monthly reports.",
+"जिम के कपड़े, लड़कों और लड़कियों दोनों के। साइज़ के हिसाब से रेट देखें और सीधे ऑर्डर करें।": "Gym clothes for both boys and girls. See size-wise prices and order directly.",
+"जिम वेयर बनाने वाले, इक्विपमेंट सप्लायर और इंटीरियर वालों के लिए। ShinePro360 से मिली वेंडर ID और पासवर्ड डालें।": "For gym wear makers, equipment suppliers and interior designers. Enter the vendor ID and password you received from ShinePro360.",
+"वेंडर ID": "Vendor ID",
+"पासवर्ड भूल गए या वेंडर बनना चाहते हैं?": "Forgot your password or want to become a vendor?",
+"ShinePro360 को WhatsApp करें": "WhatsApp ShinePro360",
+"प्रोडक्ट डालें": "Add products",
+"फ़ोटो, साइज़ और रेट": "Photos, sizes and prices",
+"ज़्यादा ग्राहक": "More customers",
+"जिम ओनर और मेंबर तक": "Reach gym owners and members",
+"सीधे ऑर्डर": "Direct orders",
+"नाम, फ़ोन और पता सहित": "With name, phone and address",
+"कौन जुड़ सकता है": "Who can join",
+"वेयर, इक्विपमेंट, इंटीरियर": "Wear, equipment, interior",
+"अपने प्रोडक्ट की फ़ोटो, नाम, जानकारी और साइज़ के हिसाब से रेट खुद भरें। जब चाहें बदलें या बंद करें।": "Fill in your product photos, name, details and size-wise prices yourself. Edit or turn off any time.",
+"वेंडर लॉगिन": "Vendor login",
+"आपके प्रोडक्ट ShinePro360 से जुड़े सभी जिम के ओनर और मेंबर को दिखते हैं। जिम वेयर मेंबर को भी दिखता है।": "Your products are shown to the owners and members of all gyms on ShinePro360. Gym wear is shown to members too.",
+"ऑर्डर सीधे आपके पैनल में आते हैं। खरीदार का नाम, फ़ोन और पता मिलता है, आप बात करके डिलीवरी पक्की करें।": "Orders come straight to your panel with the buyer's name, phone and address. Talk to them and confirm delivery.",
+"जिम वेयर बनाने वाले, जिम इक्विपमेंट सप्लायर, जिम इंटीरियर वाले और जिम का दूसरा सामान बेचने वाले। जुड़ने के लिए ShinePro360 से संपर्क करें।": "Gym wear makers, equipment suppliers, interior designers and sellers of other gym goods. Contact ShinePro360 to join.",
+"WhatsApp पर संपर्क करें": "Contact on WhatsApp",
+"🛍️ जिम स्टोर": "🛍️ Gym Store",
+"सभी": "All",
+"लड़के": "Boys",
+"लड़कियाँ": "Girls",
+"सबके लिए": "For everyone",
+"से": "from",
+"✕ बंद करें": "✕ Close",
+"कार्ट में जोड़ें ·": "Add to cart ·",
+"आपका कार्ट": "Your cart",
+"कुल:": "Total:",
+"आपका नाम": "Your name",
+"डिलीवरी का पता": "Delivery address",
+"ऑर्डर भेजें": "Send order",
+"वेंडर आपको फ़ोन या WhatsApp पर बात करके रेट और डिलीवरी पक्की करेगा। पैसे सीधे वेंडर को देने हैं।": "The vendor will confirm price and delivery by phone or WhatsApp. You pay the vendor directly.",
+"मेरे ऑर्डर": "My orders",
+"वेंडर को कॉल करें": "Call vendor",
+"▲ जिम वेयर छिपाएँ": "▲ Hide Gym Wear",
+"कार्ट में जुड़ गया": "Added to cart",
+"किसके लिए": "For whom",
+"श्रेणी": "Category",
+"जिम वेयर, इक्विपमेंट, इंटीरियर और बाकी सामान सीधे वेंडर से। फ़ोटो देखें और ऑर्डर या पूछताछ भेजें।": "Gym wear, equipment, interior and other goods straight from vendors. See photos and send an order or enquiry.",
+"जिम के कपड़े, लड़कों और लड़कियों दोनों के। साइज़ चुनें, रेट देखें और ऑर्डर करें।": "Gym clothes for both boys and girls. Choose a size, see the price and order.",
+"जिम इक्विपमेंट": "Gym Equipment",
+"जिम इंटीरियर": "Gym Interior",
+"अन्य": "Other",
+"वेंडर पैनल": "Vendor panel",
+"जिम वेयर बनाने वाले": "Gym wear makers",
+"नया प्रोडक्ट जोड़ें": "Add a new product",
+"प्रोडक्ट बदलें": "Edit product",
+"आपके प्रोडक्ट जिम ओनर, मेंबर और एडमिन सबको फ़ोटो के साथ दिखेंगे।": "Your products will be shown with photos to gym owners, members and the admin.",
+"आपके प्रोडक्ट जिम ओनर और एडमिन सबको फ़ोटो के साथ दिखेंगे।": "Your products will be shown with photos to gym owners and the admin.",
+"साइज़ और रेट": "Sizes and prices",
+"विकल्प और रेट": "Options and prices",
+"जानकारी (ऑप्शनल)": "Details (optional)",
+"फ़ोटो (3 तक)": "Photos (up to 3)",
+"फ़ोटो (3 तक) – नई चुनें तो बदल जाएँगी": "Photos (up to 3) - choosing new ones replaces them",
+"हर साइज़ के आगे = लगाकर रेट (₹) लिखें, कॉमा से अलग करें। अलग साइज़ का अलग रेट हो सकता है।": "Write each size followed by = and the price (₹), separated by commas. Different sizes can have different prices.",
+"हर विकल्प के आगे = लगाकर रेट (₹) लिखें, कॉमा से अलग करें। एक ही रेट हो तो सिर्फ़ संख्या लिख दें।": "Write each option followed by = and the price (₹), separated by commas. For one price just write the number.",
+"मेरे प्रोडक्ट": "My products",
+"ऑर्डर": "Orders",
+"अभी कोई ऑर्डर नहीं आया।": "No orders yet.",
+"पक्का किया": "Confirmed",
+"भेज दिया": "Shipped",
+"ऑर्डर भेज दिया। वेंडर जल्दी संपर्क करेगा": "Order sent. The vendor will contact you soon.",
+"जिम ओनर और मेंबर": "Gym owner and member",
+"🛍️ जिम स्टोर: वेंडर": "🛍️ Gym Store: Vendors",
+"जिम वेयर बनाने वाले, इक्विपमेंट सप्लायर और इंटीरियर वाले यहाँ से जुड़ते हैं। उन्हें अपनी ID और पासवर्ड दें।": "Gym wear makers, equipment suppliers and interior designers join from here. Give them their ID and password.",
+"दुकान / कंपनी का नाम": "Shop / company name",
+"संपर्क व्यक्ति": "Contact person",
+"शहर": "City",
+"वेंडर का प्रकार": "Vendor type",
+"वेंडर जोड़ें और ID-पासवर्ड बनाएँ": "Add vendor and create ID-password",
+"नया पासवर्ड": "New password",
+"रोकें": "Pause",
+"सभी वेंडर के प्रोडक्ट देखें": "See all vendors' products",
+"स्टोर के ऑर्डर": "Store orders",
+"अभी कोई वेंडर नहीं जुड़ा।": "No vendor joined yet.",
+"दिखाएँ": "Show",
+"रुका हुआ": "Paused",
+" · 👕 जिम वेयर": " · 👕 Gym Wear",
+"· 👕 जिम वेयर": "· 👕 Gym Wear",
+" · 🏋️ जिम इक्विपमेंट": " · 🏋️ Gym Equipment",
+" · 🏢 जिम इंटीरियर": " · 🏢 Gym Interior",
+" · 📦 अन्य": " · 📦 Other",
+"👕 जिम वेयर": "👕 Gym Wear",
+"🏋️ जिम इक्विपमेंट": "🏋️ Gym Equipment",
+"🏢 जिम इंटीरियर": "🏢 Gym Interior",
+"📦 अन्य": "📦 Other",
+"· प्रोडक्ट": "· Products",
+"· ऑर्डर": "· Orders",
+" · प्रोडक्ट ": " · Products ",
+" · ऑर्डर ": " · Orders ",
+"(जिम ओनर": "(Gym owner",
+"मेंबर": "Member",
+"यह प्रोडक्ट हटाएँ?": "Delete this product?",
+"साइज़ चुनें": "Choose size",
+"विकल्प चुनें": "Choose option",
+"अभी इस हिस्से में कोई प्रोडक्ट नहीं जुड़ा है।": "No product in this section yet.",
+"कार्ट खाली है": "Cart is empty",
+"जिम ओनर": "Gym owner",
+"पासवर्ड भूल गए या वेंडर बनना चाहते हैं? ": "Forgot your password or want to become a vendor? ",
+"वेंडर ID या पासवर्ड गलत है।": "Vendor ID or password is wrong.",
+"स्थिति बदली": "Status changed",
+"वेंडर जुड़ गया": "Vendor added",
+"नया पासवर्ड तैयार": "New password ready",
+"वेंडर रोका गया": "Vendor paused",
+"वेंडर चालू": "Vendor active",
+"वेंडर हट गया": "Vendor removed",
+"हट गया": "Deleted",
+"फ़ोटो के बिना जोड़ें? फ़ोटो से बिक्री ज़्यादा होती है।": "Add without a photo? Photos help sell more.",
+"साइज़ और रेट ऐसे लिखें: M=399, L=449": "Write sizes and prices like: M=399, L=449",
+"आपके 10 ऑर्डर अभी बाकी हैं। पहले उन पर बात हो जाने दें": "You already have 10 pending orders. Let those be settled first.",
+"जानकारी जाँचें: मोबाइल 10 अंक का, पता कम से कम 5 अक्षर का": "Check details: mobile must be 10 digits, address at least 5 characters",
+"यह पासवर्ड अभी एक ही बार दिखेगा। वेंडर को भेज दें।": "This password is shown only once now. Send it to the vendor.",
+"WhatsApp से भेजें": "Send via WhatsApp",
+"कॉपी": "Copy",
+"जानकारी": "Details",
+"जिम स्टोर:": "Gym Store:",
+"जिम ओनर ": "Gym owner ",
+"नए": "new",
+"कुल": "Total",
+"लड़कों और लड़कियों के कपड़े, साइज़ के हिसाब से रेट": "Clothes for boys and girls, price by size",
+"कपड़ा, रंग, मटेरियल, वारंटी वगैरह": "Fabric, colour, material, warranty etc.",
+"फ़ोटो का नमूना": "Photo preview"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -1066,15 +1235,15 @@ function vToday(){
 }
 function vOwner(){
   const g=gOwn();
-  const subs=[['today','आज'],['members','मेंबर और फ़ीस'],['trainers','ट्रेनर'],['diet','डाइट इंक्वायरी'],['care','जिम केयर प्रोडक्ट'],['backup','जिम सेटिंग और बैकअप']];
+  const subs=[['today','आज'],['members','मेंबर और फ़ीस'],['trainers','ट्रेनर'],['diet','डाइट इंक्वायरी'],['store','जिम स्टोर'],['care','जिम केयर प्रोडक्ट'],['backup','जिम सेटिंग और बैकअप']];
   return '<div class="ohead"><div><p class="eyebrow">जिम ओनर पैनल</p><h1>'+esc(g.name)+'</h1><p class="muted">'+esc(g.address)+' · ID '+esc(g.code)+' · <span class="pill '+svc(g).c+'">'+svc(g).t+'</span></p></div></div>'
    +'<div class="odash"><div class="sub" role="group" aria-label="पैनल के हिस्से">'+subs.map(s=>'<button type="button" data-act="sub" data-v="'+s[0]+'" aria-pressed="'+(ui.sub===s[0])+'">'+s[1]+'</button>').join('')+'</div>'
-   +'<div class="obody">'+({today:vToday,members:vMembersP,trainers:vTrainers,diet:vOwnerDiet,care:vCare,backup:vBackup}[ui.sub]||vToday)()+'</div></div>';
+   +'<div class="obody">'+({today:vToday,members:vMembersP,trainers:vTrainers,diet:vOwnerDiet,store:()=>vStore("owner"),care:vCare,backup:vBackup}[ui.sub]||vToday)()+'</div></div>';
 }
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v25';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v26';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -1091,6 +1260,7 @@ const gOwn=()=>gym(S.sess);
 const appUrl=()=>location.origin+location.pathname;
 const emailOf={
   owner:code=>String(code).trim().toLowerCase()+'@owners.shinepro360.example',
+  vendor:code=>String(code).trim().toLowerCase()+'@vendors.shinepro360.example',
   member:(ph,code)=>String(ph).trim()+'-'+String(code).trim().toLowerCase()+'@members.shinepro360.example'
 };
 const CATH={underweight:'कम वज़न',normal:'सामान्य',overweight:'ज़्यादा वज़न',obese:'मोटापे की श्रेणी'};
@@ -1137,9 +1307,16 @@ async function loadAll(light){
     N.gyms=(must(ov)||[]).map(r=>({id:r.gym_id,code:r.gym_code,name:r.gym_name,owner:r.owner_name,phone:r.owner_phone,address:r.address,count:Number(r.member_count),inside:Number(r.inside_now),sub:r.subscription,trialLeft:Number(r.trial_days_left)}));
     N.diets=(must(dt)||[]).map(adaptDiet);
     try{N.acare=(must(await sb.rpc('admin_care_list'))||[])}catch(e){N.acare=[]}
+    try{N.vendors=must(await sb.rpc('admin_vendors_list'))||[]}catch(e){N.vendors=[]}
+    try{N.sorders=must(await sb.rpc('store_orders_list'))||[]}catch(e){N.sorders=[]}
     try{N.reqs=(must(await sb.rpc('admin_requests'))||[]).map(q=>({id:q.id,name:q.name,address:q.address,owner:q.owner_name,phone:q.owner_phone,at:q.created_at}))}catch(e){N.reqs=[]}
     try{N.cans=(must(await sb.rpc('admin_cancellations'))||[]).map(c=>({id:c.gym_id,code:c.gym_code,name:c.gym_name,owner:c.owner_name,phone:c.owner_phone,on:c.cancel_on,why:c.cancel_reason,count:Number(c.member_count)}))}catch(e){N.cans=[]}
     try{N.rr=(must(await sb.rpc('admin_reset_requests'))||[]).map(c=>({id:c.gym_id,code:c.gym_code,name:c.gym_name,owner:c.owner_name,phone:c.owner_phone}))}catch(e){N.rr=[]}
+    Object.assign(S,N);return;
+  }
+  if(S.role==='vendor'){
+    try{const vm=must(await sb.rpc('vendor_me'));N.vend=(vm&&vm[0])||vm||null}catch(e){N.vend=null}
+    try{N.sorders=must(await sb.rpc('store_orders_list'))||[]}catch(e){N.sorders=[]}
     Object.assign(S,N);return;
   }
   const lt=!!light&&S.logs&&S.logs.length>0,sinceMs=lt?Date.now()-2*DAY:Date.now()-LOGDAYS*DAY,since=new Date(sinceMs).toISOString();
@@ -1175,6 +1352,123 @@ async function loadAll(light){
   Object.assign(S,N);
 }
 async function refresh(){await loadAll();render()}
+
+/* ---------- gym store (vendors: gym wear, equipment, interior) ---------- */
+const SKIND=[['wear','👕','जिम वेयर','लड़कों और लड़कियों के कपड़े'],['equipment','🏋️','जिम इक्विपमेंट','डंबल, मशीन, रॉड, प्लेट'],['interior','🏢','जिम इंटीरियर','फ़्लोरिंग, मिरर, डिज़ाइन'],['other','📦','अन्य','जिम का बाकी सामान']];
+const SGEN={boys:'लड़के',girls:'लड़कियाँ',unisex:'सबके लिए',na:''};
+const SST={new:['नया','warn'],confirmed:['पक्का','info'],shipped:['भेज दिया','info'],done:['पूरा','ok'],cancelled:['रद्द','bad']};
+const skind=k=>SKIND.find(x=>x[0]===k)||SKIND[3];
+function stS(){return ui.st=ui.st||{ph:{}}}
+async function loadStore(force){
+  const s=stS();
+  if(!force&&s.list&&Date.now()-s.at<300000)return;
+  try{s.list=must(await sb.rpc('store_list'))||[];s.at=Date.now()}catch(e){if(!s.list){s.list=[];s.at=Date.now()}}
+  if(S.role==='owner'||S.role==='member'){try{s.mine=must(await sb.rpc('store_my_orders'))||[]}catch(e){s.mine=s.mine||[]}}
+}
+function ensureStore(){
+  const s=stS();if(s.loading)return;
+  if(!s.list||Date.now()-s.at>300000){s.loading=1;loadStore(true).then(()=>{s.loading=0;render()},()=>{s.loading=0})}
+}
+const minP=p=>Math.min.apply(null,p.variants.map(v=>Number(v.p)));
+const maxP=p=>Math.max.apply(null,p.variants.map(v=>Number(v.p)));
+function priceHTML(p){return '<span class="spp num">'+inr(minP(p))+'</span>'+(maxP(p)>minP(p)?' <small class="muted">से</small>':'')}
+function varsText(p){return p.variants.map(v=>v.l+'='+v.p).join(', ')}
+function spThumb(p,cls){return p.photo?'<img class="'+cls+'" src="'+p.photo+'" alt="'+esc(p.name)+'" loading="lazy">':'<span class="'+cls+' ph" aria-hidden="true">'+skind(p.kind)[1]+'</span>'}
+function parseVars(t){
+  const out=[];
+  String(t||'').split(/[\n,;]+/).forEach(x=>{x=x.trim();if(!x)return;
+    const m=x.match(/^(.+?)\s*[=:]\s*₹?\s*([0-9]+(?:\.[0-9]+)?)$/);
+    if(m)out.push({l:m[1].trim().slice(0,24),p:Number(m[2])});
+    else if(/^₹?\s*[0-9]+(\.[0-9]+)?$/.test(x))out.push({l:'Standard',p:Number(x.replace(/[^0-9.]/g,''))})});
+  return out;
+}
+function spCard(p){
+  return '<button type="button" class="spc'+(ui.stOpen===p.id?' on':'')+'" data-act="stopen" data-id="'+p.id+'"><span class="spi">'+spThumb(p,'spimg')+(p.gender&&p.gender!=='na'?'<i class="spg">'+SGEN[p.gender]+'</i>':'')+'</span><b>'+esc(p.name)+'</b><span class="muted sm">'+esc(p.vendor_name)+'</span>'+priceHTML(p)+'</button>';
+}
+function spDetail(p){
+  const s=stS(),ph=s.ph[p.id]||(p.photo?[p.photo]:[]),sel=(ui.stSel||{})[p.id]||p.variants[0].l,vr=p.variants.find(v=>v.l===sel)||p.variants[0];
+  return '<div class="spd" role="region" aria-label="'+esc(p.name)+'"><div class="spdh"><b>'+esc(p.name)+'</b><button type="button" class="lnk" data-act="stclose">✕ बंद करें</button></div>'
+   +(ph.length?'<div class="spph">'+ph.map(x=>'<img src="'+x+'" alt="'+esc(p.name)+'" loading="lazy">').join('')+'</div>':'')
+   +'<p class="muted sm">'+esc(p.vendor_name)+(p.gender&&p.gender!=='na'?' · '+SGEN[p.gender]:'')+'</p>'+(p.descr?'<p>'+esc(p.descr)+'</p>':'')
+   +'<p class="sm" style="margin:10px 0 6px"><b>'+(p.kind==='wear'?'साइज़ चुनें':'विकल्प चुनें')+'</b></p><div class="vch">'
+   +p.variants.map(v=>'<button type="button" data-act="stvar" data-id="'+p.id+'" data-v="'+esc(v.l)+'" aria-pressed="'+(v.l===vr.l)+'"><b>'+esc(v.l)+'</b><span class="num">'+inr(v.p)+'</span></button>').join('')+'</div>'
+   +'<p style="margin-top:12px"><button type="button" class="btn gold" data-act="stadd" data-id="'+p.id+'">कार्ट में जोड़ें · <span class="num">'+inr(vr.p)+'</span></button></p></div>';
+}
+function cartRows(){
+  const c=ui.scart||{},L=(stS().list||[]),out=[];
+  Object.keys(c).forEach(k=>{const i=k.indexOf('|'),pid=k.slice(0,i),v=k.slice(i+1),p=L.find(x=>x.id===pid),vr=p&&p.variants.find(x=>x.l===v);if(p&&vr&&c[k]>0)out.push({k:k,p:p,v:v,n:c[k],price:Number(vr.p)})});
+  return out;
+}
+function orderLines(L){
+  if(!L||!L.length)return '';
+  return '<ul class="cl">'+L.map(l=>'<li><span>'+esc(l.name)+' <span class="muted sm">['+esc(l.v)+']</span> × <b class="num">'+l.n+'</b></span><b class="num">'+inr(Number(l.p)*Number(l.n))+'</b></li>').join('')+'</ul>';
+}
+function vStore(role){
+  ensureStore();
+  const s=stS(),all=(s.list||[]).filter(p=>role==='member'?p.kind==='wear':true),kind=role==='member'?'wear':(ui.stKind||'wear'),gen=ui.stGen||'all';
+  const ps=all.filter(p=>p.kind===kind&&(kind!=='wear'||gen==='all'||p.gender===gen||p.gender==='unisex'));
+  const op=ui.stOpen?all.find(p=>p.id===ui.stOpen):null,rows=cartRows(),total=rows.reduce((a,r)=>a+r.n*r.price,0),mine=s.mine||[];
+  const me=role==='owner'?gOwn():(S.members.find(x=>x.id===S.me)||{});
+  const kc=role==='member'?'':'<div class="chips skinds" role="group" aria-label="श्रेणी">'+SKIND.map(k=>'<button type="button" data-act="stkind" data-v="'+k[0]+'" aria-pressed="'+(kind===k[0])+'"><span aria-hidden="true">'+k[1]+'</span> '+k[2]+' <span class="num">'+all.filter(p=>p.kind===k[0]).length+'</span></button>').join('')+'</div>';
+  const gc=kind==='wear'?'<div class="chips" role="group" aria-label="किसके लिए">'+[['all','सभी'],['boys','लड़के'],['girls','लड़कियाँ']].map(g=>'<button type="button" data-act="stgen" data-v="'+g[0]+'" aria-pressed="'+(gen===g[0])+'">'+g[1]+'</button>').join('')+'</div>':'';
+  return '<section class="panel storebox"><h2>🛍️ जिम स्टोर</h2><p class="muted sm" style="margin-bottom:10px">'+(role==='member'?'जिम के कपड़े, लड़कों और लड़कियों दोनों के। साइज़ चुनें, रेट देखें और ऑर्डर करें।':'जिम वेयर, इक्विपमेंट, इंटीरियर और बाकी सामान सीधे वेंडर से। फ़ोटो देखें और ऑर्डर या पूछताछ भेजें।')+'</p>'
+   +kc+gc
+   +(s.list?(ps.length?'<div class="spg2">'+ps.map(spCard).join('')+'</div>':'<p class="muted sm" style="margin:12px 0">अभी इस हिस्से में कोई प्रोडक्ट नहीं जुड़ा है।</p>'):'<p class="muted sm" style="margin:12px 0">लोड हो रहा है…</p>')
+   +(op?spDetail(op):'')
+   +(rows.length?'<div class="scart"><h3>आपका कार्ट</h3><ul class="cl">'+rows.map(r=>'<li><span>'+esc(r.p.name)+' <span class="muted sm">['+esc(r.v)+']</span></span><span class="qty"><button type="button" data-act="stq" data-k="'+esc(r.k)+'" data-d="-1" aria-label="कम">−</button><b class="num">'+r.n+'</b><button type="button" data-act="stq" data-k="'+esc(r.k)+'" data-d="1" aria-label="ज़्यादा">+</button></span><b class="num">'+inr(r.n*r.price)+'</b></li>').join('')+'</ul>'
+     +'<p class="sm" style="text-align:right"><b>कुल: <span class="num">'+inr(total)+'</span></b></p>'
+     +'<form data-form="storeorder" class="frm"><div><label for="so1">आपका नाम</label><input id="so1" name="name" maxlength="60" value="'+esc(role==='owner'?(me.owner||''):(me.name||''))+'" required></div>'
+     +'<div><label for="so2">मोबाइल नंबर</label><input id="so2" name="phone" inputmode="numeric" maxlength="10" value="'+esc(me.phone||'')+'" required></div>'
+     +'<div class="full"><label for="so3">डिलीवरी का पता</label><textarea id="so3" name="addr" rows="2" maxlength="300" required></textarea></div>'
+     +'<div class="full"><label for="so4">कोई बात (ऑप्शनल)</label><input id="so4" name="note" maxlength="300"></div>'
+     +'<div class="full"><button class="btn gold" type="submit">ऑर्डर भेजें</button><p class="muted sm" style="margin-top:6px">वेंडर आपको फ़ोन या WhatsApp पर बात करके रेट और डिलीवरी पक्की करेगा। पैसे सीधे वेंडर को देने हैं।</p></div></form></div>':'')
+   +(mine.length?'<h3 style="margin-top:16px">मेरे ऑर्डर</h3><ul class="feed">'+mine.map(o=>'<li style="grid-template-columns:minmax(0,1fr)"><span><b>'+esc(o.vendor_name)+'</b> <span class="pill '+SST[o.status][1]+'">'+SST[o.status][0]+'</span>'+orderLines(o.lines)+'<span class="sm"><b>कुल: <span class="num">'+inr(o.total)+'</span></b> · <span class="muted num">'+fd(new Date(o.created_at))+'</span></span><br><a class="btn alt sm" style="margin-top:6px" href="tel:'+esc(o.vendor_phone)+'">वेंडर को कॉल करें</a></span></li>').join('')+'</ul>':'')
+   +'</section>';
+}
+function storeBox(){
+  if(!ui.stBox)return '<button type="button" class="reqbtn" style="margin-bottom:20px" data-act="stbox" aria-expanded="false"><span class="fi" aria-hidden="true">👕</span><span><b>जिम वेयर</b><small>लड़कों और लड़कियों के कपड़े, साइज़ के हिसाब से रेट</small></span><i class="fc" aria-hidden="true">▼</i></button>';
+  return '<div style="margin-bottom:20px">'+vStore('member')+'<p style="margin-top:8px"><button type="button" class="lnk" data-act="stbox">▲ जिम वेयर छिपाएँ</button></p></div>';
+}
+/* ----- vendor panel ----- */
+function vendOrderCard(o,adm){
+  const nxt=[['confirmed','पक्का किया'],['shipped','भेज दिया'],['done','पूरा हुआ'],['cancelled','रद्द']].filter(x=>x[0]!==o.status);
+  return '<li style="grid-template-columns:minmax(0,1fr)"><span>'+(adm?'<b>'+esc(o.vendor_name)+'</b> · ':'')+'<b>'+esc(o.buyer_name)+'</b> <span class="muted sm">('+(o.buyer_role==='owner'?'जिम ओनर':'मेंबर')+(o.gym_name?', '+esc(o.gym_name):'')+')</span> <span class="pill '+SST[o.status][1]+'">'+SST[o.status][0]+'</span>'
+   +orderLines(o.lines)+'<span class="sm"><b>कुल: <span class="num">'+inr(o.total)+'</span></b></span><br><span class="sm">📍 '+esc(o.address)+'</span>'+(o.note?'<br><span class="sm muted">'+esc(o.note)+'</span>':'')+'<br><span class="muted sm num">'+esc(o.buyer_phone)+' · '+fd(new Date(o.created_at))+'</span>'
+   +'<span class="row" style="margin-top:8px"><a class="btn sm" href="tel:'+esc(o.buyer_phone)+'">कॉल</a><a class="btn alt sm" target="_blank" rel="noopener" href="'+wa(o.buyer_phone,'नमस्ते '+o.buyer_name+' जी, आपका जिम स्टोर ऑर्डर मिला है। रेट और डिलीवरी की बात करनी थी।')+'">WhatsApp</a>'
+   +nxt.map(x=>'<button type="button" class="btn alt sm" data-act="stset" data-id="'+o.id+'" data-v="'+x[0]+'">'+x[1]+'</button>').join('')+'</span></span></li>';
+}
+function vVendor(){
+  const v=S.vend||{name:'',code:'',kind:'wear'},k=skind(v.kind),P=(stS().list||[]),ed=ui.vEdit?P.find(p=>p.id===ui.vEdit):null,O=S.sorders||[],nw=O.filter(o=>o.status==='new').length;
+  ensureStore();
+  const wear=v.kind==='wear',f=ed||{name:'',descr:'',gender:'unisex',variants:[]};
+  const ph=ui.vPhotos||[];
+  const form='<form data-form="vsave" class="frm"><div class="full"><label for="vp1">प्रोडक्ट का नाम</label><input id="vp1" name="name" maxlength="80" value="'+esc(f.name)+'" required></div>'
+   +(wear?'<div><label for="vp2">किसके लिए</label><select id="vp2" name="gender">'+[['boys','लड़के'],['girls','लड़कियाँ'],['unisex','सबके लिए']].map(g=>opt(g[0],g[1],f.gender===g[0])).join('')+'</select></div>':'')
+   +'<div class="full"><label for="vp3">'+(wear?'साइज़ और रेट':'विकल्प और रेट')+'</label><textarea id="vp3" name="vars" rows="2" placeholder="'+(wear?'S=399, M=399, L=449, XL=449':'10 kg जोड़ी=2000, 20 kg जोड़ी=3800')+'" required>'+esc(ed?varsText(ed):'')+'</textarea><p class="muted sm" style="margin-top:4px">'+(wear?'हर साइज़ के आगे = लगाकर रेट (₹) लिखें, कॉमा से अलग करें। अलग साइज़ का अलग रेट हो सकता है।':'हर विकल्प के आगे = लगाकर रेट (₹) लिखें, कॉमा से अलग करें। एक ही रेट हो तो सिर्फ़ संख्या लिख दें।')+'</p></div>'
+   +'<div class="full"><label for="vp4">जानकारी (ऑप्शनल)</label><textarea id="vp4" name="descr" rows="2" maxlength="400" placeholder="कपड़ा, रंग, मटेरियल, वारंटी वगैरह">'+esc(f.descr||'')+'</textarea></div>'
+   +'<div class="full"><label for="vpf">फ़ोटो (3 तक)'+(ed?' – नई चुनें तो बदल जाएँगी':'')+'</label><input id="vpf" type="file" accept="image/*" multiple><div class="spph" id="vprev">'+ph.map(x=>'<img src="'+x+'" alt="">').join('')+'</div></div>'
+   +'<div class="full row"><button class="btn gold" type="submit">'+(ed?'बदलाव सेव करें':'प्रोडक्ट जोड़ें')+'</button>'+(ed?'<button class="btn alt" type="button" data-act="vcancel">रद्द करें</button>':'')+'</div></form>';
+  const list=P.length?'<ul class="feed">'+P.map(p=>'<li style="grid-template-columns:minmax(0,1fr)"><span class="cprod" style="border:0;padding:0">'+spThumb(p,'cpt')+'<span class="cpi"><b>'+esc(p.name)+'</b> '+(p.active?'':'<span class="pill mute">बंद</span>')+'<span class="muted sm">'+esc(varsText(p))+'</span></span></span><span class="row" style="margin-top:6px"><button class="btn alt sm" type="button" data-act="vedit" data-id="'+p.id+'">बदलें</button><button class="btn alt sm" type="button" data-act="vtog" data-id="'+p.id+'">'+(p.active?'बंद करें':'चालू करें')+'</button><button class="btn alt sm" type="button" data-act="vdel" data-id="'+p.id+'">हटाएँ</button></span></li>').join('')+'</ul>':'<p class="muted sm">अभी कोई प्रोडक्ट नहीं जोड़ा।</p>';
+  return '<div class="ohead"><div><p class="eyebrow">वेंडर पैनल</p><h1>'+esc(v.name)+'</h1><p class="muted"><span class="num">'+esc(v.code)+'</span> · '+k[1]+' '+k[2]+'</p></div></div>'
+   +'<div class="cols"><div class="stack"><section class="panel"><h2>'+(ed?'प्रोडक्ट बदलें':'नया प्रोडक्ट जोड़ें')+'</h2><p class="muted sm" style="margin-bottom:10px">आपके प्रोडक्ट जिम ओनर'+(wear?', मेंबर':'')+' और एडमिन सबको फ़ोटो के साथ दिखेंगे।</p>'+form+'</section>'
+   +'<section class="panel"><h2>मेरे प्रोडक्ट</h2>'+list+'</section></div>'
+   +'<div class="stack"><section class="panel"><h2>ऑर्डर '+(nw?'<span class="livetag">'+nw+' नए</span>':'')+'</h2>'+(O.length?'<ul class="feed">'+O.map(o=>vendOrderCard(o,false)).join('')+'</ul>':'<p class="muted sm">अभी कोई ऑर्डर नहीं आया।</p>')+'</section></div></div>';
+}
+/* ----- admin: vendors ----- */
+function storeAdmin(){
+  ensureStore();
+  const V=S.vendors||[],O=S.sorders||[],P=stS().list||[],nv=ui.newVen,nw=O.filter(o=>o.status==='new').length;
+  const form='<form data-form="addvendor" class="frm"><div><label for="av1">दुकान / कंपनी का नाम</label><input id="av1" name="name" maxlength="80" required></div><div><label for="av2">संपर्क व्यक्ति</label><input id="av2" name="contact" maxlength="80"></div>'
+   +'<div><label for="av3">मोबाइल नंबर</label><input id="av3" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required></div><div><label for="av4">शहर</label><input id="av4" name="city" maxlength="80"></div>'
+   +'<div class="full"><label for="av5">वेंडर का प्रकार</label><select id="av5" name="kind">'+SKIND.map(k=>opt(k[0],k[2],false)).join('')+'</select></div>'
+   +'<div class="full"><button class="btn gold" type="submit">वेंडर जोड़ें और ID-पासवर्ड बनाएँ</button></div></form>';
+  const cred=nv?'<div class="cred" role="status" style="margin-top:12px"><span class="muted">वेंडर ID</span><b>'+esc(nv.code)+'</b><button class="btn alt sm" type="button" data-act="copy" data-t="'+esc(nv.code)+'">कॉपी</button><span class="muted">पासवर्ड</span><b>'+esc(nv.pass)+'</b><button class="btn alt sm" type="button" data-act="copy" data-t="'+esc(nv.pass)+'">कॉपी</button></div><p class="sm muted" style="margin-top:6px">यह पासवर्ड अभी एक ही बार दिखेगा। वेंडर को भेज दें।</p><p class="row" style="margin-top:8px"><a class="btn sm" target="_blank" rel="noopener" href="'+wa(nv.phone,'नमस्ते, ShinePro360 जिम स्टोर पर '+nv.name+' का वेंडर लॉगिन तैयार है। वेंडर ID: '+nv.code+', पासवर्ड: '+nv.pass+' ऐप लिंक: '+appUrl()+' (लॉगिन पर वेंडर चुनें)')+'">WhatsApp से भेजें</a> <button class="btn alt sm" type="button" data-act="vnclose">ठीक है</button></p>':'';
+  const vl=V.length?'<ul class="feed">'+V.map(v=>'<li style="grid-template-columns:minmax(0,1fr)"><span><b>'+esc(v.name)+'</b> <span class="muted sm num">'+esc(v.code)+'</span> <span class="pill '+(v.active?'ok':'mute')+'">'+(v.active?'चालू':'रुका हुआ')+'</span><br><span class="sm">'+skind(v.kind)[1]+' '+skind(v.kind)[2]+(v.city?' · '+esc(v.city):'')+'</span><br><span class="muted sm"><span class="num">'+esc(v.phone)+'</span> · प्रोडक्ट <span class="num">'+v.n_products+'</span> · ऑर्डर <span class="num">'+v.n_orders+'</span></span>'
+    +'<span class="row" style="margin-top:8px"><a class="btn alt sm" href="tel:'+esc(v.phone)+'">कॉल</a><button class="btn alt sm" type="button" data-act="venreset" data-id="'+v.id+'">नया पासवर्ड</button><button class="btn alt sm" type="button" data-act="venset" data-id="'+v.id+'">'+(v.active?'रोकें':'चालू करें')+'</button><button class="btn alt sm" type="button" data-act="vendel" data-id="'+v.id+'">हटाएँ</button></span></span></li>').join('')+'</ul>':'<p class="muted sm" style="margin-top:10px">अभी कोई वेंडर नहीं जुड़ा।</p>';
+  const pl=P.length?'<details class="spdet"><summary>सभी वेंडर के प्रोडक्ट देखें <span class="num">('+P.length+')</span></summary><ul class="feed">'+P.map(p=>'<li style="grid-template-columns:minmax(0,1fr)"><span class="cprod" style="border:0;padding:0">'+spThumb(p,'cpt')+'<span class="cpi"><b>'+esc(p.name)+'</b> '+(p.active?'':'<span class="pill mute">बंद</span>')+'<span class="muted sm">'+esc(p.vendor_name)+' · '+skind(p.kind)[2]+'</span><span class="muted sm">'+esc(varsText(p))+'</span></span></span><span class="row" style="margin-top:6px"><button class="btn alt sm" type="button" data-act="astog" data-id="'+p.id+'">'+(p.active?'छिपाएँ':'दिखाएँ')+'</button></span></li>').join('')+'</ul></details>':'';
+  return '<section class="panel storebox" style="margin-bottom:20px"><h2>🛍️ जिम स्टोर: वेंडर</h2><p class="muted sm" style="margin-bottom:10px">जिम वेयर बनाने वाले, इक्विपमेंट सप्लायर और इंटीरियर वाले यहाँ से जुड़ते हैं। उन्हें अपनी ID और पासवर्ड दें।</p>'+form+cred+vl+pl
+   +(O.length?'<h3 style="margin-top:16px">स्टोर के ऑर्डर '+(nw?'<span class="livetag">'+nw+' नए</span>':'')+'</h3><ul class="feed">'+O.map(o=>vendOrderCard(o,true)).join('')+'</ul>':'')+'</section>';
+}
 
 /* ---------- crowd ---------- */
 function chartHTML(){
@@ -1328,6 +1622,7 @@ function vMembersP(){return pinBox()+resetPanel()+remList()+vMembers()+offList()
 const ROLEIC={
  owner:'<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l2-5h14l2 5"/><path d="M4 10v9h16v-9"/><path d="M9 19v-5h6v5"/></svg>',
  member:'<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>',
+ vendor:'<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8l9-5 9 5-9 5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>',
  admin:'<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>'};
 /* ---------- gym care products & service ---------- */
 const CARE=[['cleaner','🧴','जिम क्लीनिंग प्रोडक्ट','फ़र्श, मशीन और जिम की रोज़ की सफ़ाई के लिए'],
@@ -1414,29 +1709,48 @@ function cpPanel(){
 }
 document.addEventListener('change',async e=>{const t=e.target;
   if(t&&t.id==='cpf'&&t.files&&t.files[0]){try{ui.cpPhoto=await compressImg(t.files[0]);ui.cpDirty=true;const pv=$('#cpprev');if(pv){pv.src=ui.cpPhoto;pv.hidden=false}}catch(x){toast('फ़ोटो नहीं खुली, दूसरी चुनें')}}});
-document.addEventListener('input',e=>{const f=e.target&&e.target.closest&&e.target.closest('form[data-form=cpsave]');if(f)ui.cpDirty=true});
-const FEAT=[
- ['att','🕒','हाज़िरी','QR स्कैन, बस एक टैप','जिम के गेट पर लगा QR अपने फ़ोन से स्कैन करें। आना और जाना अपने आप दर्ज होता है। कैलेंडर में आपके आए और न आए दिन दिखते हैं।','member','मेंबर लॉगिन'],
- ['fee','💳','फ़ीस','रिमाइंडर अपने आप','फ़ीस कब खत्म होगी, कितनी बाकी है, सब एक जगह। ओनर को खत्म होने वाली फ़ीस वालों की लिस्ट मिलती है और एक टैप में WhatsApp रिमाइंडर जाता है।','owner','ओनर लॉगिन'],
+document.addEventListener('input',e=>{const f=e.target&&e.target.closest&&e.target.closest('form[data-form=cpsave]');if(f)ui.cpDirty=true;const g=e.target&&e.target.closest&&e.target.closest('form[data-form=vsave]');if(g)ui.vDirty=true});
+document.addEventListener('change',async e=>{const t=e.target;if(t&&t.id==='vpf'&&t.files&&t.files.length){try{const a=[];for(const fl of Array.from(t.files).slice(0,3))a.push(await compressImg(fl));ui.vPhotos=a;ui.vDirty=true;const pv=$('#vprev');if(pv)pv.innerHTML=a.map(x=>'<img src="'+x+'" alt="">').join('')}catch(x){toast('फ़ोटो नहीं खुली, दूसरी चुनें')}}});
+const FEATS={
+ owner:[
+ ['att','🕒','हाज़िरी','QR स्कैन, बस एक टैप','जिम के गेट पर QR स्क्रीन लगाएँ। मेंबर अपने फ़ोन से स्कैन करते हैं और आना-जाना अपने आप दर्ज होता है।','owner','ओनर लॉगिन'],
+ ['fee','💳','फ़ीस','रिमाइंडर अपने आप','फ़ीस कब खत्म होगी और कितनी बाकी है, सब एक जगह। खत्म होने वाली फ़ीस की लिस्ट मिलती है और एक टैप में WhatsApp रिमाइंडर जाता है।','owner','ओनर लॉगिन'],
  ['live','👥','लाइव भीड़','जाने से पहले देखें','जिम जाने से पहले देखें कि अभी कितनी भीड़ है। लॉगिन की ज़रूरत नहीं, सिर्फ़ जिम ID डालें। किसी का नाम नहीं दिखता।','live','भीड़ देखें'],
  ['care','🧴','जिम केयर','सफ़ाई प्रोडक्ट और सर्विस','फ़्लोर पॉलिश, इक्विपमेंट क्लीनर, ग्लास क्लीनर जैसे प्रोडक्ट और जिम की सफ़ाई सर्विस। ओनर यहीं से चुनकर ऑर्डर करता है।','owner','ओनर लॉगिन'],
- ['wo','🏋️','वर्कआउट','रोज़ का लक्ष्य और स्ट्रीक','रोज़ की एक्सरसाइज़ टैप करके दर्ज करें, सेट गिनें, स्ट्रीक बनाएँ और हफ़्ते या महीने की रिपोर्ट देखें। ओनर भी देख सकता है।','member','मेंबर लॉगिन'],
- ['diet','🥗','डाइट','सलाह और इंक्वायरी','अपना वज़न, ऊँचाई और लक्ष्य भरें। डाइटिशियन की टीम आपसे बात करेगी। यह डॉक्टरी सलाह नहीं है।','member','मेंबर लॉगिन']
-];
+ ['store','🛍️','जिम स्टोर','इक्विपमेंट, वेयर, इंटीरियर','जिम इक्विपमेंट सप्लायर, जिम इंटीरियर वाले और जिम वेयर बनाने वाले सीधे अपने प्रोडक्ट फ़ोटो के साथ दिखाते हैं। ओनर देखकर ऑर्डर या पूछताछ भेजता है।','owner','ओनर लॉगिन'],
+ ['wo','🏋️','वर्कआउट','रोज़ का लक्ष्य और स्ट्रीक','मेंबर की रोज़ की एक्सरसाइज़, सेट और स्ट्रीक ओनर भी देख सकता है और हर मेंबर को नोट भेज सकता है।','owner','ओनर लॉगिन']],
+ member:[
+ ['att','🕒','हाज़िरी','QR स्कैन, बस एक टैप','जिम के गेट पर लगा QR अपने फ़ोन से स्कैन करें। आना और जाना अपने आप दर्ज होता है। कैलेंडर में आपके आए और न आए दिन दिखते हैं।','member','मेंबर लॉगिन'],
+ ['fee','💳','फ़ीस','कब तक चालू है','आपकी फ़ीस कब तक चालू है और कितनी बाकी है, सब आपके फ़ोन पर दिखता है।','member','मेंबर लॉगिन'],
+ ['live','👥','लाइव भीड़','जाने से पहले देखें','जिम जाने से पहले देखें कि अभी कितनी भीड़ है। लॉगिन की ज़रूरत नहीं, सिर्फ़ जिम ID डालें। किसी का नाम नहीं दिखता।','live','भीड़ देखें'],
+ ['wo','🏋️','वर्कआउट','रोज़ का लक्ष्य और स्ट्रीक','रोज़ की एक्सरसाइज़ टैप करके दर्ज करें, सेट गिनें, स्ट्रीक बनाएँ और हफ़्ते या महीने की रिपोर्ट देखें।','member','मेंबर लॉगिन'],
+ ['diet','🥗','डाइट','सलाह और इंक्वायरी','अपना वज़न, ऊँचाई और लक्ष्य भरें। डाइटिशियन की टीम आपसे बात करेगी। यह डॉक्टरी सलाह नहीं है।','member','मेंबर लॉगिन'],
+ ['wear','👕','जिम वेयर','लड़के और लड़कियों के कपड़े','जिम के कपड़े, लड़कों और लड़कियों दोनों के। साइज़ के हिसाब से रेट देखें और सीधे ऑर्डर करें।','member','मेंबर लॉगिन']],
+ vendor:[
+ ['sell','📦','प्रोडक्ट डालें','फ़ोटो, साइज़ और रेट','अपने प्रोडक्ट की फ़ोटो, नाम, जानकारी और साइज़ के हिसाब से रेट खुद भरें। जब चाहें बदलें या बंद करें।','vendor','वेंडर लॉगिन'],
+ ['reach','👥','ज़्यादा ग्राहक','जिम ओनर और मेंबर तक','आपके प्रोडक्ट ShinePro360 से जुड़े सभी जिम के ओनर और मेंबर को दिखते हैं। जिम वेयर मेंबर को भी दिखता है।','vendor','वेंडर लॉगिन'],
+ ['ord','🧾','सीधे ऑर्डर','नाम, फ़ोन और पता सहित','ऑर्डर सीधे आपके पैनल में आते हैं। खरीदार का नाम, फ़ोन और पता मिलता है, आप बात करके डिलीवरी पक्की करें।','vendor','वेंडर लॉगिन'],
+ ['who','🏭','कौन जुड़ सकता है','वेयर, इक्विपमेंट, इंटीरियर','जिम वेयर बनाने वाले, जिम इक्विपमेंट सप्लायर, जिम इंटीरियर वाले और जिम का दूसरा सामान बेचने वाले। जुड़ने के लिए ShinePro360 से संपर्क करें।','vwa','WhatsApp पर संपर्क करें']]
+};
+function featFor(){const m=ui.lmode;return FEATS[m]||FEATS.owner}
 function heroHTML(){
-  const o=ui.feat,f=FEAT.find(x=>x[0]===o);
+  const FEAT=featFor(),o=ui.feat,f=FEAT.find(x=>x[0]===o);
   return '<div class="hero"><div class="feat" role="group" aria-label="सुविधाएँ">'+FEAT.map(x=>'<button type="button" class="ft'+(o===x[0]?' on':'')+'" data-act="feat" data-v="'+x[0]+'" aria-expanded="'+(o===x[0])+'"><span class="fi" aria-hidden="true">'+x[1]+'</span><b>'+x[2]+'</b><small>'+x[3]+'</small><i class="fc" aria-hidden="true">'+(o===x[0]?'▲':'▼')+'</i></button>').join('')+'</div>'
    +(f?'<div class="fdet" role="region"><p>'+f[4]+'</p><button type="button" class="btn gold sm" data-act="fgo" data-v="'+f[5]+'">'+f[6]+'</button></div>':'<p class="fhint">किसी भी सुविधा पर टैप करके जानें</p>')+'</div>';
 }
 function vLogin(){
   const m=ui.lmode,lv=ui.lv||{};
-  const tabs=[['owner','जिम ओनर'],['member','मेंबर'],['admin','एडमिन']];
+  const tabs=[['owner','जिम ओनर'],['member','मेंबर'],['vendor','वेंडर'],['admin','एडमिन']];
   let f,hint;
   if(m==='member'){
     f='<div class="full"><label for="lg">जिम ID</label><input id="lg" name="code" value="'+esc(lv.code||lsGet('sp360-gym')||'')+'" autocapitalize="characters" placeholder="SP360-001" required></div>'
      +'<div class="full"><label for="mph">मोबाइल नंबर</label><input id="mph" name="phone" inputmode="numeric" maxlength="10" value="'+esc(lv.phone||'')+'" autocomplete="username" required></div>'
      +'<div class="full"><label for="mpn">पिन</label><input id="mpn" name="pin" type="password" inputmode="numeric" maxlength="6" autocomplete="current-password" required></div>';
     hint='जिम से मिली जिम ID, अपना मोबाइल नंबर और 6 अंकों का पिन डालें। लॉगिन के बाद आपको सिर्फ़ अपनी फ़ीस, अपनी हाज़िरी, डाइट और जिम की भीड़ दिखेगी।';
+  }else if(m==='vendor'){
+    f='<div class="full"><label for="lv">वेंडर ID</label><input id="lv" name="code" value="'+esc(lv.code||'')+'" autocomplete="username" autocapitalize="characters" placeholder="VND-001" required></div>'
+     +'<div class="full"><label for="lpw">पासवर्ड</label><input id="lpw" name="pass" type="password" autocomplete="current-password" required></div>';
+    hint='जिम वेयर बनाने वाले, इक्विपमेंट सप्लायर और इंटीरियर वालों के लिए। ShinePro360 से मिली वेंडर ID और पासवर्ड डालें।';
   }else if(m==='admin'){
     f='<div class="full"><label for="le">ईमेल</label><input id="le" name="email" type="email" value="'+esc(lv.email||'')+'" autocomplete="username" required></div>'
      +'<div class="full"><label for="lpw">पासवर्ड</label><input id="lpw" name="pass" type="password" autocomplete="current-password" required></div>';
@@ -1455,6 +1769,7 @@ function vLogin(){
 }
 function forgotHTML(m){
   if(m==='admin')return '';
+  if(m==='vendor')return '<p class="sm muted" style="margin-top:12px">पासवर्ड भूल गए या वेंडर बनना चाहते हैं? <a class="lnk" target="_blank" rel="noopener" href="'+wa('8318360447','नमस्ते, मैं ShinePro360 जिम स्टोर पर वेंडर बनना चाहता/चाहती हूँ या मेरा पासवर्ड चाहिए। वेंडर ID (अगर है): '+(ui.lv&&ui.lv.code||''))+'">ShinePro360 को WhatsApp करें</a></p>';
   const own=m==='owner',lab=own?'पासवर्ड भूल गए?':'पिन भूल गए?';
   if(ui.forgotDone===m)return '<div role="status" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line,#444)"><b>अनुरोध भेज दिया</b><p class="sm muted" style="margin-top:4px">'+(own?'एडमिन को सूचना चली गई। जल्दी के लिए WhatsApp से भी बता दें। नया पासवर्ड वही भेजेगा।':'आपके जिम ओनर को सूचना चली गई। वह आपको नया पिन भेज देंगे। नंबर या जिम ID गलत होने पर कोई सूचना नहीं जाती।')+'</p>'
     +(own?'<p style="margin-top:8px"><a class="btn gold sm" target="_blank" rel="noopener" href="'+wa('8318360447','नमस्ते, मैं जिम ID '+(ui.forgotCode||'')+' का ओनर हूँ। मेरा पासवर्ड भूल गया है, नया पासवर्ड भेज दें।')+'">WhatsApp से बताएँ</a></p>':'')+'</div>';
@@ -1663,7 +1978,8 @@ function entryState(m){
   const t0=T0().getTime();
   return S.logs.some(l=>l.m===m.id&&l.t==='out'&&l.ts>=t0)?'out':'ready';
 }
-function vMember(){
+function vMember(){const h=vMember0();return h.replace(/(<section class="entry[\s\S]*?<\/section>)/,'$1'+storeBox())}
+function vMember0(){
   const m=S.members.find(x=>x.id===S.me)||S.members[0];
   if(!m)return '<section class="panel"><p class="muted">आपकी जानकारी नहीं मिली। जिम से संपर्क करें।</p></section>';
   const g=gym(m.gym)||{name:'',hasTrainers:false},f=feeInfo(m),s=stats(m.id),used=Math.min(100,Math.max(0,(f.days-f.left)/f.days*100));
@@ -1746,7 +2062,7 @@ function vAdmin(){
   return '<div class="ohead"><div><p class="eyebrow">ShinePro360 एडमिन</p><h1>सभी जिम एक जगह</h1><p class="muted">जिम जोड़ें, ID-पासवर्ड दें और डाइट इंक्वायरी देखें। यहाँ मेंबर के नाम, फ़ीस या हाज़िरी नहीं दिखती।</p></div></div>'
    +'<div class="strip"><div><div class="big">'+S.gyms.length+'</div><div class="lab">जिम जुड़े हैं</div></div><div><div class="big">'+total+'</div><div class="lab">कुल मेंबर</div></div><div><div class="big">'+open+'</div><div class="lab">नई डाइट इंक्वायरी</div></div>'
    +'<div><div class="big">'+inr(paying*fee)+'</div><div class="lab">मासिक कमाई: भुगतान वाले '+paying+' जिम × '+inr(fee)+'</div></div></div>'
-   +carePanel()+cpPanel()+reqPanel()+rrPanel()+canPanel()
+   +storeAdmin()+carePanel()+cpPanel()+reqPanel()+rrPanel()+canPanel()
    +'<div class="cols"><div class="stack"><section class="panel"><h2>नया जिम जोड़ें</h2><form data-form="addgym" class="frm">'
    +'<div><label for="gn">जिम का नाम</label><input id="gn" name="name" required></div><div><label for="go">ओनर का नाम</label><input id="go" name="owner" required></div>'
    +'<div><label for="gph">ओनर का मोबाइल</label><input id="gph" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required></div><div><label for="gc">क्षमता (एक समय में कितने लोग)</label><input id="gc" name="cap" type="number" min="5" max="500" value="25" required></div>'
@@ -1891,10 +2207,30 @@ const ACT={
   openm:b=>{ui.sub='members';ACT.selm(b)},
   calnav:b=>{let m=ui.cal.m+Number(b.dataset.v),y=ui.cal.y;if(m<0){m=11;y--}if(m>11){m=0;y++}ui.cal={y:y,m:m};render()},
   lang:b=>setLang(b.dataset.v),
+  stbox:b=>{ui.stBox=!ui.stBox;render()},
+  stkind:b=>{ui.stKind=b.dataset.v;ui.stOpen=null;render()},
+  stgen:b=>{ui.stGen=b.dataset.v;ui.stOpen=null;render()},
+  stopen:async b=>{const id=b.dataset.id;ui.stOpen=ui.stOpen===id?null:id;render();
+    const s=stS(),p=(s.list||[]).find(x=>x.id===id);
+    if(ui.stOpen&&p&&p.npics>1&&!s.ph[id]){try{s.ph[id]=must(await sb.rpc('store_product_photos',{p_id:id}))||[];render()}catch(e){}}},
+  stclose:b=>{ui.stOpen=null;render()},
+  stvar:b=>{ui.stSel=ui.stSel||{};ui.stSel[b.dataset.id]=b.dataset.v;render()},
+  stadd:b=>{const id=b.dataset.id,p=(stS().list||[]).find(x=>x.id===id);if(!p)return;const v=(ui.stSel||{})[id]||p.variants[0].l,k=id+'|'+v;ui.scart=ui.scart||{};ui.scart[k]=Math.min(99,(ui.scart[k]||0)+1);render();toast('कार्ट में जुड़ गया')},
+  stq:b=>{const k=b.dataset.k;ui.scart=ui.scart||{};const n=(ui.scart[k]||0)+Number(b.dataset.d);if(n<=0)delete ui.scart[k];else ui.scart[k]=Math.min(99,n);render()},
+  vedit:b=>{ui.vEdit=b.dataset.id;ui.vPhotos=[];ui.vDirty=true;render();window.scrollTo({top:0,behavior:'smooth'})},
+  vcancel:b=>{ui.vEdit=null;ui.vPhotos=[];ui.vDirty=false;render()},
+  vtog:async b=>{const p=(stS().list||[]).find(x=>x.id===b.dataset.id);must(await sb.rpc('vendor_product_toggle',{p_id:p.id,p_active:!p.active}));await loadStore(true);render()},
+  vdel:async b=>{if(!confirm('यह प्रोडक्ट हटाएँ?'))return;must(await sb.rpc('vendor_product_delete',{p_id:b.dataset.id}));await loadStore(true);render();toast('हट गया')},
+  stset:async b=>{must(await sb.rpc('store_order_set',{p_id:b.dataset.id,p_status:b.dataset.v}));await refresh();toast('स्थिति बदली')},
+  astog:async b=>{const p=(stS().list||[]).find(x=>x.id===b.dataset.id);must(await sb.rpc('admin_store_product_toggle',{p_id:p.id,p_active:!p.active}));await loadStore(true);render()},
+  venset:async b=>{const v=(S.vendors||[]).find(x=>x.id===b.dataset.id);must(await sb.rpc('admin_vendor_set',{p_id:v.id,p_active:!v.active}));await refresh();toast(v.active?'वेंडर रोका गया':'वेंडर चालू')},
+  venreset:async b=>{const v=(S.vendors||[]).find(x=>x.id===b.dataset.id);if(!confirm(v.name+' का नया पासवर्ड बनाएँ?'))return;const r=await fn({action:'reset_vendor_password',vendor_id:v.id});ui.newVen={name:v.name,code:v.code,pass:r.password,phone:v.phone};render();toast('नया पासवर्ड तैयार')},
+  vendel:async b=>{const v=(S.vendors||[]).find(x=>x.id===b.dataset.id);if(!confirm(v.name+' और उसके सारे प्रोडक्ट हमेशा के लिए हटाएँ?'))return;must(await sb.rpc('admin_vendor_delete',{p_id:v.id}));await loadStore(true);await refresh();toast('वेंडर हट गया')},
+  vnclose:b=>{ui.newVen=null;render()},
   feat:b=>{ui.feat=ui.feat===b.dataset.v?null:b.dataset.v;render()},
   reqopen:b=>{ui.reqOpen=!ui.reqOpen;render();if(ui.reqOpen){const i=$('#rq1');if(i)i.focus()}},
-  fgo:b=>{const v=b.dataset.v;if(v==='live'){const i=$('#pg');if(i){i.scrollIntoView({block:'center',behavior:'smooth'});i.focus()}return}ui.forgot=null;ui.forgotDone=null;ui.lmode=v;ui.err='';lsSet('sp360-mode',v);render();window.scrollTo({top:0,behavior:'smooth'})},
-  lmode:b=>{ui.forgot=null;ui.forgotDone=null;ui.lmode=b.dataset.v;ui.err='';lsSet('sp360-mode',ui.lmode);render()},
+  fgo:b=>{const v=b.dataset.v;if(v==='vwa'){window.open(wa('8318360447','नमस्ते, मैं ShinePro360 जिम स्टोर पर वेंडर बनना चाहता/चाहती हूँ।'),'_blank','noopener');return}if(v==='live'){const i=$('#pg');if(i){i.scrollIntoView({block:'center',behavior:'smooth'});i.focus()}return}ui.forgot=null;ui.forgotDone=null;ui.lmode=v;ui.err='';lsSet('sp360-mode',v);render();window.scrollTo({top:0,behavior:'smooth'})},
+  lmode:b=>{ui.forgot=null;ui.forgotDone=null;ui.lmode=b.dataset.v;ui.err='';ui.feat=null;lsSet('sp360-mode',ui.lmode);render()},
   copy:b=>{const t=b.dataset.t;const fb=()=>{const a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');a.style.cssText='position:fixed;top:0;left:0;opacity:0';document.body.appendChild(a);a.select();a.setSelectionRange(0,t.length);let ok=false;try{ok=document.execCommand('copy')}catch(e){}a.remove();toast(ok?'कॉपी हो गया':t)};
     if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(()=>toast('कॉपी हो गया'),fb);else fb()},
   forceout:async b=>{const id=b.dataset.id;must(await sb.from('attendance').update({checked_out_at:new Date().toISOString()}).eq('member_id',id).is('checked_out_at',null).select());await refresh();toast('मेंबर को बाहर दर्ज कर दिया')},
@@ -1939,6 +2275,21 @@ async function doLogin(email,pw,bad,keep){
   ui.err='';ui.lv={};await enter();
 }
 const FORMS={
+  storeorder:async f=>{const d=new FormData(f),lines=cartRows().map(r=>({pid:r.p.id,v:r.v,n:r.n}));
+    if(!lines.length){toast('कार्ट खाली है');return}
+    const r=must(await sb.rpc('store_order',{p_lines:lines,p_name:String(d.get('name')).trim(),p_phone:String(d.get('phone')).trim(),p_address:String(d.get('addr')).trim(),p_note:String(d.get('note')||'').trim()}));
+    if(r&&r.result==='ok'){ui.scart={};ui.stOpen=null;await loadStore(true);render();toast('ऑर्डर भेज दिया। वेंडर जल्दी संपर्क करेगा')}
+    else if(r&&r.result==='busy')toast('आपके 10 ऑर्डर अभी बाकी हैं। पहले उन पर बात हो जाने दें')
+    else toast('जानकारी जाँचें: मोबाइल 10 अंक का, पता कम से कम 5 अक्षर का')},
+  vsave:async f=>{const d=new FormData(f),vars=parseVars(d.get('vars')),k=(S.vend||{}).kind;
+    if(!vars.length){toast('साइज़ और रेट ऐसे लिखें: M=399, L=449');return}
+    if(!ui.vEdit&&!(ui.vPhotos||[]).length&&!confirm('फ़ोटो के बिना जोड़ें? फ़ोटो से बिक्री ज़्यादा होती है।'))return;
+    must(await sb.rpc('vendor_product_save',{p_id:ui.vEdit||null,p_name:String(d.get('name')).trim(),p_descr:String(d.get('descr')||'').trim(),p_gender:k==='wear'?String(d.get('gender')||'unisex'):'na',p_variants:vars,p_photos:(ui.vPhotos||[]).length?ui.vPhotos:null,p_active:true}));
+    ui.vEdit=null;ui.vPhotos=[];ui.vDirty=false;await loadStore(true);render();toast('प्रोडक्ट सेव हो गया')},
+  addvendor:async f=>{const d=new FormData(f),name=String(d.get('name')).trim(),phone=String(d.get('phone')).trim();
+    const r=await fn({action:'create_vendor',name:name,contact_name:String(d.get('contact')||'').trim(),phone:phone,city:String(d.get('city')||'').trim(),kind:String(d.get('kind'))});
+    ui.newVen={name:name,code:r.code,pass:r.password,phone:phone};await refresh();toast('वेंडर जुड़ गया')},
+  'login-vendor':f=>{const d=new FormData(f);return doLogin(emailOf.vendor(d.get('code')),String(d.get('pass')),'वेंडर ID या पासवर्ड गलत है।',{code:d.get('code')})},
   cpsave:async f=>{const d=new FormData(f),n=k=>{const v=parseFloat(d.get(k));return isFinite(v)?v:null};
     if(!ui.cpEdit&&!ui.cpPhoto&&!confirm('फ़ोटो के बिना जोड़ें?'))return;
     must(await sb.rpc('admin_care_product_save',{p_id:ui.cpEdit||null,p_cat:String(d.get('cat')),p_name:String(d.get('name')).trim(),p_qty:n('qty'),p_unit:String(d.get('unit')),p_price:n('price'),p_photo:ui.cpPhoto||null,p_active:true}));
@@ -2007,19 +2358,19 @@ document.addEventListener('input',e=>{const t=e.target;if(!t.dataset)return;
   if(t.dataset.inp==='fee'){ui.fee=t.value;const fee=Number(t.value)||0,e1=$('#feeTot');if(e1)e1.textContent=inr(S.gyms.filter(g=>g.sub==='paid').length*fee)}});
 
 /* ---------- sign-in, routing, render ---------- */
-const HOME={admin:'admin',owner:'owner',member:'member'};
-const ALLOWED={admin:['admin'],owner:['owner','gate'],member:['member']};
-const NAVS={admin:[['admin','ShinePro360 एडमिन']],owner:[['owner','जिम ओनर'],['gate','गेट QR स्क्रीन']],member:[['member','मेंबर ऐप']]};
+const HOME={admin:'admin',owner:'owner',member:'member',vendor:'vendor'};
+const ALLOWED={admin:['admin'],owner:['owner','gate'],member:['member'],vendor:['vendor']};
+const NAVS={admin:[['admin','ShinePro360 एडमिन']],owner:[['owner','जिम ओनर'],['gate','गेट QR स्क्रीन']],member:[['member','मेंबर ऐप']],vendor:[['vendor','वेंडर पैनल']]};
 function routeNow(){
   if(!S.role)return 'login';
   const r=(location.hash||'').slice(1),ok=ALLOWED[S.role]||[];
   return ok.indexOf(r)>=0?r:HOME[S.role];
 }
-const ROUTES={login:vLogin,owner:()=>cancelBanner()+((S.resets||[]).length?'<p class="scan warn" style="margin-bottom:16px" role="status"><b>कुछ मेंबर ने पिन भूलने का अनुरोध भेजा है।</b> <span class="num">'+S.resets.length+'</span><br><span class="sm">मेंबर और फ़ीस में जाकर नया पिन बनाएँ।</span></p>':'')+vOwner(),gate:vGate,member:vMember,admin:vAdmin};
+const ROUTES={login:vLogin,owner:()=>cancelBanner()+((S.resets||[]).length?'<p class="scan warn" style="margin-bottom:16px" role="status"><b>कुछ मेंबर ने पिन भूलने का अनुरोध भेजा है।</b> <span class="num">'+S.resets.length+'</span><br><span class="sm">मेंबर और फ़ीस में जाकर नया पिन बनाएँ।</span></p>':'')+vOwner(),gate:vGate,member:vMember,admin:vAdmin,vendor:vVendor};
 async function enter(){
   const sess=(await sb.auth.getSession()).data.session;
   if(!sess){ui.loading=false;S=BLANK();render();return}
-  const au=await sb.from('app_users').select('role,gym_id,member_id').eq('user_id',sess.user.id).maybeSingle();
+  const au=await sb.from('app_users').select('role,gym_id,member_id,vendor_id').eq('user_id',sess.user.id).maybeSingle();
   if(au.error||!au.data){try{await sb.auth.signOut()}catch(e){}S=BLANK();ui.loading=false;ui.err='आपके खाते को कोई भूमिका नहीं मिली। ShinePro360 से संपर्क करें।';render();return}
   S=BLANK();S.role=au.data.role;S.sess=au.data.gym_id||'';S.me=au.data.member_id||'';
   try{await loadAll()}catch(e){S=BLANK();ui.loading=false;ui.err=errH(e&&e.message);render();return}
@@ -2048,7 +2399,7 @@ setInterval(async()=>{
   ui.pollN=(ui.pollN||0)+1;
   try{await loadAll(ui.pollN%20!==0)}catch(e){return}
   const sel=window.getSelection&&String(window.getSelection()||'');
-  if(sel||ui.newPin||ui.newGym||ui.cpDirty)return;
+  if(sel||ui.newPin||ui.newGym||ui.newVen||ui.cpDirty||ui.vDirty)return;
   if(r==='gate'){const c=$('#gcount');if(c)c.textContent=insideOf(S.sess).length}else render();
 },15000);
 async function checkUpdate(){
