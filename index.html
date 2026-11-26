@@ -352,52 +352,6 @@ main.wrap{padding-inline:28px}
 .rc-vendor .ri{background:#efe3fb;color:#6b2fa3}
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]) .rc-vendor .ri{background:#3a2a52;color:#d7b8f5}}
 :root[data-theme=dark] .rc-vendor .ri{background:#3a2a52;color:#d7b8f5}
-
-.rc .rs{display:block;font-size:10.5px;color:var(--muted);font-weight:500;line-height:1.2;margin-top:2px}
-.rc[aria-pressed=true] .rs{color:var(--fg)}
-.hintbox{display:flex;gap:8px;align-items:flex-start;margin:0 0 16px;padding:10px 12px;border-radius:12px;background:var(--info-bg);font-size:14px;line-height:1.45}
-.strip{border:0;background:none;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
-.strip>div{background:var(--surface);border:1px solid var(--line)!important;border-top:4px solid var(--gold-btn)!important;border-radius:14px;padding:12px 14px;box-shadow:0 1px 6px rgba(18,37,74,.06)}
-.strip .big{font-size:34px}
-@media (min-width:760px){.strip{grid-template-columns:repeat(4,minmax(0,1fr))}}
-.fold{margin-bottom:16px;padding:0!important}
-.fold>summary{padding:14px 16px;cursor:pointer;font-weight:700;min-height:48px;display:flex;align-items:center;gap:8px}
-.fold[open]>summary{border-bottom:1px solid var(--line)}
-.fold>.panel,.fold>section{border:0!important;box-shadow:none!important;margin:0!important;padding:14px 16px!important}
-.backl{margin:0 0 8px}
-.morelist{display:grid;gap:10px}
-.morerow{font:inherit;color:inherit;text-decoration:none;display:flex;align-items:center;gap:14px;text-align:left;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);min-height:64px;cursor:pointer;width:100%}
-.mi{width:44px;height:44px;border-radius:12px;background:var(--warn-bg);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
-.morerow .mt,.obl .mt{flex:1;min-width:0}.morerow b{display:block}.morerow small{color:var(--muted);font-size:12px}
-.morerow .fc{font-size:22px;font-style:normal;color:var(--muted)}
-.ob{border:2px solid var(--gold-btn)!important;margin-bottom:16px}
-.obl{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:10px}
-.obl li{display:flex;align-items:center;gap:12px}
-.obl li.ok .mi{background:var(--ok-bg);color:var(--ok)}
-.obl li.ok b{text-decoration:line-through;color:var(--muted)}
-.sub [data-v=more]::before{content:"☰"}
-@media (max-width:999px){
-body:has(.odash){padding-bottom:88px}
-body:has(.odash) .upd,body:has(.odash) .toast{bottom:92px}
-.odash .sub{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:0;padding:6px 6px calc(6px + env(safe-area-inset-bottom));background:var(--surface);border:0;border-top:1px solid var(--line-strong);border-radius:0;box-shadow:0 -4px 16px rgba(18,37,74,.12);overflow:visible}
-.odash .sub [data-v=trainers],.odash .sub [data-v=diet],.odash .sub [data-v=backup]{display:none}
-.odash .sub button{flex-direction:column;justify-content:center;gap:2px;border:0;border-radius:12px;box-shadow:none;background:transparent;min-height:56px;padding:6px 2px;font-size:12px;white-space:normal;color:var(--muted);width:auto}
-.odash .sub button::before{font-size:22px}
-.odash .sub button[aria-pressed=true]{background:var(--head-bg);color:#fff}
-}
-@media (min-width:1000px){.sub [data-v=more]{display:none}.backl{display:none}}
-
-.mnav{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px}
-.mnav button{font:inherit;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:56px;padding:6px 2px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer}
-.mnav button span{font-size:22px;line-height:1}.mnav button b{font-size:12px;font-weight:600}
-.mnav button[aria-pressed=true]{background:var(--head-bg);color:#fff;border-color:var(--head-bg)}
-@media (max-width:999px){
-body:has(.mnav){padding-bottom:88px}
-body:has(.mnav) .upd,body:has(.mnav) .toast{bottom:92px}
-.mnav{position:fixed;left:0;right:0;bottom:0;z-index:30;gap:0;margin:0;padding:6px 6px calc(6px + env(safe-area-inset-bottom));background:var(--surface);border-top:1px solid var(--line-strong);box-shadow:0 -4px 16px rgba(18,37,74,.12)}
-.mnav button{border:0;border-radius:12px;background:transparent}
-.mnav button[aria-pressed=true]{background:var(--head-bg);color:#fff}
-}
 </style>
 </head>
 <body>
@@ -1119,34 +1073,7 @@ const EXTRA={
 "कुल": "Total",
 "लड़कों और लड़कियों के कपड़े, साइज़ के हिसाब से रेट": "Clothes for boys and girls, price by size",
 "कपड़ा, रंग, मटेरियल, वारंटी वगैरह": "Fabric, colour, material, warranty etc.",
-"फ़ोटो का नमूना": "Sample photo",
-"जिम चलाते हैं": "Run a gym",
-"जिम जाते हैं": "Go to a gym",
-"सामान बेचते हैं": "Sell products",
-"दो चीज़ें डालें: जिम ID (जैसे SP360-001) और पासवर्ड। दोनों ShinePro360 से मिले हैं।": "Enter two things: Gym ID (e.g. SP360-001) and password. Both are given by ShinePro360.",
-"तीन चीज़ें डालें: जिम की ID (जिम से मिलती है), आपका मोबाइल नंबर और 6 अंकों का पिन। लॉगिन के बाद आपको सिर्फ़ अपनी फ़ीस, अपनी हाज़िरी, डाइट और जिम की भीड़ दिखेगी।": "Enter three things: Gym ID (from your gym), your mobile number and a 6-digit PIN. After login you will see only your own fee, attendance, diet and the gym crowd.",
-"दो चीज़ें डालें: वेंडर ID (जैसे VND-001) और पासवर्ड। दोनों ShinePro360 से मिले हैं।": "Enter two things: Vendor ID (e.g. VND-001) and password. Both are given by ShinePro360.",
-"यह सिर्फ़ ShinePro360 के एडमिन के लिए है। ईमेल और पासवर्ड डालें।": "This is only for the ShinePro360 admin. Enter email and password.",
-"स्टोर": "Store",
-"सेटिंग": "Settings",
-"जुड़ा": "Joined",
-"नया पिन चाहिए": "Needs new PIN",
-"ट्रेनर जोड़ें और मेंबर को असाइन करें": "Add trainers and assign members",
-"मेंबर की डाइट इंक्वायरी": "Member diet inquiries",
-"जिम के गेट पर चलाने वाली QR स्क्रीन": "QR screen to run at the gym gate",
-"सेटिंग और बैकअप": "Settings & backup",
-"फ़ीस रेट, जगह, QR का तरीका, डेटा बैकअप": "Fee rates, location, QR method, data backup",
-"शुरू करने के 4 कदम": "4 steps to get started",
-"पूरे हुए": "done",
-"पहला मेंबर जोड़ें": "Add your first member",
-"फ़ीस रेट जाँचें": "Check fee rates",
-"गेट QR खोलें और प्रिंट करें": "Open and print the gate QR",
-"QR खोलें": "Open QR",
-"एक स्कैन टेस्ट करें": "Do one test scan",
-"मेंबर की डाइट इंक्वायरी (1 नई)": "Member diet inquiries (1 new)",
-"होम": "Home",
-"मेंबर मेन्यू": "Member menu",
-"अभी वर्कआउट नहीं मिला।": "No workout found yet."
+"फ़ोटो का नमूना": "Photo preview"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -1233,8 +1160,8 @@ function mTable(){
   const F={all:()=>true,bad:m=>feeInfo(m).st==='bad',soon:m=>{const f=feeInfo(m);return f.left>0&&f.left<=5},due:m=>feeInfo(m).due>0,churn:m=>{const s=stats(m.id).since;return s!==null&&s>=7}};
   ms=ms.filter(F[ui.filt]||F.all).sort((a,b)=>feeInfo(a).left-feeInfo(b).left);
   if(!ms.length)return '<p class="muted" style="padding:16px">कोई मेंबर नहीं मिला।</p>';
-  return '<table><thead><tr><th>नाम</th><th>प्लान</th><th>जुड़ा</th><th>स्थिति</th><th>वैधता तक</th><th>बाकी रकम</th><th>आखिरी विज़िट</th><th>आमतौर पर आना</th></tr></thead><tbody>'
-   +ms.map(m=>{const f=feeInfo(m),s=stats(m.id);return '<tr data-act="selm" data-id="'+m.id+'" class="'+(ui.sel===m.id?'sel':'')+'"><td><button class="lnk" type="button" data-act="selm" data-id="'+m.id+'">'+esc(m.name)+'</button>'+(m.inside?' <span class="pill ok">अंदर</span>':'')+'</td><td>'+m.months+' माह</td><td class="num">'+(m.joined?fd(new Date(m.joined)):'–')+'</td><td><span class="pill '+f.st+'">'+f.lab+'</span></td><td class="num">'+fd(f.last)+'</td><td class="num">'+(f.due?inr(f.due):'–')+'</td><td>'+(s.since==null?'–':s.since===0?'आज':s.since+' दिन पहले')+'</td><td class="num">'+(s.avgIn==null?'–':ftm(s.avgIn))+'</td></tr>'}).join('')+'</tbody></table>';
+  return '<table><thead><tr><th>नाम</th><th>प्लान</th><th>स्थिति</th><th>वैधता तक</th><th>बाकी रकम</th><th>आखिरी विज़िट</th><th>आमतौर पर आना</th></tr></thead><tbody>'
+   +ms.map(m=>{const f=feeInfo(m),s=stats(m.id);return '<tr data-act="selm" data-id="'+m.id+'" class="'+(ui.sel===m.id?'sel':'')+'"><td><button class="lnk" type="button" data-act="selm" data-id="'+m.id+'">'+esc(m.name)+'</button>'+(m.inside?' <span class="pill ok">अंदर</span>':'')+'</td><td>'+m.months+' माह</td><td><span class="pill '+f.st+'">'+f.lab+'</span></td><td class="num">'+fd(f.last)+'</td><td class="num">'+(f.due?inr(f.due):'–')+'</td><td>'+(s.since==null?'–':s.since===0?'आज':s.since+' दिन पहले')+'</td><td class="num">'+(s.avgIn==null?'–':ftm(s.avgIn))+'</td></tr>'}).join('')+'</tbody></table>';
 }
 function vMembers(){
   const g=gOwn(),F=[['all','सभी'],['bad','फ़ीस खत्म'],['soon','जल्द खत्म'],['due','बाकी रकम'],['churn','7+ दिन गैरहाज़िर']];
@@ -1281,7 +1208,7 @@ function vOwnerDiet(){
   const g=gOwn();
   return '<section><h2 style="margin-bottom:6px">डाइट इंक्वायरी</h2><p class="muted" style="margin-bottom:12px">आपके जिम के मेंबर ने डाइटिशियन के लिए जो फ़ॉर्म भरा, वह यहाँ दिखता है। ShinePro360 की टीम मेंबर से बात करके डाइटिशियन से जोड़ती है।</p><div class="tw">'+dietRows(S.diets.filter(d=>d.gym===g.id).sort((a,b)=>b.ts-a.ts),false)+'</div></section>';
 }
-function vToday0(){
+function vToday(){
   const g=gOwn(),ms=S.members.filter(m=>m.gym===g.id),ids=new Set(ms.map(m=>m.id)),t0=T0().getTime();
   const ins=ms.filter(m=>m.inside),lv=level(ins.length,g.capacity);
   const entries=S.logs.filter(l=>ids.has(l.m)&&l.t==='in'&&l.ts>=t0).length;
@@ -1308,15 +1235,15 @@ function vToday0(){
 }
 function vOwner(){
   const g=gOwn();
-  const subs=[['today','आज'],['members','मेंबर'],['trainers','ट्रेनर'],['diet','डाइट'],['store','स्टोर'],['backup','सेटिंग'],['more','ज़्यादा']];
+  const subs=[['today','आज'],['members','मेंबर और फ़ीस'],['trainers','ट्रेनर'],['diet','डाइट इंक्वायरी'],['store','जिम स्टोर'],['care','जिम केयर प्रोडक्ट'],['backup','जिम सेटिंग और बैकअप']];
   return '<div class="ohead"><div><p class="eyebrow">जिम ओनर पैनल</p><h1>'+esc(g.name)+'</h1><p class="muted">'+esc(g.address)+' · ID '+esc(g.code)+' · <span class="pill '+svc(g).c+'">'+svc(g).t+'</span></p></div></div>'
-   +'<div class="odash"><div class="sub" role="group" aria-label="पैनल के हिस्से">'+subs.map(s=>'<button type="button" data-act="sub" data-v="'+s[0]+'" aria-pressed="'+(ui.sub===s[0]||(s[0]==='more'&&['trainers','diet','backup'].indexOf(ui.sub)>=0))+'">'+s[1]+'</button>').join('')+'</div>'
-   +'<div class="obody">'+({today:vTodayN,members:vMembersP,trainers:()=>backL()+vTrainers(),diet:()=>backL()+vOwnerDiet(),store:()=>vStore("owner"),more:vMore,backup:()=>backL("backup")+vBackup()}[ui.sub]||vToday)()+'</div></div>';
+   +'<div class="odash"><div class="sub" role="group" aria-label="पैनल के हिस्से">'+subs.map(s=>'<button type="button" data-act="sub" data-v="'+s[0]+'" aria-pressed="'+(ui.sub===s[0])+'">'+s[1]+'</button>').join('')+'</div>'
+   +'<div class="obody">'+({today:vToday,members:vMembersP,trainers:vTrainers,diet:vOwnerDiet,store:()=>vStore("owner"),care:vCare,backup:vBackup}[ui.sub]||vToday)()+'</div></div>';
 }
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v28';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v26';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -1404,7 +1331,7 @@ async function loadAll(light){
   if(g){const s=subOf(g.trial_start,g.paid_until);N.gyms=[{id:g.id,code:g.code,name:g.name,owner:g.owner_name,phone:g.owner_phone,address:g.address,capacity:g.capacity,hasTrainers:g.has_trainers,qrMode:g.qr_mode||'rotating',fees:g.plan_fees||{},lat:g.lat,lng:g.lng,radius:g.radius_m||150,locCheck:g.loc_check!==false,cancelOn:g.cancel_on||null,sub:s.sub,trialLeft:s.trialLeft}];N.sess=g.id;if(g.plan_fees)['1','3','6','12'].forEach(k=>{if(g.plan_fees[k]!=null)PLAN[k]=Number(g.plan_fees[k])})}
   N.trainers=(must(tr)||[]).map(t=>({id:t.id,gym:t.gym_id,name:t.name,phone:t.phone||'',spec:t.speciality||''}));
   const fee={};(must(fv)||[]).forEach(f=>{fee[f.member_id]=f});
-  const allM=(must(mm)||[]).map(m=>{const f=fee[m.id]||{};return{active:m.active!==false,id:m.id,gym:m.gym_id,name:m.name,phone:m.phone,months:f.months||1,total:f.total_fee||0,paid:f.paid||0,start:f.start_date||iso(T0()),lastPaid:f.last_paid_on||f.start_date||iso(T0()),trainer:m.trainer_id||'',joined:m.created_at||null,msId:f.membership_id||null,inside:false,inTs:0}});
+  const allM=(must(mm)||[]).map(m=>{const f=fee[m.id]||{};return{active:m.active!==false,id:m.id,gym:m.gym_id,name:m.name,phone:m.phone,months:f.months||1,total:f.total_fee||0,paid:f.paid||0,start:f.start_date||iso(T0()),lastPaid:f.last_paid_on||f.start_date||iso(T0()),trainer:m.trainer_id||'',msId:f.membership_id||null,inside:false,inTs:0}});
   N.members=allM.filter(m=>m.active);N.off=allM.filter(m=>!m.active);
   if(lt)N.logs=S.logs.filter(l=>l.ts<sinceMs);
   const byId={};N.members.forEach(m=>{byId[m.id]=m});const cut=Date.now()-6*36e5;
@@ -1479,11 +1406,10 @@ function orderLines(L){
 function vStore(role){
   ensureStore();
   const s=stS(),all=(s.list||[]).filter(p=>role==='member'?p.kind==='wear':true),kind=role==='member'?'wear':(ui.stKind||'wear'),gen=ui.stGen||'all';
-  if(kind==='care'&&role==='owner'){const ch=SKIND.concat([['care','🧴','जिम केयर','']]).map(k=>'<button type="button" data-act="stkind" data-v="'+k[0]+'" aria-pressed="'+(k[0]==='care')+'"><span aria-hidden="true">'+k[1]+'</span> '+k[2]+'</button>').join('');return '<section class="panel storebox"><h2>🛍️ जिम स्टोर</h2><div class="chips skinds" role="group" aria-label="श्रेणी">'+ch+'</div></section>'+vCare()}
   const ps=all.filter(p=>p.kind===kind&&(kind!=='wear'||gen==='all'||p.gender===gen||p.gender==='unisex'));
   const op=ui.stOpen?all.find(p=>p.id===ui.stOpen):null,rows=cartRows(),total=rows.reduce((a,r)=>a+r.n*r.price,0),mine=s.mine||[];
   const me=role==='owner'?gOwn():(S.members.find(x=>x.id===S.me)||{});
-  const kc=role==='member'?'':'<div class="chips skinds" role="group" aria-label="श्रेणी">'+SKIND.concat([['care','🧴','जिम केयर','']]).map(k=>'<button type="button" data-act="stkind" data-v="'+k[0]+'" aria-pressed="'+(kind===k[0])+'"><span aria-hidden="true">'+k[1]+'</span> '+k[2]+' <span class="num">'+(k[0]==='care'?'':all.filter(p=>p.kind===k[0]).length)+'</span></button>').join('')+'</div>';
+  const kc=role==='member'?'':'<div class="chips skinds" role="group" aria-label="श्रेणी">'+SKIND.map(k=>'<button type="button" data-act="stkind" data-v="'+k[0]+'" aria-pressed="'+(kind===k[0])+'"><span aria-hidden="true">'+k[1]+'</span> '+k[2]+' <span class="num">'+all.filter(p=>p.kind===k[0]).length+'</span></button>').join('')+'</div>';
   const gc=kind==='wear'?'<div class="chips" role="group" aria-label="किसके लिए">'+[['all','सभी'],['boys','लड़के'],['girls','लड़कियाँ']].map(g=>'<button type="button" data-act="stgen" data-v="'+g[0]+'" aria-pressed="'+(gen===g[0])+'">'+g[1]+'</button>').join('')+'</div>':'';
   return '<section class="panel storebox"><h2>🛍️ जिम स्टोर</h2><p class="muted sm" style="margin-bottom:10px">'+(role==='member'?'जिम के कपड़े, लड़कों और लड़कियों दोनों के। साइज़ चुनें, रेट देखें और ऑर्डर करें।':'जिम वेयर, इक्विपमेंट, इंटीरियर और बाकी सामान सीधे वेंडर से। फ़ोटो देखें और ऑर्डर या पूछताछ भेजें।')+'</p>'
    +kc+gc
@@ -1692,53 +1618,7 @@ function resetPanel(){
   return '<section class="panel" style="margin-bottom:16px"><h2>पिन भूलने के अनुरोध</h2><p class="muted sm" style="margin-bottom:8px">इन मेंबर्स ने पिन भूलने का अनुरोध भेजा है। नया पिन बनाकर WhatsApp से भेज दें।</p><ul class="feed">'
    +q.map(x=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span><b>'+esc(x.name)+'</b><br><span class="muted sm num">'+esc(x.phone)+'</span></span><button class="btn gold sm" type="button" data-act="resetpin" data-id="'+x.id+'">नया पिन बनाएँ</button></li>').join('')+'</ul></section>';
 }
-function fold(ic,title,n,html,open){
-  return '<details class="panel fold"'+(open?' open':'')+'><summary><span aria-hidden="true">'+ic+'</span> '+title+' <span class="pill warn num">'+n+'</span></summary>'+html+'</details>';
-}
-function vMembersP(){
-  const g=gOwn(),ms=S.members.filter(m=>m.gym===g.id),bad=ms.filter(m=>feeInfo(m).st==='bad').length,soon=ms.filter(m=>{const f=feeInfo(m);return f.left>0&&f.left<=5}).length;
-  const rs=S.resets||[],rem=ms.filter(m=>{const f=feeInfo(m);return f.left<=5||f.due>0}).length;
-  return '<div class="strip sum"><div><div class="big">'+ms.length+'</div><div class="lab">कुल मेंबर</div></div><div><div class="big" style="color:var(--ok)">'+(ms.length-bad)+'</div><div class="lab">चालू</div></div>'
-   +'<div><div class="big" style="color:'+(bad?'var(--bad)':'inherit')+'">'+bad+'</div><div class="lab">फ़ीस खत्म</div></div><div><div class="big">'+soon+'</div><div class="lab">जल्द खत्म</div></div></div>'
-   +pinBox()
-   +(rs.length?fold('🔑','नया पिन चाहिए',rs.length,resetPanel()):'')
-   +(rem?fold('💬','फ़ीस याद दिलाएँ',rem,remList()):'')
-   +vMembers()+offList();
-}
-function backL(k){
-  if(k==='backup'){try{lsSet('sp360-ob-fee-'+gOwn().id,'1')}catch(e){}}
-  return '<p class="backl"><button type="button" class="lnk" data-act="sub" data-v="more">‹ ज़्यादा</button></p>';
-}
-function vMore(){
-  const nd=(S.diets||[]).filter(d=>d.gym===gOwn().id&&d.status===DSTAT[0]).length;
-  const row=(ic,t,s,att)=>'<'+(att.href?'a href="'+att.href+'"':'button type="button" data-act="sub" data-v="'+att.v+'"')+' class="morerow"><span class="mi" aria-hidden="true">'+ic+'</span><span class="mt"><b>'+t+'</b><small>'+s+'</small></span><i class="fc" aria-hidden="true">›</i></'+(att.href?'a':'button')+'>';
-  return '<h2 style="margin-bottom:12px">ज़्यादा</h2><div class="morelist">'
-   +row('🏋️','ट्रेनर','ट्रेनर जोड़ें और मेंबर को असाइन करें',{v:'trainers'})
-   +row('🥗','डाइट इंक्वायरी','मेंबर की डाइट इंक्वायरी'+(nd?' ('+nd+' नई)':''),{v:'diet'})
-   +row('📱','गेट QR स्क्रीन','जिम के गेट पर चलाने वाली QR स्क्रीन',{href:'#gate'})
-   +row('⚙️','सेटिंग और बैकअप','फ़ीस रेट, जगह, QR का तरीका, डेटा बैकअप',{v:'backup'})
-   +'</div>';
-}
-function obSteps(g,ms){
-  const k=x=>{try{return lsGet('sp360-ob-'+x+'-'+g.id)==='1'}catch(e){return false}};
-  return [['👥','पहला मेंबर जोड़ें',ms.length>0,'मेंबर','members'],['💰','फ़ीस रेट जाँचें',k('fee'),'सेटिंग','backup'],['📱','गेट QR खोलें और प्रिंट करें',k('qr'),'QR खोलें','#gate'],['✅','एक स्कैन टेस्ट करें',S.logs.some(l=>ms.some(m=>m.id===l.m)),'मेंबर के फ़ोन से स्कैन करें',null]];
-}
-function obHTML(g,ms){
-  let hid=false;try{hid=lsGet('sp360-ob-hide-'+g.id)==='1'}catch(e){}
-  if(hid)return '';
-  const st=obSteps(g,ms),done=st.filter(x=>x[2]).length;if(done===st.length)return '';
-  return '<section class="panel ob"><div class="row sp"><h2>शुरू करने के 4 कदम</h2><button type="button" class="lnk" data-act="obhide">✕ छिपाएँ</button></div><p class="muted sm" style="margin-bottom:8px"><b class="num">'+done+'/4</b> पूरे हुए</p><div class="prog" aria-hidden="true"><i style="width:'+(done*25)+'%"></i></div><ol class="obl">'
-   +st.map(x=>'<li class="'+(x[2]?'ok':'')+'"><span class="mi" aria-hidden="true">'+(x[2]?'✔':x[0])+'</span><span class="mt"><b>'+x[1]+'</b></span>'+(x[2]?'':(x[4]?(x[4].charAt(0)==='#'?'<a class="btn gold sm" data-act="obqr" href="'+x[4]+'">'+x[3]+'</a>':'<button type="button" class="btn gold sm" data-act="sub" data-v="'+x[4]+'">'+x[3]+'</button>'):'<span class="muted sm">'+x[3]+'</span>'))+'</li>').join('')+'</ol></section>';
-}
-function vTodayN(){
-  const g=gOwn(),ms=S.members.filter(m=>m.gym===g.id),d=document.createElement('div');
-  d.innerHTML=vToday0();
-  const keys=['bad','soon','churn'];
-  d.querySelectorAll('.alert').forEach((a,i)=>{const lis=a.querySelectorAll('ul>li');if(lis.length>3){for(let j=3;j<lis.length;j++)lis[j].remove();const ul=a.querySelector('ul');const li=document.createElement('li');li.innerHTML='<button type="button" class="lnk" data-act="gofilt" data-v="'+(keys[i]||'all')+'">सभी '+lis.length+' देखें ›</button>';ul.appendChild(li)}});
-  return obHTML(g,ms)+d.innerHTML;
-}
-function vToday(){return vTodayN()}
-
+function vMembersP(){return pinBox()+resetPanel()+remList()+vMembers()+offList()}
 const ROLEIC={
  owner:'<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l2-5h14l2 5"/><path d="M4 10v9h16v-9"/><path d="M9 19v-5h6v5"/></svg>',
  member:'<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>',
@@ -1860,29 +1740,29 @@ function heroHTML(){
 }
 function vLogin(){
   const m=ui.lmode,lv=ui.lv||{};
-  const tabs=[['owner','जिम ओनर','जिम चलाते हैं'],['member','मेंबर','जिम जाते हैं'],['vendor','वेंडर','सामान बेचते हैं'],['admin','एडमिन','ShinePro360']];
+  const tabs=[['owner','जिम ओनर'],['member','मेंबर'],['vendor','वेंडर'],['admin','एडमिन']];
   let f,hint;
   if(m==='member'){
     f='<div class="full"><label for="lg">जिम ID</label><input id="lg" name="code" value="'+esc(lv.code||lsGet('sp360-gym')||'')+'" autocapitalize="characters" placeholder="SP360-001" required></div>'
      +'<div class="full"><label for="mph">मोबाइल नंबर</label><input id="mph" name="phone" inputmode="numeric" maxlength="10" value="'+esc(lv.phone||'')+'" autocomplete="username" required></div>'
      +'<div class="full"><label for="mpn">पिन</label><input id="mpn" name="pin" type="password" inputmode="numeric" maxlength="6" autocomplete="current-password" required></div>';
-    hint='तीन चीज़ें डालें: जिम की ID (जिम से मिलती है), आपका मोबाइल नंबर और 6 अंकों का पिन। लॉगिन के बाद आपको सिर्फ़ अपनी फ़ीस, अपनी हाज़िरी, डाइट और जिम की भीड़ दिखेगी।';
+    hint='जिम से मिली जिम ID, अपना मोबाइल नंबर और 6 अंकों का पिन डालें। लॉगिन के बाद आपको सिर्फ़ अपनी फ़ीस, अपनी हाज़िरी, डाइट और जिम की भीड़ दिखेगी।';
   }else if(m==='vendor'){
     f='<div class="full"><label for="lv">वेंडर ID</label><input id="lv" name="code" value="'+esc(lv.code||'')+'" autocomplete="username" autocapitalize="characters" placeholder="VND-001" required></div>'
      +'<div class="full"><label for="lpw">पासवर्ड</label><input id="lpw" name="pass" type="password" autocomplete="current-password" required></div>';
-    hint='दो चीज़ें डालें: वेंडर ID (जैसे VND-001) और पासवर्ड। दोनों ShinePro360 से मिले हैं।';
+    hint='जिम वेयर बनाने वाले, इक्विपमेंट सप्लायर और इंटीरियर वालों के लिए। ShinePro360 से मिली वेंडर ID और पासवर्ड डालें।';
   }else if(m==='admin'){
     f='<div class="full"><label for="le">ईमेल</label><input id="le" name="email" type="email" value="'+esc(lv.email||'')+'" autocomplete="username" required></div>'
      +'<div class="full"><label for="lpw">पासवर्ड</label><input id="lpw" name="pass" type="password" autocomplete="current-password" required></div>';
-    hint='यह सिर्फ़ ShinePro360 के एडमिन के लिए है। ईमेल और पासवर्ड डालें।';
+    hint='सिर्फ़ ShinePro360 के एडमिन के लिए।';
   }else{
     f='<div class="full"><label for="lid">जिम ID</label><input id="lid" name="code" value="'+esc(lv.code||'')+'" autocomplete="username" autocapitalize="characters" placeholder="SP360-001" required></div>'
      +'<div class="full"><label for="lpw">पासवर्ड</label><input id="lpw" name="pass" type="password" autocomplete="current-password" required></div>';
-    hint='दो चीज़ें डालें: जिम ID (जैसे SP360-001) और पासवर्ड। दोनों ShinePro360 से मिले हैं।';
+    hint='ShinePro360 से मिली जिम ID और पासवर्ड डालें। हर जिम को सिर्फ़ अपना डेटा दिखता है।';
   }
-  return '<div class="lgrid"><div class="lc lc1"><div class="panel lp" style="max-width:460px">'+'<div class="roles" role="group" aria-label="लॉगिन का प्रकार">'+tabs.map(t=>'<button type="button" class="rc rc-'+t[0]+'" data-act="lmode" data-v="'+t[0]+'" aria-pressed="'+(m===t[0])+'"><span class="ri">'+ROLEIC[t[0]]+'</span><span class="rt">'+t[1]+'</span><small class="rs">'+t[2]+'</small></button>').join('')+'</div>'
+  return '<div class="lgrid"><div class="lc lc1"><div class="panel lp" style="max-width:460px">'+'<div class="roles" role="group" aria-label="लॉगिन का प्रकार">'+tabs.map(t=>'<button type="button" class="rc rc-'+t[0]+'" data-act="lmode" data-v="'+t[0]+'" aria-pressed="'+(m===t[0])+'"><span class="ri">'+ROLEIC[t[0]]+'</span><span class="rt">'+t[1]+'</span></button>').join('')+'</div>'
    +'<h1 class="lh">अपने खाते में लॉगिन करें</h1>'
-   +'<p class="hintbox"><span aria-hidden="true">ℹ️</span> '+hint+'</p>'
+   +'<p class="muted" style="margin:0 0 16px">'+hint+'</p>'
    +'<form data-form="login-'+m+'" class="frm">'+f+(ui.err?'<p class="err full" role="alert">'+esc(ui.err)+'</p>':'')+'<div class="full"><button class="btn" type="submit">लॉगिन</button></div></form>'+forgotHTML(m)+'</div>'
    +'<div class="panel livebox" style="max-width:460px;margin-top:16px"><h2><i class="livedot" aria-hidden="true"></i>जिम लाइव भीड़ <span class="livetag">LIVE</span></h2><p class="muted sm" style="margin-bottom:10px">जिम जाने से पहले देखें कितनी भीड़ है। लॉगिन के बिना भी। सिर्फ़ भीड़ का स्तर दिखता है, किसी का नाम नहीं।</p>'
    +'<form data-form="pubcrowd" class="frm"><div><label for="pg">जिम ID</label><input id="pg" name="code" value="'+esc(lsGet('sp360-gym')||'')+'" autocapitalize="characters" placeholder="SP360-001" required></div><div><button class="btn gold" type="submit">लाइव भीड़ देखें</button></div></form>'+pubHTML()+'</div></div><div class="lc lc2">'+heroHTML()+(m==='member'?'':reqHTML())+'</div></div>';
@@ -2098,22 +1978,7 @@ function entryState(m){
   const t0=T0().getTime();
   return S.logs.some(l=>l.m===m.id&&l.t==='out'&&l.ts>=t0)?'out':'ready';
 }
-const MTABS=[['home','🏠','होम'],['work','💪','वर्कआउट'],['diet','🥗','डाइट'],['store','🛍️','स्टोर']];
-function vMember(){
-  const h=vMember0(),tab=MTABS.some(t=>t[0]===ui.mtab)?ui.mtab:'home';
-  const grab=(a,b)=>{const i=h.indexOf(a),j=h.indexOf(b);return i<0||j<0?'':h.slice(i+a.length,j)};
-  const W=grab('<!--W-->','<!--/W-->'),D=grab('<!--D-->','<!--/D-->');
-  const head=h.slice(0,h.indexOf('<div class="cols">'));
-  const home=h.slice(h.indexOf('<div class="cols">')).replace('<!--W-->'+W+'<!--/W-->','').replace('<!--D-->'+D+'<!--/D-->','').replace('<div class="stack"></div>','');
-  const nav='<nav class="mnav" aria-label="मेंबर मेन्यू">'+MTABS.map(t=>'<button type="button" data-act="mtab" data-v="'+t[0]+'" aria-pressed="'+(t[0]===tab)+'"><span aria-hidden="true">'+t[1]+'</span><b>'+t[2]+'</b></button>').join('')+'</nav>';
-  const m0=head.slice(0,head.indexOf('<section class="entry'));
-  let body;
-  if(tab==='home')body=head+home;
-  else if(tab==='work')body=m0+'<div class="stack">'+(W||'<section class="panel"><p class="muted">अभी वर्कआउट नहीं मिला।</p></section>')+'</div>';
-  else if(tab==='diet')body=m0+'<div class="stack">'+D+'</div>';
-  else body=m0+vStore('member');
-  return nav+body;
-}
+function vMember(){const h=vMember0();return h.replace(/(<section class="entry[\s\S]*?<\/section>)/,'$1'+storeBox())}
 function vMember0(){
   const m=S.members.find(x=>x.id===S.me)||S.members[0];
   if(!m)return '<section class="panel"><p class="muted">आपकी जानकारी नहीं मिली। जिम से संपर्क करें।</p></section>';
@@ -2132,17 +1997,17 @@ function vMember0(){
    +'<div class="prog" aria-hidden="true"><i style="width:'+used+'%"></i></div>'
    +'<dl class="kv" style="margin-top:14px"><div><dt>वैधता तक</dt><dd>'+fd(f.last)+'</dd></div><div><dt>आखिरी फ़ीस जमा</dt><dd>'+fd(pd(m.lastPaid))+'</dd></div><div><dt>कुल / पेड</dt><dd class="num">'+inr(m.total)+' / '+inr(m.paid)+'</dd></div><div><dt>बाकी</dt><dd class="num">'+inr(f.due)+'</dd></div></dl></section>'
    +'<section class="panel"><h2>मेरी टाइमिंग</h2><p>आमतौर पर <b class="num">'+(s.avgIn==null?'–':ftm(s.avgIn))+'</b> आते हैं और <b class="num">'+(s.avgOut==null?'–':ftm(s.avgOut))+'</b> जाते हैं। पिछले 30 दिन में <b>'+s.d30+'</b> दिन आए।</p></section>'
-   +'<section class="panel"><h2>मेरी हाज़िरी कैलेंडर</h2>'+calendar(m)+'</section>'+'<!--W-->'+fitView(m,S.fit,true).replace('<section class="panel" style="margin-top:16px">','<section class="panel">')+'<!--/W-->'
+   +'<section class="panel"><h2>मेरी हाज़िरी कैलेंडर</h2>'+calendar(m)+'</section>'+fitView(m,S.fit,true).replace('<section class="panel" style="margin-top:16px">','<section class="panel">')
    +(g.hasTrainers?'<section class="panel"><h2>मेरा ट्रेनर</h2><p>'+(tr?'<b>'+esc(tr.name)+'</b> <span class="muted">'+esc(tr.spec)+' · '+esc(tr.phone)+'</span>':'<span class="muted">अभी कोई ट्रेनर नहीं दिया गया। काउंटर पर बात करें।</span>')+'</p></section>':'')
    +(isStandalone()?'':'<section class="panel"><h2>होम स्क्रीन पर रखें</h2><p class="muted sm">ऐप की तरह इस्तेमाल करने के लिए ब्राउज़र का ⋮ मेन्यू खोलें और Add to Home screen दबाएँ।</p></section>')
-   +'</div><div class="stack"><!--D-->'
+   +'</div><div class="stack">'
    +'<section class="panel"><h2>डाइटिशियन चाहिए?</h2><p class="muted sm" style="margin-bottom:10px">वज़न और ऊँचाई भरें। आपके लक्ष्य के हिसाब से डाइटिशियन का प्रकार सुझाया जाएगा और ShinePro360 की टीम आपसे बात करेगी। यह डॉक्टरी सलाह नहीं है।</p>'
    +'<form data-form="diet" data-id="'+m.id+'" class="frm"><div><label for="dw">वज़न (kg)</label><input id="dw" name="w" type="number" min="25" max="250" step="0.1" required></div><div><label for="dh">ऊँचाई (cm)</label><input id="dh" name="h" type="number" min="100" max="230" required></div>'
    +'<div><label for="dg">लक्ष्य</label><select id="dg" name="goal">'+Object.keys(GOAL).map(k=>opt(k,GOAL[k],k==='loss')).join('')+'</select></div><div><label for="df">खान-पान</label><select id="df" name="pref">'+Object.keys(PREF).map(k=>opt(k,PREF[k],k==='veg')).join('')+'</select></div>'
    +'<label class="full row" style="font-weight:400;color:var(--fg);cursor:pointer"><input type="checkbox" name="ok" required> मेरा नाम और नंबर ShinePro360 व डाइटिशियन को देने की सहमति है।</label>'
    +'<div class="full"><button class="btn" type="submit">डाइट इंक्वायरी भेजें</button></div></form>'
    +(ui.dietMsg?'<p class="scan ok" style="margin-top:12px" role="status">'+ui.dietMsg+'</p>':'')
-   +(mine.length?'<h3 style="margin-top:14px">मेरी इंक्वायरी</h3><ul class="feed">'+mine.map(d=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span>'+esc(d.type)+'<br><span class="muted sm">'+fd(new Date(d.ts))+'</span></span><span class="pill '+(d.status==='नया'?'warn':'mute')+'">'+d.status+'</span></li>').join('')+'</ul>':'')+'</section><!--/D--></div></div>';
+   +(mine.length?'<h3 style="margin-top:14px">मेरी इंक्वायरी</h3><ul class="feed">'+mine.map(d=>'<li style="grid-template-columns:minmax(0,1fr) auto"><span>'+esc(d.type)+'<br><span class="muted sm">'+fd(new Date(d.ts))+'</span></span><span class="pill '+(d.status==='नया'?'warn':'mute')+'">'+d.status+'</span></li>').join('')+'</ul>':'')+'</section></div></div>';
 }
 function qrSettings(){
   const g=gOwn(),md=g.qrMode,st=(md==='static'||md==='both'),has=g.lat!=null&&g.lng!=null;
@@ -2315,7 +2180,6 @@ const ACT={
   rejectreq:async b=>{if(!confirm('इस अनुरोध को ठुकराएँ?'))return;must(await sb.rpc('admin_finish_request',{p_id:b.dataset.id,p_gym:null,p_ok:false}));await refresh();toast('अनुरोध ठुकरा दिया')},
   remsent:async b=>{lsSet('sp360-rem-'+b.dataset.id,iso(T0()));setTimeout(render,400)},
   sub:b=>{ui.sub=b.dataset.v;render()},
-  mtab:b=>{ui.mtab=b.dataset.v;render();try{window.scrollTo(0,0)}catch(e){}},
   filt:b=>{ui.filt=b.dataset.v;render()},
   selm:b=>{ui.sel=b.dataset.id;const t=new Date();ui.cal={y:t.getFullYear(),m:t.getMonth()};render();loadOwnerFit(ui.sel).then(render)},
   careopen:b=>{ui.careOpen=ui.careOpen===b.dataset.v?null:b.dataset.v;render()},
@@ -2343,9 +2207,6 @@ const ACT={
   openm:b=>{ui.sub='members';ACT.selm(b)},
   calnav:b=>{let m=ui.cal.m+Number(b.dataset.v),y=ui.cal.y;if(m<0){m=11;y--}if(m>11){m=0;y++}ui.cal={y:y,m:m};render()},
   lang:b=>setLang(b.dataset.v),
-  gofilt:b=>{ui.sub='members';ui.filt=b.dataset.v;render();window.scrollTo(0,0)},
-  obhide:b=>{try{lsSet('sp360-ob-hide-'+gOwn().id,'1')}catch(e){}render()},
-  obqr:b=>{try{lsSet('sp360-ob-qr-'+gOwn().id,'1')}catch(e){}},
   stbox:b=>{ui.stBox=!ui.stBox;render()},
   stkind:b=>{ui.stKind=b.dataset.v;ui.stOpen=null;render()},
   stgen:b=>{ui.stGen=b.dataset.v;ui.stOpen=null;render()},
