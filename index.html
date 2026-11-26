@@ -1146,7 +1146,37 @@ const EXTRA={
 "मेंबर की डाइट इंक्वायरी (1 नई)": "Member diet inquiries (1 new)",
 "होम": "Home",
 "मेंबर मेन्यू": "Member menu",
-"अभी वर्कआउट नहीं मिला।": "No workout found yet."
+"अभी वर्कआउट नहीं मिला।": "No workout found yet.",
+"गोपनीयता नीति": "Privacy policy",
+"‹ वापस": "‹ Back",
+"पुराने मेंबर एक साथ जोड़ें। CSV/Excel-से-CSV फ़ाइल में कॉलम: नाम, मोबाइल, महीने (1/3/6/12), कुल फ़ीस, जमा। आख़िरी दो खाली हों तो पूरी फ़ीस जमा मानी जाएगी। एक बार में 200 तक।": "Add existing members in one go. CSV file columns: name, mobile, months (1/3/6/12), total fee, paid. If the last two are empty, the full fee is treated as paid. Up to 200 at a time.",
+"⬇ नमूना फ़ाइल डाउनलोड करें": "⬇ Download sample file",
+"CSV फ़ाइल चुनें": "Choose CSV file",
+"या यहाँ पेस्ट करें": "Or paste here",
+"पढ़ें": "Read",
+"CSV से मेंबर जोड़ें": "Add members from CSV",
+"इम्पोर्ट करें": "Import",
+"⬇ पिन लिस्ट डाउनलोड करें": "⬇ Download PIN list",
+"कोई सही लाइन नहीं मिली।": "No valid line found.",
+"पिन सिर्फ़ अभी दिखते हैं। फ़ाइल सेव कर लें और हर मेंबर को उसका पिन भेजें।": "PINs are shown only now. Save the file and send each member their PIN.",
+"भुगतान इतिहास": "Payment history",
+"इस महीने: ": "This month: ",
+" · कुल दर्ज: ": " · Total recorded: ",
+"अभी कोई भुगतान दर्ज नहीं है।": "No payment recorded yet.",
+"ShinePro360 को किए भुगतान": "Payments made to ShinePro360",
+"रकम": "Amount",
+"चालू रहेगा": "Valid until",
+"तक": "Until",
+"हम कौन-सा डेटा रखते हैं": "What data we keep",
+"जिम का नाम और पता, ओनर/मेंबर का नाम और मोबाइल नंबर, फ़ीस और हाज़िरी का रिकॉर्ड, डाइट/वर्कआउट की जानकारी, और स्टोर के ऑर्डर। मेंबर का डेटा सिर्फ़ उसी जिम के ओनर और खुद उस मेंबर को दिखता है।": "Gym name and address, owner/member name and mobile number, fee and attendance records, diet/workout details, and store orders. A member's data is visible only to that gym's owner and the member themselves.",
+"डेटा कहाँ रहता है": "Where data is stored",
+"डेटा सुरक्षित क्लाउड डेटाबेस (Supabase) में रहता है। पासवर्ड और पिन एन्क्रिप्टेड रूप में रखे जाते हैं।": "Data is stored in a secure cloud database (Supabase). Passwords and PINs are stored in encrypted form.",
+"हम क्या नहीं करते": "What we do not do",
+"हम आपका डेटा बेचते नहीं हैं और विज्ञापन वालों को नहीं देते। स्टोर पर ऑर्डर करने पर सिर्फ़ उस वेंडर को आपका नाम, मोबाइल और पता दिखता है, ताकि वह सामान भेज सके।": "We never sell your data or give it to advertisers. When you order from the store, only that vendor sees your name, mobile and address so they can deliver.",
+"आपका अधिकार": "Your rights",
+"ओनर \"सेटिंग और बैकअप\" से अपना पूरा डेटा CSV में डाउनलोड कर सकते हैं। मेंबर अपना डेटा हटवाने के लिए अपने जिम ओनर से कहें। जिम का डेटा हटवाने के लिए ShinePro360 से संपर्क करें।": "Owners can download all their data as CSV from \"Settings & backup\". Members should ask their gym owner to delete their data. To delete a gym's data, contact ShinePro360.",
+"संपर्क": "Contact",
+"सवाल हो तो ShinePro360 से संपर्क करें, कानपुर।": "For any questions, contact ShinePro360, Kanpur."
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -1316,7 +1346,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v28';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v29';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -1381,6 +1411,7 @@ async function loadAll(light){
     N.diets=(must(dt)||[]).map(adaptDiet);
     try{N.acare=(must(await sb.rpc('admin_care_list'))||[])}catch(e){N.acare=[]}
     try{N.vendors=must(await sb.rpc('admin_vendors_list'))||[]}catch(e){N.vendors=[]}
+    try{N.gpay=must(await sb.rpc('admin_payments_list'))||[]}catch(e){N.gpay=[]}
     try{N.sorders=must(await sb.rpc('store_orders_list'))||[]}catch(e){N.sorders=[]}
     try{N.reqs=(must(await sb.rpc('admin_requests'))||[]).map(q=>({id:q.id,name:q.name,address:q.address,owner:q.owner_name,phone:q.owner_phone,at:q.created_at}))}catch(e){N.reqs=[]}
     try{N.cans=(must(await sb.rpc('admin_cancellations'))||[]).map(c=>({id:c.gym_id,code:c.gym_code,name:c.gym_name,owner:c.owner_name,phone:c.owner_phone,on:c.cancel_on,why:c.cancel_reason,count:Number(c.member_count)}))}catch(e){N.cans=[]}
@@ -1403,6 +1434,7 @@ async function loadAll(light){
   const g=(must(gy)||[])[0];
   if(g){const s=subOf(g.trial_start,g.paid_until);N.gyms=[{id:g.id,code:g.code,name:g.name,owner:g.owner_name,phone:g.owner_phone,address:g.address,capacity:g.capacity,hasTrainers:g.has_trainers,qrMode:g.qr_mode||'rotating',fees:g.plan_fees||{},lat:g.lat,lng:g.lng,radius:g.radius_m||150,locCheck:g.loc_check!==false,cancelOn:g.cancel_on||null,sub:s.sub,trialLeft:s.trialLeft}];N.sess=g.id;if(g.plan_fees)['1','3','6','12'].forEach(k=>{if(g.plan_fees[k]!=null)PLAN[k]=Number(g.plan_fees[k])})}
   N.trainers=(must(tr)||[]).map(t=>({id:t.id,gym:t.gym_id,name:t.name,phone:t.phone||'',spec:t.speciality||''}));
+  try{N.mypay=must(await sb.rpc('my_gym_payments'))||[]}catch(e){N.mypay=[]}
   const fee={};(must(fv)||[]).forEach(f=>{fee[f.member_id]=f});
   const allM=(must(mm)||[]).map(m=>{const f=fee[m.id]||{};return{active:m.active!==false,id:m.id,gym:m.gym_id,name:m.name,phone:m.phone,months:f.months||1,total:f.total_fee||0,paid:f.paid||0,start:f.start_date||iso(T0()),lastPaid:f.last_paid_on||f.start_date||iso(T0()),trainer:m.trainer_id||'',joined:m.created_at||null,msId:f.membership_id||null,inside:false,inTs:0}});
   N.members=allM.filter(m=>m.active);N.off=allM.filter(m=>!m.active);
@@ -1703,6 +1735,7 @@ function vMembersP(){
    +pinBox()
    +(rs.length?fold('🔑','नया पिन चाहिए',rs.length,resetPanel()):'')
    +(rem?fold('💬','फ़ीस याद दिलाएँ',rem,remList()):'')
+   +fold('📥','CSV से मेंबर जोड़ें','',importPanel(),ui.imp&&1)
    +vMembers()+offList();
 }
 function backL(k){
@@ -2208,7 +2241,7 @@ function vAdmin(){
    +'<section><h2 style="margin-bottom:8px">जुड़े हुए जिम</h2><div class="tw"><table><thead><tr><th>ID</th><th>जिम</th><th>ओनर</th><th>पता</th><th>मेंबर</th><th>अभी अंदर</th><th>सेवा</th><th></th></tr></thead><tbody>'
    +(S.gyms.length?S.gyms.map(g=>'<tr><td class="num">'+esc(g.code)+'</td><td><b>'+esc(g.name)+'</b></td><td>'+esc(g.owner)+'<br><span class="muted sm num">'+esc(g.phone)+'</span></td><td>'+esc(g.address)+'</td><td class="num">'+g.count+'</td><td class="num">'+g.inside+'</td><td><span class="pill '+svc(g).c+'">'+svc(g).t+'</span></td><td><div class="row"><button class="btn gold sm" type="button" data-act="paidgym" data-id="'+g.id+'">'+(g.sub==='paid'?'भुगतान हटाएँ':'भुगतान मिला')+'</button><button class="btn alt sm" type="button" data-act="editowner" data-id="'+g.id+'">ओनर बदलें</button> <button class="btn alt sm" type="button" data-act="resetpw" data-id="'+g.id+'">नया पासवर्ड</button><button class="btn alt sm" type="button" data-act="delgym" data-id="'+g.id+'">जिम हटाएँ</button></div></td></tr>').join(''):'<tr><td colspan="8" class="muted">अभी कोई जिम नहीं जुड़ा।</td></tr>')+'</tbody></table></div></section></div>'
    +'<div class="stack"><section class="panel"><h2>कमाई का हिसाब</h2><label for="fee">हर जिम से मासिक शुल्क (₹)</label><input id="fee" type="number" min="0" data-inp="fee" value="'+esc(ui.fee)+'"><p class="sm muted" style="margin-top:8px">'+paying+' भुगतान वाले जिम × '+inr(fee)+' = <b id="feeTot">'+inr(paying*fee)+'</b> प्रति माह। पहला महीना फ़्री ट्रायल है।</p></section>'
-   +'<section class="panel"><h2>डाइट इंक्वायरी</h2><p class="sm muted">ऊपर वाले मेंबर की इंक्वायरी नीचे की तालिका में है।</p></section></div></div>'
+   +gpayPanel()+'<section class="panel"><h2>डाइट इंक्वायरी</h2><p class="sm muted">ऊपर वाले मेंबर की इंक्वायरी नीचे की तालिका में है।</p></section></div></div>'
    +'<section style="margin-top:28px"><h2 style="margin-bottom:8px">सभी डाइट इंक्वायरी</h2><div class="tw">'+dietRows(S.diets,true)+'</div></section>';
 }
 
@@ -2238,6 +2271,44 @@ async function exportCsv(kinds,share){
   else files.forEach((f,i)=>{setTimeout(()=>{const u=URL.createObjectURL(f),a=document.createElement('a');a.href=u;a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(u);a.remove()},1500)},i*600)});
   lsSet('sp360-backup-'+g.code,day);ui.lastBackup=day;render();toast(share?'फ़ाइल तैयार है':'फ़ाइल डाउनलोड हो रही है');
 }
+
+function dlText(name,txt){const f=new File([txt],name,{type:'text/csv'}),u=URL.createObjectURL(f),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(u);a.remove()},1500)}
+function parseCsv(t){t=String(t||'').replace(/^﻿/,'');const first=t.split(/\r?\n/)[0]||'';const d=(first.match(/\t/g)||[]).length?'\t':((first.match(/;/g)||[]).length>(first.match(/,/g)||[]).length?';':',');
+  const rows=[];let row=[],c='',q=false;for(let i=0;i<t.length;i++){const ch=t[i];
+    if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++}else q=false}else c+=ch}
+    else if(ch==='"')q=true;else if(ch===d){row.push(c);c=''}else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&t[i+1]==='\n')i++;row.push(c);c='';if(row.some(x=>x.trim()))rows.push(row);row=[]}else c+=ch}
+  row.push(c);if(row.some(x=>x.trim()))rows.push(row);return rows}
+function impParse(text){const R=parseCsv(text),rows=[],bad=[],seen={};
+  if(R.length&&/[a-zA-Zऀ-ॿ]/.test(R[0][1]||'')&&!/\d{8}/.test(R[0][1]||''))R.shift();
+  R.forEach((c,i)=>{const name=String(c[0]||'').trim().slice(0,100),ph=String(c[1]||'').replace(/\D/g,'').slice(-10),mo=Number(String(c[2]||'').trim()||1),n=i+1;
+    if(!name){bad.push(n+': नाम खाली');return}
+    if(ph.length!==10){bad.push(n+' ('+name+'): मोबाइल 10 अंक का नहीं');return}
+    if(!PLAN[mo]){bad.push(n+' ('+name+'): महीने 1, 3, 6 या 12 ही हों');return}
+    if(seen[ph]){bad.push(n+' ('+name+'): नंबर दोबारा आया');return}seen[ph]=1;
+    if(S.members.some(m=>m.phone===ph)){bad.push(n+' ('+name+'): यह मेंबर पहले से है');return}
+    const total=String(c[3]||'').trim()===''?PLAN[mo]:num(c[3]),paid=String(c[4]||'').trim()===''?total:Math.min(total,num(c[4]));
+    rows.push({name:name,phone:ph,months:mo,total:total,paid:paid})});
+  ui.imp={rows:rows.slice(0,200),bad:bad,over:rows.length>200,run:false,done:[]};render()}
+function importPanel(){
+  const I=ui.imp,h=[];
+  h.push('<p class="sm muted">पुराने मेंबर एक साथ जोड़ें। CSV/Excel-से-CSV फ़ाइल में कॉलम: नाम, मोबाइल, महीने (1/3/6/12), कुल फ़ीस, जमा। आख़िरी दो खाली हों तो पूरी फ़ीस जमा मानी जाएगी। एक बार में 200 तक।</p>');
+  h.push('<p style="margin:8px 0"><button type="button" class="lnk" data-act="csvtpl">⬇ नमूना फ़ाइल डाउनलोड करें</button></p>');
+  h.push('<label for="csvf">CSV फ़ाइल चुनें</label><input id="csvf" type="file" accept=".csv,.txt,text/csv" data-chg="csvfile">');
+  h.push('<label for="csvt" style="margin-top:10px">या यहाँ पेस्ट करें</label><textarea id="csvt" rows="4" placeholder="Rahul, 9876543210, 1, 800, 800"></textarea><p><button type="button" class="btn sec" data-act="csvread">पढ़ें</button></p>');
+  if(I&&I.run)h.push('<p class="ok" role="status">जोड़ रहे हैं… '+I.done.length+'/'+(I.rows.length)+' — पेज बंद न करें।</p>');
+  else if(I&&I.done.length){const ok=I.done.filter(d=>d.ok).length;h.push('<p class="ok" role="status"><b>'+ok+' मेंबर जुड़े</b>'+(I.done.length-ok?', '+(I.done.length-ok)+' नहीं जुड़े':'')+'।</p><div class="tw"><table><thead><tr><th>नाम</th><th>मोबाइल</th><th>पिन</th></tr></thead><tbody>'+I.done.map(d=>'<tr><td>'+esc(d.name)+'</td><td class="num">'+esc(d.phone)+'</td><td class="num">'+(d.ok?'<b>'+esc(d.pin)+'</b>':'<span class="err">'+esc(d.err)+'</span>')+'</td></tr>').join('')+'</tbody></table></div><p style="margin-top:8px"><button type="button" class="btn" data-act="csvpins">⬇ पिन लिस्ट डाउनलोड करें</button> <button type="button" class="lnk" data-act="csvclear">छिपाएँ</button></p><p class="sm muted">पिन सिर्फ़ अभी दिखते हैं। फ़ाइल सेव कर लें और हर मेंबर को उसका पिन भेजें।</p>')}
+  else if(I){if(I.bad.length)h.push('<div class="err"><b>'+I.bad.length+' लाइन छोड़ी गईं</b><br><span class="sm">'+I.bad.slice(0,8).map(esc).join('<br>')+(I.bad.length>8?'<br>…':'')+'</span></div>');
+    h.push(I.rows.length?'<p><b>'+I.rows.length+' नए मेंबर तैयार हैं</b>'+(I.over?' (पहले 200)':'')+'</p><p><button type="button" class="btn" data-act="csvgo">इम्पोर्ट करें</button> <button type="button" class="lnk" data-act="csvclear">रद्द करें</button></p>':'<p class="muted">कोई सही लाइन नहीं मिली।</p>')}
+  return h.join('')}
+function myPayPanel(){const P=S.mypay||[];return '<section class="panel"><h2>ShinePro360 को किए भुगतान</h2>'+(P.length?'<div class="tw"><table><thead><tr><th>तारीख़</th><th>रकम</th><th>चालू रहेगा</th></tr></thead><tbody>'+P.map(p=>'<tr><td class="num">'+esc(fd(pd(p.paid_on)))+'</td><td class="num">'+inr(p.amount)+'</td><td class="num">'+esc(fd(pd(p.until)))+'</td></tr>').join('')+'</tbody></table></div>':'<p class="sm muted">अभी कोई भुगतान दर्ज नहीं है।</p>')+'</section>'}
+function gpayPanel(){const P=S.gpay||[],mo=iso(T0()).slice(0,7),tot=P.filter(p=>String(p.paid_on).slice(0,7)===mo).reduce((a,p)=>a+Number(p.amount),0),all=P.reduce((a,p)=>a+Number(p.amount),0);
+  return '<section class="panel"><h2>भुगतान इतिहास</h2><p class="sm muted">इस महीने: <b>'+inr(tot)+'</b> · कुल दर्ज: <b>'+inr(all)+'</b></p>'+(P.length?'<div class="tw"><table><thead><tr><th>तारीख़</th><th>जिम</th><th>रकम</th><th>तक</th></tr></thead><tbody>'+P.slice(0,40).map(p=>'<tr><td class="num">'+esc(fd(pd(p.paid_on)))+'</td><td>'+esc(p.gym_name)+'</td><td class="num">'+inr(p.amount)+'</td><td class="num">'+esc(fd(pd(p.until)))+'</td></tr>').join('')+'</tbody></table></div>':'<p class="sm muted">अभी कोई भुगतान दर्ज नहीं है।</p>')+'</section>'}
+function vPrivacy(){return '<section class="panel"><p class="backl" style="display:block"><button type="button" class="lnk" data-act="priv">‹ वापस</button></p><h1>गोपनीयता नीति</h1>'
+ +'<h2>हम कौन-सा डेटा रखते हैं</h2><p>जिम का नाम और पता, ओनर/मेंबर का नाम और मोबाइल नंबर, फ़ीस और हाज़िरी का रिकॉर्ड, डाइट/वर्कआउट की जानकारी, और स्टोर के ऑर्डर। मेंबर का डेटा सिर्फ़ उसी जिम के ओनर और खुद उस मेंबर को दिखता है।</p>'
+ +'<h2>डेटा कहाँ रहता है</h2><p>डेटा सुरक्षित क्लाउड डेटाबेस (Supabase) में रहता है। पासवर्ड और पिन एन्क्रिप्टेड रूप में रखे जाते हैं।</p>'
+ +'<h2>हम क्या नहीं करते</h2><p>हम आपका डेटा बेचते नहीं हैं और विज्ञापन वालों को नहीं देते। स्टोर पर ऑर्डर करने पर सिर्फ़ उस वेंडर को आपका नाम, मोबाइल और पता दिखता है, ताकि वह सामान भेज सके।</p>'
+ +'<h2>आपका अधिकार</h2><p>ओनर "सेटिंग और बैकअप" से अपना पूरा डेटा CSV में डाउनलोड कर सकते हैं। मेंबर अपना डेटा हटवाने के लिए अपने जिम ओनर से कहें। जिम का डेटा हटवाने के लिए ShinePro360 से संपर्क करें।</p>'
+ +'<h2>संपर्क</h2><p>सवाल हो तो ShinePro360 से संपर्क करें, कानपुर।</p></section>'}
 function gymForm(){
   const g=gOwn();
   return '<section class="panel" style="max-width:640px;margin-bottom:20px"><h2>जिम की जानकारी</h2><form data-form="gymedit" class="frm" style="margin-top:8px">'
@@ -2280,7 +2351,7 @@ function stopPanel(){
    +'<p class="muted sm" style="margin-top:8px">बंद करने के बाद भी 15 दिन तक डेटा डाउनलोड कर सकेंगे।</p></section>';
 }
 function vBackup(){
-  return cancelBanner()+gymForm()+plansForm()+vBackup2()+stopPanel();
+  return cancelBanner()+gymForm()+plansForm()+vBackup2()+myPayPanel()+stopPanel();
 }
 function vBackup2(){
   const g=gOwn(),last=ui.lastBackup||lsGet('sp360-backup-'+g.code),d=T0().getDate(),due=d>=28||d<=2;
@@ -2395,10 +2466,19 @@ const ACT={
   editowner:async b=>{const g=gym(b.dataset.id);const n=prompt('ओनर का नाम',g.owner);if(n===null)return;const p=prompt('ओनर का 10 अंकों का मोबाइल नंबर',g.phone);if(p===null)return;
     await fn({action:'update_gym_owner',gym_id:g.id,owner_name:n.trim(),owner_phone:p.trim()});await refresh();toast('ओनर की जानकारी बदल गई')},
   resetpw:async b=>{const g=gym(b.dataset.id);const r=await fn({action:'reset_gym_password',gym_id:g.id});ui.newGym={name:g.name,code:g.code,pass:r.password,owner:g.owner,phone:g.phone};try{await sb.rpc('admin_clear_reset',{p_gym:g.id})}catch(e){}S.rr=(S.rr||[]).filter(x=>x.id!==g.id);render();toast('नया पासवर्ड बन गया')},
-  paidgym:async b=>{const g=gym(b.dataset.id);let v=null;
-    if(g.sub!=='paid'){const row=must(await sb.from('gyms').select('paid_until').eq('id',g.id).single());const base=row.paid_until&&pd(row.paid_until)>T0()?pd(row.paid_until):T0();v=iso(addD(base,30))}
-    must(await sb.from('gyms').update({paid_until:v}).eq('id',g.id).select());
-    await refresh();toast(v?'भुगतान दर्ज हुआ':'भुगतान हटाया')}
+  paidgym:async b=>{const g=gym(b.dataset.id);
+    if(g.sub==='paid'){if(!confirm(g.name+' का आख़िरी भुगतान हटाएँ?'))return;must(await sb.rpc('admin_undo_payment',{p_gym:g.id}));await refresh();toast('भुगतान हटाया');return}
+    const a=prompt(g.name+' — कितने ₹ मिले? (30 दिन जुड़ेंगे)',String(num(ui.fee)||199));if(a===null)return;
+    must(await sb.rpc('admin_record_payment',{p_gym:g.id,p_amount:num(a),p_days:30}));await refresh();toast('भुगतान दर्ज हुआ')},
+  priv:()=>{ui.priv=!ui.priv;render();try{window.scrollTo(0,0)}catch(e){}},
+  csvtpl:()=>dlText('members-sample.csv',csvText([['Name','Phone','Months','Total','Paid'],['Rahul Sharma','9876543210','1','800','800'],['Amit Verma','9876500000','3','2100','1000']])),
+  csvread:()=>{const t=document.getElementById('csvt');impParse(t?t.value:'')},
+  csvgo:async()=>{const I=ui.imp;if(!I||I.run||!I.rows.length)return;I.run=true;I.done=[];render();
+    for(const r of I.rows){try{const x=await fn({action:'create_member',name:r.name,phone:r.phone,months:r.months,total_fee:r.total,paid:r.paid});I.done.push({name:r.name,phone:r.phone,pin:x.pin,ok:true})}catch(e){I.done.push({name:r.name,phone:r.phone,err:String(e&&e.message||e),ok:false})}
+      if(I.done.length%5===0)render()}
+    I.run=false;I.rows=[];await refresh();toast('इम्पोर्ट पूरा')},
+  csvpins:()=>{const I=ui.imp;if(!I)return;dlText('new-members-pins.csv',csvText([['Name','Phone','PIN','Status']].concat(I.done.map(d=>[d.name,d.phone,d.pin||'',d.ok?'OK':d.err]))))},
+  csvclear:()=>{ui.imp=null;render()}
 };
 const CHG={
   planpick:async t=>{const f=t.closest('form');if(!f)return;const v=PLAN[t.value]||0;f.elements.total.value=v;f.elements.paid.value=v},
@@ -2489,7 +2569,7 @@ const FORMS={
 };
 const run=(p,btn)=>Promise.resolve(p).catch(e=>toast(errH(e&&e.message))).then(()=>{if(btn&&btn.isConnected)btn.disabled=false});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const a=ACT[b.dataset.act];if(a)run(a(b))});
-document.addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.chg&&CHG[t.dataset.chg])run(CHG[t.dataset.chg](t))});
+document.addEventListener('change',e=>{const t=e.target;if(t.id==='csvf'&&t.files&&t.files[0]){const r=new FileReader();r.onload=()=>impParse(r.result);r.readAsText(t.files[0]);return}if(t.dataset&&t.dataset.chg&&CHG[t.dataset.chg])run(CHG[t.dataset.chg](t))});
 document.addEventListener('submit',e=>{const f=e.target.closest('form[data-form]');if(!f)return;e.preventDefault();const btn=f.querySelector('[type=submit]');if(btn)btn.disabled=true;run(FORMS[f.dataset.form](f),btn)});
 document.addEventListener('input',e=>{const t=e.target;if(!t.dataset)return;
   if(t.dataset.inp==='q'){ui.q=t.value;const w=$('#mtable');if(w){w.innerHTML=mTable();loc(w)}}
@@ -2526,7 +2606,7 @@ function render(){
   loc($('.top'));
   if(ui.fatal){app.innerHTML='<section class="panel"><p class="err">'+esc(ui.fatal)+'</p></section>';loc(app);return}
   if(ui.loading){app.innerHTML='<p class="muted">लोड हो रहा है…</p>';loc(app);return}
-  app.innerHTML=ROUTES[r]()+'<p class="muted sm pver" style="margin-top:32px">Powered by ShinePro360 · Gym Support &amp; Service · '+VER+'</p>';loc(app);
+  app.innerHTML=(ui.priv?vPrivacy():ROUTES[r]())+'<p class="muted sm pver" style="margin-top:32px">Powered by ShinePro360 · Gym Support &amp; Service · '+VER+' · <button type="button" class="lnk" data-act="priv">गोपनीयता नीति</button></p>';loc(app);
   if(r==='gate')drawQR();
 }
 window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
@@ -2538,7 +2618,7 @@ setInterval(async()=>{
   ui.pollN=(ui.pollN||0)+1;
   try{await loadAll(ui.pollN%20!==0)}catch(e){return}
   const sel=window.getSelection&&String(window.getSelection()||'');
-  if(sel||ui.newPin||ui.newGym||ui.newVen||ui.cpDirty||ui.vDirty)return;
+  if(sel||ui.newPin||ui.newGym||ui.newVen||ui.cpDirty||ui.vDirty||ui.priv||(ui.imp&&(ui.imp.run||ui.imp.done.length)))return;
   if(r==='gate'){const c=$('#gcount');if(c)c.textContent=insideOf(S.sess).length}else render();
 },15000);
 async function checkUpdate(){
