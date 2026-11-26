@@ -398,6 +398,21 @@ body:has(.mnav) .upd,body:has(.mnav) .toast{bottom:92px}
 .mnav button{border:0;border-radius:12px;background:transparent}
 .mnav button[aria-pressed=true]{background:var(--head-bg);color:#fff}
 }
+
+.frm.one{display:flex;flex-direction:column;gap:16px}.frm.one>div{width:100%;min-width:0}
+.szr{display:flex;align-items:center;gap:8px}.szr input{flex:1;min-width:0}.szr b{min-width:52px}.szl{display:grid;gap:8px;margin-top:10px}
+.szc{margin:4px 0}.szc button[aria-pressed=true]{background:var(--head-bg);color:#fff;border-color:var(--head-bg)}
+.spph{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.phx{position:relative;display:inline-block}.phx img{width:84px;height:84px;object-fit:cover;border-radius:10px;border:1px solid var(--line);display:block}
+.phx button{position:absolute;top:-6px;right:-6px;width:28px;height:28px;border-radius:50%;border:0;background:var(--bad);color:#fff;font-size:14px;cursor:pointer}
+.otabs{margin:6px 0 10px}.otabs button[aria-pressed=true]{background:var(--head-bg);color:#fff;border-color:var(--head-bg)}
+.trk{margin:10px 0 4px}.trk .stl{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0}
+.trk .stp{display:block!important;position:relative;text-align:center;font-size:11px;line-height:1.25;color:var(--muted)}
+.trk .stp .dot{display:flex;flex:none;align-items:center;justify-content:center;width:22px;height:22px;margin:0 auto 4px;border-radius:50%;border:2px solid var(--line-strong);background:var(--surface);font-style:normal;font-size:12px;color:#fff;position:relative;z-index:1}
+.trk .stp::before{content:"";position:absolute;top:10px;left:-50%;width:100%;height:2px;background:var(--line-strong)}
+.trk .stp:first-child::before{display:none}
+.trk .stp.ok .dot,.trk .stp.now .dot{background:var(--ok);border-color:var(--ok)}.trk .stp.ok::before,.trk .stp.now::before{background:var(--ok)}
+.trk .stp.now .sl{color:var(--fg)}.trk .stp .sl{display:block;font-weight:600}.trk .stp .sd{display:block;font-size:10px;color:var(--muted)}
+.trkc{margin:8px 0 0;font-size:13px}
 </style>
 </head>
 <body>
@@ -1176,7 +1191,58 @@ const EXTRA={
 "आपका अधिकार": "Your rights",
 "ओनर \"सेटिंग और बैकअप\" से अपना पूरा डेटा CSV में डाउनलोड कर सकते हैं। मेंबर अपना डेटा हटवाने के लिए अपने जिम ओनर से कहें। जिम का डेटा हटवाने के लिए ShinePro360 से संपर्क करें।": "Owners can download all their data as CSV from \"Settings & backup\". Members should ask their gym owner to delete their data. To delete a gym's data, contact ShinePro360.",
 "संपर्क": "Contact",
-"सवाल हो तो ShinePro360 से संपर्क करें, कानपुर।": "For any questions, contact ShinePro360, Kanpur."
+"सवाल हो तो ShinePro360 से संपर्क करें, कानपुर।": "For any questions, contact ShinePro360, Kanpur.",
+"मशीन आसानी से मिलेगी": "Machines will be easy to get",
+"थोड़ी देर बाद आएँ": "Please come a little later",
+"ऑर्डर मिला": "Order placed",
+"पक्का हुआ": "Confirmed",
+"पैक हुआ": "Packed",
+"भेजा गया": "Shipped",
+"पहुँच गया": "Delivered",
+"कूरियर से भेजा": "Shipped by courier",
+"❌ ऑर्डर रद्द": "❌ Order cancelled",
+" · ट्रैकिंग नंबर ": " · Tracking no. ",
+"ट्रैक करें ›": "Track ›",
+"नए ": "New ",
+"चालू ": "Active ",
+"पूरे": "Completed",
+"पूरे ": "Completed ",
+"रद्द ": "Cancelled ",
+"इस हिस्से में कोई ऑर्डर नहीं है।": "No orders in this section.",
+"✅ ऑर्डर पक्का करें": "✅ Confirm order",
+"📦 पैक हो गया": "📦 Mark as packed",
+"🚚 कूरियर से भेजें": "🚚 Ship by courier",
+"✔ ग्राहक को पहुँच गया": "✔ Delivered to customer",
+"ऑर्डर रद्द करें": "Cancel order",
+"कूरियर कंपनी": "Courier company",
+"ट्रैकिंग / AWB नंबर": "Tracking / AWB number",
+"ट्रैकिंग लिंक (ऑप्शनल, https से शुरू)": "Tracking link (optional, starts with https)",
+"भेज दिया — सेव करें": "Shipped — save",
+"India Post (स्पीड पोस्ट)": "India Post (Speed Post)",
+"दूसरा कूरियर / ख़ुद पहुँचाया": "Other courier / delivered myself",
+"1. फ़ोटो (3 तक)": "1. Photos (up to 3)",
+" – नई चुनें तो बदल जाएँगी": " – choosing new ones replaces them",
+"2. प्रोडक्ट का नाम": "2. Product name",
+"3. जानकारी (ऑप्शनल)": "3. Details (optional)",
+"4. साइज़ चुनें, फिर हर साइज़ का रेट भरें": "4. Choose sizes, then enter the rate for each",
+"4. विकल्प और रेट": "4. Options and rates",
+"+ जोड़ें": "+ Add",
+"सबका एक रेट:": "Same rate for all:",
+"सब में भरें": "Fill all",
+"ऊपर से साइज़ चुनें।": "Choose sizes above.",
+"कम से कम एक साइज़/विकल्प चुनें": "Choose at least one size/option",
+"हर साइज़ का रेट भरें": "Enter a rate for every size",
+"ऑर्डर आगे बढ़ा": "Order moved ahead",
+"रद्द करने का कारण (ऑप्शनल)": "Reason for cancelling (optional)",
+"ऑर्डर रद्द हुआ": "Order cancelled",
+"यह ऑर्डर रद्द करें?": "Cancel this order?",
+"भेजने की जानकारी सेव हुई": "Shipping details saved",
+"दूसरा साइज़ जोड़ें": "Add another size",
+"विकल्प का नाम, जैसे 10 kg जोड़ी": "Option name, e.g. 10 kg pair",
+"रेट": "Rate",
+"सबका एक रेट": "Same rate for all",
+"नया विकल्प": "New option",
+"फ़ोटो हटाएँ": "Remove photo"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -1346,7 +1412,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v29';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v30';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -1461,7 +1527,24 @@ async function refresh(){await loadAll();render()}
 /* ---------- gym store (vendors: gym wear, equipment, interior) ---------- */
 const SKIND=[['wear','👕','जिम वेयर','लड़कों और लड़कियों के कपड़े'],['equipment','🏋️','जिम इक्विपमेंट','डंबल, मशीन, रॉड, प्लेट'],['interior','🏢','जिम इंटीरियर','फ़्लोरिंग, मिरर, डिज़ाइन'],['other','📦','अन्य','जिम का बाकी सामान']];
 const SGEN={boys:'लड़के',girls:'लड़कियाँ',unisex:'सबके लिए',na:''};
-const SST={new:['नया','warn'],confirmed:['पक्का','info'],shipped:['भेज दिया','info'],done:['पूरा','ok'],cancelled:['रद्द','bad']};
+const SST={new:['नया','warn'],confirmed:['पक्का हुआ','info'],packed:['पैक हुआ','info'],shipped:['कूरियर से भेजा','info'],done:['पहुँच गया','ok'],cancelled:['रद्द','bad']};
+const STEPS=[['new','ऑर्डर मिला'],['confirmed','पक्का हुआ'],['packed','पैक हुआ'],['shipped','भेजा गया'],['done','पहुँच गया']];
+const COURIERS=[['India Post (स्पीड पोस्ट)','https://www.indiapost.gov.in/_layouts/15/dop.portal.tracking/trackconsignment.aspx'],['Delhivery','https://www.delhivery.com/track/package/{n}'],['DTDC','https://www.dtdc.in/tracking.asp'],['Blue Dart','https://www.bluedart.com/tracking'],['Ecom Express','https://ecomexpress.in/tracking/'],['Xpress Bees','https://www.xpressbees.com/shipment/tracking'],['Ekart','https://ekartlogistics.com/shipmenttrack/{n}'],['Shiprocket','https://www.shiprocket.in/shipment-tracking/'],['दूसरा कूरियर / ख़ुद पहुँचाया','']];
+const SIZES_W=['Free','XS','S','M','L','XL','XXL','3XL'],SIZES_K=['2-3Y','4-5Y','6-7Y','8-9Y','10-11Y','12-13Y'];
+function courierLink(o){const u=String(o.track_url||'');if(/^https:\/\//i.test(u))return u;const c=COURIERS.find(x=>x[0]===o.courier);if(!c||!c[1])return '';return c[1].replace('{n}',encodeURIComponent(o.tracking_no||''))}
+function ordTrack(o){
+  const H=o.history||[],at=k=>{const h=H.find(x=>x.s===k);return h?fd(new Date(h.at)):''};
+  if(o.status==='cancelled')return '<div class="trk"><p class="err" style="margin:4px 0"><b>❌ ऑर्डर रद्द</b>'+(at('cancelled')?'<span class="sm"> · '+at('cancelled')+'</span>':'')+(o.cancel_reason?'<br><span class="sm">'+esc(o.cancel_reason)+'</span>':'')+'</p></div>';
+  const cur=STEPS.findIndex(x=>x[0]===o.status),cl=o.courier?courierLink(o):'';
+  return '<div class="trk"><div class="stl">'+STEPS.map((x,i)=>'<div class="stp '+(i<cur?'ok':i===cur?'now':'')+'"><span class="dot" aria-hidden="true">'+(i<=cur?'✓':'')+'</span><span class="sl">'+x[1]+'</span><span class="sd">'+at(x[0])+'</span></div>').join('')+'</div>'
+   +(o.courier?'<p class="trkc">🚚 <b>'+esc(o.courier)+'</b>'+(o.tracking_no?' · ट्रैकिंग नंबर <b class="num">'+esc(o.tracking_no)+'</b>':'')+(cl?' · <a class="lnk" target="_blank" rel="noopener" href="'+esc(cl)+'">ट्रैक करें ›</a>':'')+'</p>':'')+'</div>';
+}
+function ordersPanel(O,adm){
+  const G={new:['नए',x=>x.status==='new'],active:['चालू',x=>['confirmed','packed','shipped'].includes(x.status)],done:['पूरे',x=>x.status==='done'],cancelled:['रद्द',x=>x.status==='cancelled']};
+  const tab=G[ui.otab]?ui.otab:'new',list=O.filter(G[tab][1]);
+  return '<div class="chips otabs" role="group" aria-label="ऑर्डर">'+Object.keys(G).map(k=>'<button type="button" data-act="otab" data-v="'+k+'" aria-pressed="'+(k===tab)+'">'+G[k][0]+' <span class="num">'+O.filter(G[k][1]).length+'</span></button>').join('')+'</div>'
+   +(list.length?'<ul class="feed">'+list.map(o=>vendOrderCard(o,adm)).join('')+'</ul>':'<p class="muted sm" style="margin:12px 0">इस हिस्से में कोई ऑर्डर नहीं है।</p>');
+}
 const skind=k=>SKIND.find(x=>x[0]===k)||SKIND[3];
 function stS(){return ui.st=ui.st||{ph:{}}}
 async function loadStore(force){
@@ -1528,7 +1611,7 @@ function vStore(role){
      +'<div class="full"><label for="so3">डिलीवरी का पता</label><textarea id="so3" name="addr" rows="2" maxlength="300" required></textarea></div>'
      +'<div class="full"><label for="so4">कोई बात (ऑप्शनल)</label><input id="so4" name="note" maxlength="300"></div>'
      +'<div class="full"><button class="btn gold" type="submit">ऑर्डर भेजें</button><p class="muted sm" style="margin-top:6px">वेंडर आपको फ़ोन या WhatsApp पर बात करके रेट और डिलीवरी पक्की करेगा। पैसे सीधे वेंडर को देने हैं।</p></div></form></div>':'')
-   +(mine.length?'<h3 style="margin-top:16px">मेरे ऑर्डर</h3><ul class="feed">'+mine.map(o=>'<li style="grid-template-columns:minmax(0,1fr)"><span><b>'+esc(o.vendor_name)+'</b> <span class="pill '+SST[o.status][1]+'">'+SST[o.status][0]+'</span>'+orderLines(o.lines)+'<span class="sm"><b>कुल: <span class="num">'+inr(o.total)+'</span></b> · <span class="muted num">'+fd(new Date(o.created_at))+'</span></span><br><a class="btn alt sm" style="margin-top:6px" href="tel:'+esc(o.vendor_phone)+'">वेंडर को कॉल करें</a></span></li>').join('')+'</ul>':'')
+   +(mine.length?'<h3 style="margin-top:16px">मेरे ऑर्डर</h3><ul class="feed">'+mine.map(o=>'<li style="grid-template-columns:minmax(0,1fr)"><span><b>'+esc(o.vendor_name)+'</b> <span class="pill '+SST[o.status][1]+'">'+SST[o.status][0]+'</span>'+orderLines(o.lines)+'<span class="sm"><b>कुल: <span class="num">'+inr(o.total)+'</span></b> · <span class="muted num">'+fd(new Date(o.created_at))+'</span></span>'+ordTrack(o)+'<span class="row" style="margin-top:8px"><a class="btn alt sm" href="tel:'+esc(o.vendor_phone)+'">वेंडर को कॉल करें</a>'+(['new','confirmed'].includes(o.status)?'<button type="button" class="btn alt sm" data-act="bcancel" data-id="'+o.id+'">ऑर्डर रद्द करें</button>':'')+'</span></span></li>').join('')+'</ul>':'')
    +'</section>';
 }
 function storeBox(){
@@ -1537,28 +1620,37 @@ function storeBox(){
 }
 /* ----- vendor panel ----- */
 function vendOrderCard(o,adm){
-  const nxt=[['confirmed','पक्का किया'],['shipped','भेज दिया'],['done','पूरा हुआ'],['cancelled','रद्द']].filter(x=>x[0]!==o.status);
+  const NX={new:['✅ ऑर्डर पक्का करें','confirmed'],confirmed:['📦 पैक हो गया','packed'],packed:['🚚 कूरियर से भेजें','ship'],shipped:['✔ ग्राहक को पहुँच गया','done']}[o.status],can=['new','confirmed','packed'].includes(o.status);
+  const shipF=ui.shipFor===o.id?'<form data-form="shipform" data-id="'+o.id+'" class="frm one" style="margin-top:10px"><div><label for="sh1'+o.id+'">कूरियर कंपनी</label><select id="sh1'+o.id+'" name="courier">'+COURIERS.map(c=>opt(c[0],c[0],false)).join('')+'</select></div><div><label for="sh2'+o.id+'">ट्रैकिंग / AWB नंबर</label><input id="sh2'+o.id+'" name="trk" maxlength="60" autocomplete="off"></div><div><label for="sh3'+o.id+'">ट्रैकिंग लिंक (ऑप्शनल, https से शुरू)</label><input id="sh3'+o.id+'" name="url" type="url" maxlength="500" placeholder="https://"></div><div class="row"><button class="btn gold" type="submit">भेज दिया — सेव करें</button><button type="button" class="btn alt" data-act="oship" data-id="'+o.id+'">रद्द</button></div></form>':'';
   return '<li style="grid-template-columns:minmax(0,1fr)"><span>'+(adm?'<b>'+esc(o.vendor_name)+'</b> · ':'')+'<b>'+esc(o.buyer_name)+'</b> <span class="muted sm">('+(o.buyer_role==='owner'?'जिम ओनर':'मेंबर')+(o.gym_name?', '+esc(o.gym_name):'')+')</span> <span class="pill '+SST[o.status][1]+'">'+SST[o.status][0]+'</span>'
    +orderLines(o.lines)+'<span class="sm"><b>कुल: <span class="num">'+inr(o.total)+'</span></b></span><br><span class="sm">📍 '+esc(o.address)+'</span>'+(o.note?'<br><span class="sm muted">'+esc(o.note)+'</span>':'')+'<br><span class="muted sm num">'+esc(o.buyer_phone)+' · '+fd(new Date(o.created_at))+'</span>'
-   +'<span class="row" style="margin-top:8px"><a class="btn sm" href="tel:'+esc(o.buyer_phone)+'">कॉल</a><a class="btn alt sm" target="_blank" rel="noopener" href="'+wa(o.buyer_phone,'नमस्ते '+o.buyer_name+' जी, आपका जिम स्टोर ऑर्डर मिला है। रेट और डिलीवरी की बात करनी थी।')+'">WhatsApp</a>'
-   +nxt.map(x=>'<button type="button" class="btn alt sm" data-act="stset" data-id="'+o.id+'" data-v="'+x[0]+'">'+x[1]+'</button>').join('')+'</span></span></li>';
+   +ordTrack(o)
+   +'<span class="row" style="margin-top:8px">'+(NX?'<button type="button" class="btn gold sm" data-act="'+(NX[1]==='ship'?'oship':'ostep')+'" data-id="'+o.id+'" data-v="'+NX[1]+'">'+NX[0]+'</button>':'')
+   +'<a class="btn sm" href="tel:'+esc(o.buyer_phone)+'">कॉल</a><a class="btn alt sm" target="_blank" rel="noopener" href="'+wa(o.buyer_phone,'नमस्ते '+o.buyer_name+' जी, आपका जिम स्टोर ऑर्डर मिला है। रेट और डिलीवरी की बात करनी थी।')+'">WhatsApp</a>'
+   +(can?'<button type="button" class="btn alt sm" data-act="ocancel" data-id="'+o.id+'">रद्द करें</button>':'')+'</span>'+shipF+'</span></li>';
 }
 function vVendor(){
   const v=S.vend||{name:'',code:'',kind:'wear'},k=skind(v.kind),P=(stS().list||[]),ed=ui.vEdit?P.find(p=>p.id===ui.vEdit):null,O=S.sorders||[],nw=O.filter(o=>o.status==='new').length;
   ensureStore();
-  const wear=v.kind==='wear',f=ed||{name:'',descr:'',gender:'unisex',variants:[]};
+  const wear=v.kind==='wear',f=Object.assign({},ed||{name:'',descr:'',gender:'unisex',variants:[]},ui.vF||{});
   const ph=ui.vPhotos||[];
-  const form='<form data-form="vsave" class="frm"><div class="full"><label for="vp1">प्रोडक्ट का नाम</label><input id="vp1" name="name" maxlength="80" value="'+esc(f.name)+'" required></div>'
+  const SZ=ui.vSz||{},szs=Object.keys(SZ);
+  const chips=wear?'<div class="chips szc" role="group" aria-label="साइज़ चुनें">'+SIZES_W.concat(f.gender==='boys'||f.gender==='girls'?SIZES_K:SIZES_K).map(z=>'<button type="button" data-act="vsz" data-v="'+z+'" aria-pressed="'+(z in SZ)+'">'+z+'</button>').join('')+'</div>':'';
+  const prow=szs.map(z=>'<div class="szr"><b>'+esc(z)+'</b><span class="muted">₹</span><input class="szp" data-sz="'+esc(z)+'" inputmode="numeric" maxlength="7" placeholder="रेट" value="'+esc(SZ[z])+'" aria-label="रेट"><button type="button" class="lnk" data-act="vsz" data-v="'+esc(z)+'" aria-label="हटाएँ">✕</button></div>').join('');
+  const form='<form data-form="vsave" class="frm one">'
+   +'<div><label for="vpf">1. फ़ोटो (3 तक)'+(ed?' – नई चुनें तो बदल जाएँगी':'')+'</label><input id="vpf" type="file" accept="image/*" multiple><div class="spph" id="vprev">'+ph.map((x,i)=>'<span class="phx"><img src="'+x+'" alt=""><button type="button" data-act="vpx" data-i="'+i+'" aria-label="फ़ोटो हटाएँ">✕</button></span>').join('')+'</div></div>'
+   +'<div><label for="vp1">2. प्रोडक्ट का नाम</label><input id="vp1" name="name" maxlength="80" value="'+esc(f.name)+'" required></div>'
    +(wear?'<div><label for="vp2">किसके लिए</label><select id="vp2" name="gender">'+[['boys','लड़के'],['girls','लड़कियाँ'],['unisex','सबके लिए']].map(g=>opt(g[0],g[1],f.gender===g[0])).join('')+'</select></div>':'')
-   +'<div class="full"><label for="vp3">'+(wear?'साइज़ और रेट':'विकल्प और रेट')+'</label><textarea id="vp3" name="vars" rows="2" placeholder="'+(wear?'S=399, M=399, L=449, XL=449':'10 kg जोड़ी=2000, 20 kg जोड़ी=3800')+'" required>'+esc(ed?varsText(ed):'')+'</textarea><p class="muted sm" style="margin-top:4px">'+(wear?'हर साइज़ के आगे = लगाकर रेट (₹) लिखें, कॉमा से अलग करें। अलग साइज़ का अलग रेट हो सकता है।':'हर विकल्प के आगे = लगाकर रेट (₹) लिखें, कॉमा से अलग करें। एक ही रेट हो तो सिर्फ़ संख्या लिख दें।')+'</p></div>'
-   +'<div class="full"><label for="vp4">जानकारी (ऑप्शनल)</label><textarea id="vp4" name="descr" rows="2" maxlength="400" placeholder="कपड़ा, रंग, मटेरियल, वारंटी वगैरह">'+esc(f.descr||'')+'</textarea></div>'
-   +'<div class="full"><label for="vpf">फ़ोटो (3 तक)'+(ed?' – नई चुनें तो बदल जाएँगी':'')+'</label><input id="vpf" type="file" accept="image/*" multiple><div class="spph" id="vprev">'+ph.map(x=>'<img src="'+x+'" alt="">').join('')+'</div></div>'
-   +'<div class="full row"><button class="btn gold" type="submit">'+(ed?'बदलाव सेव करें':'प्रोडक्ट जोड़ें')+'</button>'+(ed?'<button class="btn alt" type="button" data-act="vcancel">रद्द करें</button>':'')+'</div></form>';
+   +'<div><label for="vp4">3. जानकारी (ऑप्शनल)</label><textarea id="vp4" name="descr" rows="2" maxlength="400" placeholder="कपड़ा, रंग, मटेरियल, वारंटी वगैरह">'+esc(f.descr||'')+'</textarea></div>'
+   +'<div><label>4. '+(wear?'साइज़ चुनें, फिर हर साइज़ का रेट भरें':'विकल्प और रेट')+'</label>'+chips
+   +'<div class="szr" style="margin-top:8px"><input id="vnew" maxlength="24" placeholder="'+(wear?'दूसरा साइज़ जोड़ें':'विकल्प का नाम, जैसे 10 kg जोड़ी')+'" aria-label="नया विकल्प"><button type="button" class="btn alt sm" data-act="vsadd">+ जोड़ें</button></div>'
+   +(szs.length?'<div class="szl">'+prow+'</div><div class="szr" style="margin-top:6px"><span class="muted sm">सबका एक रेट:</span><span class="muted">₹</span><input id="vall" inputmode="numeric" maxlength="7" placeholder="रेट" aria-label="सबका एक रेट"><button type="button" class="btn alt sm" data-act="vsall">सब में भरें</button></div>':'<p class="muted sm" style="margin-top:6px">ऊपर से साइज़ चुनें।</p>')+'</div>'
+   +'<div class="row"><button class="btn gold" type="submit">'+(ed?'बदलाव सेव करें':'प्रोडक्ट जोड़ें')+'</button>'+(ed?'<button class="btn alt" type="button" data-act="vcancel">रद्द करें</button>':'')+'</div></form>';
   const list=P.length?'<ul class="feed">'+P.map(p=>'<li style="grid-template-columns:minmax(0,1fr)"><span class="cprod" style="border:0;padding:0">'+spThumb(p,'cpt')+'<span class="cpi"><b>'+esc(p.name)+'</b> '+(p.active?'':'<span class="pill mute">बंद</span>')+'<span class="muted sm">'+esc(varsText(p))+'</span></span></span><span class="row" style="margin-top:6px"><button class="btn alt sm" type="button" data-act="vedit" data-id="'+p.id+'">बदलें</button><button class="btn alt sm" type="button" data-act="vtog" data-id="'+p.id+'">'+(p.active?'बंद करें':'चालू करें')+'</button><button class="btn alt sm" type="button" data-act="vdel" data-id="'+p.id+'">हटाएँ</button></span></li>').join('')+'</ul>':'<p class="muted sm">अभी कोई प्रोडक्ट नहीं जोड़ा।</p>';
   return '<div class="ohead"><div><p class="eyebrow">वेंडर पैनल</p><h1>'+esc(v.name)+'</h1><p class="muted"><span class="num">'+esc(v.code)+'</span> · '+k[1]+' '+k[2]+'</p></div></div>'
    +'<div class="cols"><div class="stack"><section class="panel"><h2>'+(ed?'प्रोडक्ट बदलें':'नया प्रोडक्ट जोड़ें')+'</h2><p class="muted sm" style="margin-bottom:10px">आपके प्रोडक्ट जिम ओनर'+(wear?', मेंबर':'')+' और एडमिन सबको फ़ोटो के साथ दिखेंगे।</p>'+form+'</section>'
    +'<section class="panel"><h2>मेरे प्रोडक्ट</h2>'+list+'</section></div>'
-   +'<div class="stack"><section class="panel"><h2>ऑर्डर '+(nw?'<span class="livetag">'+nw+' नए</span>':'')+'</h2>'+(O.length?'<ul class="feed">'+O.map(o=>vendOrderCard(o,false)).join('')+'</ul>':'<p class="muted sm">अभी कोई ऑर्डर नहीं आया।</p>')+'</section></div></div>';
+   +'<div class="stack"><section class="panel"><h2>ऑर्डर '+(nw?'<span class="livetag">'+nw+' नए</span>':'')+'</h2>'+(O.length?ordersPanel(O,false):'<p class="muted sm">अभी कोई ऑर्डर नहीं आया।</p>')+'</section></div></div>';
 }
 /* ----- admin: vendors ----- */
 function storeAdmin(){
@@ -1573,7 +1665,7 @@ function storeAdmin(){
     +'<span class="row" style="margin-top:8px"><a class="btn alt sm" href="tel:'+esc(v.phone)+'">कॉल</a><button class="btn alt sm" type="button" data-act="venreset" data-id="'+v.id+'">नया पासवर्ड</button><button class="btn alt sm" type="button" data-act="venset" data-id="'+v.id+'">'+(v.active?'रोकें':'चालू करें')+'</button><button class="btn alt sm" type="button" data-act="vendel" data-id="'+v.id+'">हटाएँ</button></span></span></li>').join('')+'</ul>':'<p class="muted sm" style="margin-top:10px">अभी कोई वेंडर नहीं जुड़ा।</p>';
   const pl=P.length?'<details class="spdet"><summary>सभी वेंडर के प्रोडक्ट देखें <span class="num">('+P.length+')</span></summary><ul class="feed">'+P.map(p=>'<li style="grid-template-columns:minmax(0,1fr)"><span class="cprod" style="border:0;padding:0">'+spThumb(p,'cpt')+'<span class="cpi"><b>'+esc(p.name)+'</b> '+(p.active?'':'<span class="pill mute">बंद</span>')+'<span class="muted sm">'+esc(p.vendor_name)+' · '+skind(p.kind)[2]+'</span><span class="muted sm">'+esc(varsText(p))+'</span></span></span><span class="row" style="margin-top:6px"><button class="btn alt sm" type="button" data-act="astog" data-id="'+p.id+'">'+(p.active?'छिपाएँ':'दिखाएँ')+'</button></span></li>').join('')+'</ul></details>':'';
   return '<section class="panel storebox" style="margin-bottom:20px"><h2>🛍️ जिम स्टोर: वेंडर</h2><p class="muted sm" style="margin-bottom:10px">जिम वेयर बनाने वाले, इक्विपमेंट सप्लायर और इंटीरियर वाले यहाँ से जुड़ते हैं। उन्हें अपनी ID और पासवर्ड दें।</p>'+form+cred+vl+pl
-   +(O.length?'<h3 style="margin-top:16px">स्टोर के ऑर्डर '+(nw?'<span class="livetag">'+nw+' नए</span>':'')+'</h3><ul class="feed">'+O.map(o=>vendOrderCard(o,true)).join('')+'</ul>':'')+'</section>';
+   +(O.length?'<h3 style="margin-top:16px">स्टोर के ऑर्डर '+(nw?'<span class="livetag">'+nw+' नए</span>':'')+'</h3>'+ordersPanel(O,true):'')+'</section>';
 }
 
 /* ---------- crowd ---------- */
@@ -1588,11 +1680,11 @@ function chartHTML(){
 }
 function crowdHTML(){
   const c=S.crowd||{level:'quiet',percent:0},lc={quiet:'ok',moderate:'warn',full:'bad'}[c.level]||'ok';
-  const word={ok:'खाली',warn:'ठीक-ठाक',bad:'भरा'}[lc],txt={ok:'खाली: मशीन आसानी से मिलेगी',warn:'ठीक-ठाक भीड़',bad:'भीड़ ज़्यादा है'}[lc];
+  const word={ok:'खाली',warn:'ठीक-ठाक',bad:'भरा'}[lc],txt={ok:'मशीन आसानी से मिलेगी',warn:'',bad:'थोड़ी देर बाद आएँ'}[lc];
   return '<div class="crowd"><span class="big" style="font-size:56px">'+word+'</span><span class="muted">अभी जिम</span></div>'
    +(c.count!=null?'<p style="font-size:20px;margin-top:6px"><b class="num">'+c.count+'</b> / '+c.capacity+' लोग अभी जिम में</p>':'')
    +'<div class="cap" aria-hidden="true"><i class="'+lc+'" style="width:'+Math.min(100,Number(c.percent)||0)+'%"></i></div>'
-   +'<p><span class="pill '+lc+'">'+txt+'</span></p>'+chartHTML();
+   +(txt?'<p class="muted">'+txt+'</p>':'')+chartHTML();
 }
 
 /* ---------- gate QR (owner screen) ---------- */
@@ -1863,19 +1955,17 @@ function cpPanel(){
 document.addEventListener('change',async e=>{const t=e.target;
   if(t&&t.id==='cpf'&&t.files&&t.files[0]){try{ui.cpPhoto=await compressImg(t.files[0]);ui.cpDirty=true;const pv=$('#cpprev');if(pv){pv.src=ui.cpPhoto;pv.hidden=false}}catch(x){toast('फ़ोटो नहीं खुली, दूसरी चुनें')}}});
 document.addEventListener('input',e=>{const f=e.target&&e.target.closest&&e.target.closest('form[data-form=cpsave]');if(f)ui.cpDirty=true;const g=e.target&&e.target.closest&&e.target.closest('form[data-form=vsave]');if(g)ui.vDirty=true});
-document.addEventListener('change',async e=>{const t=e.target;if(t&&t.id==='vpf'&&t.files&&t.files.length){try{const a=[];for(const fl of Array.from(t.files).slice(0,3))a.push(await compressImg(fl));ui.vPhotos=a;ui.vDirty=true;const pv=$('#vprev');if(pv)pv.innerHTML=a.map(x=>'<img src="'+x+'" alt="">').join('')}catch(x){toast('फ़ोटो नहीं खुली, दूसरी चुनें')}}});
+document.addEventListener('change',async e=>{const t=e.target;if(t&&t.id==='vpf'&&t.files&&t.files.length){try{const a=[];for(const fl of Array.from(t.files).slice(0,3))a.push(await compressImg(fl));ui.vPhotos=a;ui.vDirty=true;render()}catch(x){toast('फ़ोटो नहीं खुली, दूसरी चुनें')}}});
 const FEATS={
  owner:[
  ['att','🕒','हाज़िरी','QR स्कैन, बस एक टैप','जिम के गेट पर QR स्क्रीन लगाएँ। मेंबर अपने फ़ोन से स्कैन करते हैं और आना-जाना अपने आप दर्ज होता है।','owner','ओनर लॉगिन'],
  ['fee','💳','फ़ीस','रिमाइंडर अपने आप','फ़ीस कब खत्म होगी और कितनी बाकी है, सब एक जगह। खत्म होने वाली फ़ीस की लिस्ट मिलती है और एक टैप में WhatsApp रिमाइंडर जाता है।','owner','ओनर लॉगिन'],
- ['live','👥','लाइव भीड़','जाने से पहले देखें','जिम जाने से पहले देखें कि अभी कितनी भीड़ है। लॉगिन की ज़रूरत नहीं, सिर्फ़ जिम ID डालें। किसी का नाम नहीं दिखता।','live','भीड़ देखें'],
  ['care','🧴','जिम केयर','सफ़ाई प्रोडक्ट और सर्विस','फ़्लोर पॉलिश, इक्विपमेंट क्लीनर, ग्लास क्लीनर जैसे प्रोडक्ट और जिम की सफ़ाई सर्विस। ओनर यहीं से चुनकर ऑर्डर करता है।','owner','ओनर लॉगिन'],
  ['store','🛍️','जिम स्टोर','इक्विपमेंट, वेयर, इंटीरियर','जिम इक्विपमेंट सप्लायर, जिम इंटीरियर वाले और जिम वेयर बनाने वाले सीधे अपने प्रोडक्ट फ़ोटो के साथ दिखाते हैं। ओनर देखकर ऑर्डर या पूछताछ भेजता है।','owner','ओनर लॉगिन'],
  ['wo','🏋️','वर्कआउट','रोज़ का लक्ष्य और स्ट्रीक','मेंबर की रोज़ की एक्सरसाइज़, सेट और स्ट्रीक ओनर भी देख सकता है और हर मेंबर को नोट भेज सकता है।','owner','ओनर लॉगिन']],
  member:[
  ['att','🕒','हाज़िरी','QR स्कैन, बस एक टैप','जिम के गेट पर लगा QR अपने फ़ोन से स्कैन करें। आना और जाना अपने आप दर्ज होता है। कैलेंडर में आपके आए और न आए दिन दिखते हैं।','member','मेंबर लॉगिन'],
  ['fee','💳','फ़ीस','कब तक चालू है','आपकी फ़ीस कब तक चालू है और कितनी बाकी है, सब आपके फ़ोन पर दिखता है।','member','मेंबर लॉगिन'],
- ['live','👥','लाइव भीड़','जाने से पहले देखें','जिम जाने से पहले देखें कि अभी कितनी भीड़ है। लॉगिन की ज़रूरत नहीं, सिर्फ़ जिम ID डालें। किसी का नाम नहीं दिखता।','live','भीड़ देखें'],
  ['wo','🏋️','वर्कआउट','रोज़ का लक्ष्य और स्ट्रीक','रोज़ की एक्सरसाइज़ टैप करके दर्ज करें, सेट गिनें, स्ट्रीक बनाएँ और हफ़्ते या महीने की रिपोर्ट देखें।','member','मेंबर लॉगिन'],
  ['diet','🥗','डाइट','सलाह और इंक्वायरी','अपना वज़न, ऊँचाई और लक्ष्य भरें। डाइटिशियन की टीम आपसे बात करेगी। यह डॉक्टरी सलाह नहीं है।','member','मेंबर लॉगिन'],
  ['wear','👕','जिम वेयर','लड़के और लड़कियों के कपड़े','जिम के कपड़े, लड़कों और लड़कियों दोनों के। साइज़ के हिसाब से रेट देखें और सीधे ऑर्डर करें।','member','मेंबर लॉगिन']],
@@ -2427,8 +2517,17 @@ const ACT={
   stvar:b=>{ui.stSel=ui.stSel||{};ui.stSel[b.dataset.id]=b.dataset.v;render()},
   stadd:b=>{const id=b.dataset.id,p=(stS().list||[]).find(x=>x.id===id);if(!p)return;const v=(ui.stSel||{})[id]||p.variants[0].l,k=id+'|'+v;ui.scart=ui.scart||{};ui.scart[k]=Math.min(99,(ui.scart[k]||0)+1);render();toast('कार्ट में जुड़ गया')},
   stq:b=>{const k=b.dataset.k;ui.scart=ui.scart||{};const n=(ui.scart[k]||0)+Number(b.dataset.d);if(n<=0)delete ui.scart[k];else ui.scart[k]=Math.min(99,n);render()},
-  vedit:b=>{ui.vEdit=b.dataset.id;ui.vPhotos=[];ui.vDirty=true;render();window.scrollTo({top:0,behavior:'smooth'})},
-  vcancel:b=>{ui.vEdit=null;ui.vPhotos=[];ui.vDirty=false;render()},
+  vedit:b=>{ui.vEdit=b.dataset.id;ui.vPhotos=[];ui.vF=null;ui.vDirty=true;{const p=(stS().list||[]).find(x=>x.id===b.dataset.id);ui.vSz={};(p?p.variants:[]).forEach(v=>{ui.vSz[v.l]=String(v.p)})}render();window.scrollTo({top:0,behavior:'smooth'})},
+  vcancel:b=>{ui.vEdit=null;ui.vPhotos=[];ui.vSz={};ui.vF=null;ui.vDirty=false;render()},
+  vsz:b=>{ui.vSz=ui.vSz||{};const z=b.dataset.v;if(z in ui.vSz)delete ui.vSz[z];else ui.vSz[z]='';ui.vDirty=true;render()},
+  vsadd:()=>{const t=document.getElementById('vnew'),z=String(t&&t.value||'').trim().slice(0,24);if(!z)return;ui.vSz=ui.vSz||{};if(!(z in ui.vSz))ui.vSz[z]='';ui.vDirty=true;render()},
+  vsall:()=>{const v=String((document.getElementById('vall')||{}).value||'').replace(/\D/g,'');if(!v)return;Object.keys(ui.vSz||{}).forEach(k=>{ui.vSz[k]=v});render()},
+  vpx:b=>{(ui.vPhotos||[]).splice(Number(b.dataset.i),1);render()},
+  otab:b=>{ui.otab=b.dataset.v;render()},
+  oship:b=>{ui.shipFor=ui.shipFor===b.dataset.id?null:b.dataset.id;render()},
+  ostep:async b=>{must(await sb.rpc('store_order_update',{p_id:b.dataset.id,p_status:b.dataset.v}));await refresh();toast('ऑर्डर आगे बढ़ा')},
+  ocancel:async b=>{const r=prompt('रद्द करने का कारण (ऑप्शनल)');if(r===null)return;must(await sb.rpc('store_order_update',{p_id:b.dataset.id,p_status:'cancelled',p_reason:r}));await refresh();toast('ऑर्डर रद्द हुआ')},
+  bcancel:async b=>{if(!confirm('यह ऑर्डर रद्द करें?'))return;must(await sb.rpc('store_order_cancel',{p_id:b.dataset.id}));await loadStore(true);render();toast('ऑर्डर रद्द हुआ')},
   vtog:async b=>{const p=(stS().list||[]).find(x=>x.id===b.dataset.id);must(await sb.rpc('vendor_product_toggle',{p_id:p.id,p_active:!p.active}));await loadStore(true);render()},
   vdel:async b=>{if(!confirm('यह प्रोडक्ट हटाएँ?'))return;must(await sb.rpc('vendor_product_delete',{p_id:b.dataset.id}));await loadStore(true);render();toast('हट गया')},
   stset:async b=>{must(await sb.rpc('store_order_set',{p_id:b.dataset.id,p_status:b.dataset.v}));await refresh();toast('स्थिति बदली')},
@@ -2500,11 +2599,16 @@ const FORMS={
     if(r&&r.result==='ok'){ui.scart={};ui.stOpen=null;await loadStore(true);render();toast('ऑर्डर भेज दिया। वेंडर जल्दी संपर्क करेगा')}
     else if(r&&r.result==='busy')toast('आपके 10 ऑर्डर अभी बाकी हैं। पहले उन पर बात हो जाने दें')
     else toast('जानकारी जाँचें: मोबाइल 10 अंक का, पता कम से कम 5 अक्षर का')},
-  vsave:async f=>{const d=new FormData(f),vars=parseVars(d.get('vars')),k=(S.vend||{}).kind;
-    if(!vars.length){toast('साइज़ और रेट ऐसे लिखें: M=399, L=449');return}
+  vsave:async f=>{const d=new FormData(f),k=(S.vend||{}).kind,SZ=ui.vSz||{},keys=Object.keys(SZ);
+    if(!keys.length){toast('कम से कम एक साइज़/विकल्प चुनें');return}
+    if(keys.some(z=>!(Number(SZ[z])>0))){toast('हर साइज़ का रेट भरें');return}
+    const vars=keys.map(z=>({l:z,p:Number(SZ[z])}));
     if(!ui.vEdit&&!(ui.vPhotos||[]).length&&!confirm('फ़ोटो के बिना जोड़ें? फ़ोटो से बिक्री ज़्यादा होती है।'))return;
     must(await sb.rpc('vendor_product_save',{p_id:ui.vEdit||null,p_name:String(d.get('name')).trim(),p_descr:String(d.get('descr')||'').trim(),p_gender:k==='wear'?String(d.get('gender')||'unisex'):'na',p_variants:vars,p_photos:(ui.vPhotos||[]).length?ui.vPhotos:null,p_active:true}));
-    ui.vEdit=null;ui.vPhotos=[];ui.vDirty=false;await loadStore(true);render();toast('प्रोडक्ट सेव हो गया')},
+    ui.vEdit=null;ui.vPhotos=[];ui.vSz={};ui.vF=null;ui.vDirty=false;await loadStore(true);render();toast('प्रोडक्ट सेव हो गया')},
+  shipform:async f=>{const d=new FormData(f),id=f.dataset.id;
+    must(await sb.rpc('store_order_update',{p_id:id,p_status:'shipped',p_courier:String(d.get('courier')),p_tracking:String(d.get('trk')||''),p_url:String(d.get('url')||'')}));
+    ui.shipFor=null;await refresh();toast('भेजने की जानकारी सेव हुई')},
   addvendor:async f=>{const d=new FormData(f),name=String(d.get('name')).trim(),phone=String(d.get('phone')).trim();
     const r=await fn({action:'create_vendor',name:name,contact_name:String(d.get('contact')||'').trim(),phone:phone,city:String(d.get('city')||'').trim(),kind:String(d.get('kind'))});
     ui.newVen={name:name,code:r.code,pass:r.password,phone:phone};await refresh();toast('वेंडर जुड़ गया')},
@@ -2569,6 +2673,7 @@ const FORMS={
 };
 const run=(p,btn)=>Promise.resolve(p).catch(e=>toast(errH(e&&e.message))).then(()=>{if(btn&&btn.isConnected)btn.disabled=false});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const a=ACT[b.dataset.act];if(a)run(a(b))});
+document.addEventListener('input',e=>{const t=e.target;if(t&&t.form&&t.form.dataset&&t.form.dataset.form==='vsave'&&/^(name|descr|gender)$/.test(t.name)){ui.vF=ui.vF||{};ui.vF[t.name]=t.value;ui.vDirty=true}if(t&&t.classList&&t.classList.contains('szp')){ui.vSz=ui.vSz||{};ui.vSz[t.dataset.sz]=t.value.replace(/\D/g,'');ui.vDirty=true}});
 document.addEventListener('change',e=>{const t=e.target;if(t.id==='csvf'&&t.files&&t.files[0]){const r=new FileReader();r.onload=()=>impParse(r.result);r.readAsText(t.files[0]);return}if(t.dataset&&t.dataset.chg&&CHG[t.dataset.chg])run(CHG[t.dataset.chg](t))});
 document.addEventListener('submit',e=>{const f=e.target.closest('form[data-form]');if(!f)return;e.preventDefault();const btn=f.querySelector('[type=submit]');if(btn)btn.disabled=true;run(FORMS[f.dataset.form](f),btn)});
 document.addEventListener('input',e=>{const t=e.target;if(!t.dataset)return;
@@ -2618,7 +2723,7 @@ setInterval(async()=>{
   ui.pollN=(ui.pollN||0)+1;
   try{await loadAll(ui.pollN%20!==0)}catch(e){return}
   const sel=window.getSelection&&String(window.getSelection()||'');
-  if(sel||ui.newPin||ui.newGym||ui.newVen||ui.cpDirty||ui.vDirty||ui.priv||(ui.imp&&(ui.imp.run||ui.imp.done.length)))return;
+  if(sel||ui.newPin||ui.newGym||ui.newVen||ui.cpDirty||ui.vDirty||ui.shipFor||ui.priv||(ui.imp&&(ui.imp.run||ui.imp.done.length)))return;
   if(r==='gate'){const c=$('#gcount');if(c)c.textContent=insideOf(S.sess).length}else render();
 },15000);
 async function checkUpdate(){
