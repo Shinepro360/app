@@ -8,6 +8,9 @@
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ShinePro360">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>ShinePro360 Gym Support</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -413,6 +416,9 @@ body:has(.mnav) .upd,body:has(.mnav) .toast{bottom:92px}
 .trk .stp.ok .dot,.trk .stp.now .dot{background:var(--ok);border-color:var(--ok)}.trk .stp.ok::before,.trk .stp.now::before{background:var(--ok)}
 .trk .stp.now .sl{color:var(--fg)}.trk .stp .sl{display:block;font-weight:600}.trk .stp .sd{display:block;font-size:10px;color:var(--muted)}
 .trkc{margin:8px 0 0;font-size:13px}
+
+.instbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 14px;padding:10px 12px;border:1px solid var(--gold-btn);border-radius:12px;background:var(--surface);box-shadow:0 1px 6px rgba(18,37,74,.08)}
+.instbar .ii{font-size:24px}.instbar .it{flex:1;min-width:150px}.instbar .it b{display:block}.instbar .it small{color:var(--muted);font-size:12px}
 </style>
 </head>
 <body>
@@ -1242,7 +1248,14 @@ const EXTRA={
 "रेट": "Rate",
 "सबका एक रेट": "Same rate for all",
 "नया विकल्प": "New option",
-"फ़ोटो हटाएँ": "Remove photo"
+"फ़ोटो हटाएँ": "Remove photo",
+"ऐप की तरह फ़ोन में रखें": "Keep it on your phone like an app",
+"होम स्क्रीन पर आइकन आएगा, सीधे खुलेगा": "An icon on your home screen, opens directly",
+"इंस्टॉल करें": "Install",
+"कैसे?": "How?",
+"ऐप इंस्टॉल": "Install app",
+"iPhone: नीचे Share (⬆️) दबाएँ → \"Add to Home Screen\" चुनें → Add।": "iPhone: tap Share (⬆️) at the bottom → choose \"Add to Home Screen\" → Add.",
+"Chrome में ऊपर ⋮ मेन्यू खोलें → \"Install app\" या \"Add to Home screen\" चुनें।": "In Chrome open the ⋮ menu at the top → choose \"Install app\" or \"Add to Home screen\"."
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -1412,7 +1425,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v30';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v31';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -2257,7 +2270,6 @@ function vMember0(){
    +'<section class="panel"><h2>मेरी टाइमिंग</h2><p>आमतौर पर <b class="num">'+(s.avgIn==null?'–':ftm(s.avgIn))+'</b> आते हैं और <b class="num">'+(s.avgOut==null?'–':ftm(s.avgOut))+'</b> जाते हैं। पिछले 30 दिन में <b>'+s.d30+'</b> दिन आए।</p></section>'
    +'<section class="panel"><h2>मेरी हाज़िरी कैलेंडर</h2>'+calendar(m)+'</section>'+'<!--W-->'+fitView(m,S.fit,true).replace('<section class="panel" style="margin-top:16px">','<section class="panel">')+'<!--/W-->'
    +(g.hasTrainers?'<section class="panel"><h2>मेरा ट्रेनर</h2><p>'+(tr?'<b>'+esc(tr.name)+'</b> <span class="muted">'+esc(tr.spec)+' · '+esc(tr.phone)+'</span>':'<span class="muted">अभी कोई ट्रेनर नहीं दिया गया। काउंटर पर बात करें।</span>')+'</p></section>':'')
-   +(isStandalone()?'':'<section class="panel"><h2>होम स्क्रीन पर रखें</h2><p class="muted sm">ऐप की तरह इस्तेमाल करने के लिए ब्राउज़र का ⋮ मेन्यू खोलें और Add to Home screen दबाएँ।</p></section>')
    +'</div><div class="stack"><!--D-->'
    +'<section class="panel"><h2>डाइटिशियन चाहिए?</h2><p class="muted sm" style="margin-bottom:10px">वज़न और ऊँचाई भरें। आपके लक्ष्य के हिसाब से डाइटिशियन का प्रकार सुझाया जाएगा और ShinePro360 की टीम आपसे बात करेगी। यह डॉक्टरी सलाह नहीं है।</p>'
    +'<form data-form="diet" data-id="'+m.id+'" class="frm"><div><label for="dw">वज़न (kg)</label><input id="dw" name="w" type="number" min="25" max="250" step="0.1" required></div><div><label for="dh">ऊँचाई (cm)</label><input id="dh" name="h" type="number" min="100" max="230" required></div>'
@@ -2362,6 +2374,19 @@ async function exportCsv(kinds,share){
   lsSet('sp360-backup-'+g.code,day);ui.lastBackup=day;render();toast(share?'फ़ाइल तैयार है':'फ़ाइल डाउनलोड हो रही है');
 }
 
+
+let instEv=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();instEv=e;try{render()}catch(x){}});
+window.addEventListener('appinstalled',()=>{instEv=null;ui.instDone=true;try{render()}catch(x){}});
+const isIOS=()=>/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+function installBar(){
+  if(isStandalone()||ui.instDone)return '';
+  try{const t=Number(lsGet('sp360-inst-x')||0);if(t&&Date.now()-t<7*864e5)return ''}catch(e){}
+  const steps=isIOS()?'iPhone: नीचे Share (⬆️) दबाएँ → "Add to Home Screen" चुनें → Add।':'Chrome में ऊपर ⋮ मेन्यू खोलें → "Install app" या "Add to Home screen" चुनें।';
+  return '<div class="instbar" role="region" aria-label="ऐप इंस्टॉल"><span class="ii" aria-hidden="true">📲</span><span class="it"><b>ऐप की तरह फ़ोन में रखें</b><small>होम स्क्रीन पर आइकन आएगा, सीधे खुलेगा</small></span>'
+   +'<button type="button" class="btn gold sm" data-act="inst">'+(instEv?'इंस्टॉल करें':'कैसे?')+'</button><button type="button" class="lnk" data-act="instx" aria-label="छिपाएँ">✕</button>'
+   +(ui.instHelp&&!instEv?'<p class="sm" style="flex-basis:100%;margin:6px 0 0">'+steps+'</p>':'')+'</div>';
+}
 function dlText(name,txt){const f=new File([txt],name,{type:'text/csv'}),u=URL.createObjectURL(f),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(u);a.remove()},1500)}
 function parseCsv(t){t=String(t||'').replace(/^﻿/,'');const first=t.split(/\r?\n/)[0]||'';const d=(first.match(/\t/g)||[]).length?'\t':((first.match(/;/g)||[]).length>(first.match(/,/g)||[]).length?';':',');
   const rows=[];let row=[],c='',q=false;for(let i=0;i<t.length;i++){const ch=t[i];
@@ -2569,6 +2594,8 @@ const ACT={
     if(g.sub==='paid'){if(!confirm(g.name+' का आख़िरी भुगतान हटाएँ?'))return;must(await sb.rpc('admin_undo_payment',{p_gym:g.id}));await refresh();toast('भुगतान हटाया');return}
     const a=prompt(g.name+' — कितने ₹ मिले? (30 दिन जुड़ेंगे)',String(num(ui.fee)||199));if(a===null)return;
     must(await sb.rpc('admin_record_payment',{p_gym:g.id,p_amount:num(a),p_days:30}));await refresh();toast('भुगतान दर्ज हुआ')},
+  inst:async()=>{if(instEv){const e=instEv;instEv=null;try{e.prompt();const c=await e.userChoice;if(c&&c.outcome==='accepted')ui.instDone=true}catch(x){}render()}else{ui.instHelp=!ui.instHelp;render()}},
+  instx:()=>{lsSet('sp360-inst-x',String(Date.now()));render()},
   priv:()=>{ui.priv=!ui.priv;render();try{window.scrollTo(0,0)}catch(e){}},
   csvtpl:()=>dlText('members-sample.csv',csvText([['Name','Phone','Months','Total','Paid'],['Rahul Sharma','9876543210','1','800','800'],['Amit Verma','9876500000','3','2100','1000']])),
   csvread:()=>{const t=document.getElementById('csvt');impParse(t?t.value:'')},
@@ -2711,7 +2738,7 @@ function render(){
   loc($('.top'));
   if(ui.fatal){app.innerHTML='<section class="panel"><p class="err">'+esc(ui.fatal)+'</p></section>';loc(app);return}
   if(ui.loading){app.innerHTML='<p class="muted">लोड हो रहा है…</p>';loc(app);return}
-  app.innerHTML=(ui.priv?vPrivacy():ROUTES[r]())+'<p class="muted sm pver" style="margin-top:32px">Powered by ShinePro360 · Gym Support &amp; Service · '+VER+' · <button type="button" class="lnk" data-act="priv">गोपनीयता नीति</button></p>';loc(app);
+  app.innerHTML=(r==='gate'?'':installBar())+(ui.priv?vPrivacy():ROUTES[r]())+'<p class="muted sm pver" style="margin-top:32px">Powered by ShinePro360 · Gym Support &amp; Service · '+VER+' · <button type="button" class="lnk" data-act="priv">गोपनीयता नीति</button></p>';loc(app);
   if(r==='gate')drawQR();
 }
 window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
@@ -2744,6 +2771,7 @@ async function init(){
   render();
   try{await enter()}catch(e){ui.loading=false;ui.err=errH(e&&e.message);render()}
 }
+try{if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}catch(e){}
 setTimeout(checkUpdate,4000);setInterval(checkUpdate,600000);
 
 init();
