@@ -383,7 +383,7 @@ main.wrap{padding-inline:28px}
 body:has(.odash){padding-bottom:88px}
 body:has(.odash) .upd,body:has(.odash) .toast{bottom:92px}
 .odash .sub{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:0;padding:6px 6px calc(6px + env(safe-area-inset-bottom));background:var(--surface);border:0;border-top:1px solid var(--line-strong);border-radius:0;box-shadow:0 -4px 16px rgba(18,37,74,.12);overflow:visible}
-.odash .sub [data-v=trainers],.odash .sub [data-v=diet],.odash .sub [data-v=backup]{display:none}
+.odash .sub [data-v=trainers],.odash .sub [data-v=diet],.odash .sub [data-v=backup],.odash .sub [data-v=profile]{display:none}
 .odash .sub button{flex-direction:column;justify-content:center;gap:2px;border:0;border-radius:12px;box-shadow:none;background:transparent;min-height:56px;padding:6px 2px;font-size:12px;white-space:normal;color:var(--muted);width:auto}
 .odash .sub button::before{font-size:22px}
 .odash .sub button[aria-pressed=true]{background:var(--head-bg);color:#fff}
@@ -419,6 +419,15 @@ body:has(.mnav) .upd,body:has(.mnav) .toast{bottom:92px}
 
 .instbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 14px;padding:10px 12px;border:1px solid var(--gold-btn);border-radius:12px;background:var(--surface);box-shadow:0 1px 6px rgba(18,37,74,.08)}
 .instbar .ii{font-size:24px}.instbar .it{flex:1;min-width:150px}.instbar .it b{display:block}.instbar .it small{color:var(--muted);font-size:12px}
+
+.lkg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:10px}
+.lkc{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:inherit;background:var(--surface)}
+.lkc img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--surface-2)}
+.lkc .lki{display:flex;align-items:center;justify-content:center;aspect-ratio:16/9;font-size:34px;background:var(--surface-2)}
+.lkt{display:block;min-width:0;flex:1;padding:8px 10px}.lkt b{display:block;overflow-wrap:anywhere}.lkt small{display:block;color:var(--muted);font-size:12px;overflow-wrap:anywhere}
+.lkl{display:grid;gap:6px;margin-bottom:6px}.lkl .szr{border:1px solid var(--line);border-radius:10px;padding:2px 4px}.lkl .lkt{padding:6px}
+.gph{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:10px}.gph img{width:100%;height:170px;object-fit:cover;border-radius:12px;display:block}
+.vlk{margin:8px 0}
 </style>
 </head>
 <body>
@@ -1255,7 +1264,32 @@ const EXTRA={
 "कैसे?": "How?",
 "ऐप इंस्टॉल": "Install app",
 "iPhone: नीचे Share (⬆️) दबाएँ → \"Add to Home Screen\" चुनें → Add।": "iPhone: tap Share (⬆️) at the bottom → choose \"Add to Home Screen\" → Add.",
-"Chrome में ऊपर ⋮ मेन्यू खोलें → \"Install app\" या \"Add to Home screen\" चुनें।": "In Chrome open the ⋮ menu at the top → choose \"Install app\" or \"Add to Home screen\"."
+"Chrome में ऊपर ⋮ मेन्यू खोलें → \"Install app\" या \"Add to Home screen\" चुनें।": "In Chrome open the ⋮ menu at the top → choose \"Install app\" or \"Add to Home screen\".",
+"अभी कोई लिंक नहीं जुड़ा है।": "No link added yet.",
+"✕ हटाएँ": "✕ Remove",
+"नाम (जैसे Instagram, हमारा काम)": "Name (e.g. Instagram, Our work)",
+"लिंक (https:// से शुरू)": "Link (starts with https://)",
+"+ लिंक जोड़ें": "+ Add link",
+"हमारा काम": "Our work",
+"ShinePro360 की जिम सफ़ाई सर्विस के वीडियो और डेमो। टैप करके देखें।": "Videos and demos of ShinePro360 gym cleaning service. Tap to watch.",
+"हमारा काम (वीडियो / लिंक)": "Our work (videos / links)",
+"यहाँ YouTube, Instagram या Facebook के लिंक डालें। ये लॉगिन पेज पर और जिम ओनर के जिम केयर में सबको दिखेंगे।": "Add YouTube, Instagram or Facebook links here. They show to everyone on the login page and in the gym owner's Gym Care.",
+"मेरे सोशल / वीडियो लिंक": "My social / video links",
+"आपके प्रोडक्ट के साथ ग्राहक को ये लिंक दिखेंगे। अपना काम और डेमो दिखाएँ।": "Customers will see these links with your products. Show your work and demos.",
+"मेरी जिम": "My gym",
+"ये सब ऑप्शनल है। 1–2 फ़ोटो और सोशल लिंक डालेंगे तो आपके मेंबर अपने होम पेज पर देखेंगे। न डालें तो कुछ नहीं दिखेगा।": "All of this is optional. If you add 1–2 photos and social links, your members will see them on their home page. If you add nothing, nothing is shown.",
+"जिम की फ़ोटो (2 तक)": "Gym photos (up to 2)",
+"फ़ोटो चुनें": "Choose photo",
+"2 फ़ोटो लग गईं। बदलने के लिए पहले एक हटाएँ।": "2 photos added. To change, remove one first.",
+"जिम के बारे में दो लाइन (ऑप्शनल)": "Two lines about your gym (optional)",
+"सोशल लिंक": "Social links",
+"Instagram, Facebook, YouTube वगैरह के लिंक।": "Links for Instagram, Facebook, YouTube etc.",
+"फ़ोटो और सोशल लिंक (ऑप्शनल)": "Photos and social links (optional)",
+"लिंक https:// से शुरू होना चाहिए": "Link must start with https://",
+"लिंक जुड़ गया": "Link added",
+"फ़ोटो सेव हुई": "Photo saved",
+"वेंडर के लिंक": "Vendor links",
+"जैसे: सुबह 5 से रात 10 बजे तक। ट्रेनर, कार्डियो, स्टीम": "e.g. 5 am to 10 pm. Trainers, cardio, steam"
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -1417,15 +1451,15 @@ function vToday0(){
 }
 function vOwner(){
   const g=gOwn();
-  const subs=[['today','आज'],['members','मेंबर'],['trainers','ट्रेनर'],['diet','डाइट'],['store','स्टोर'],['backup','सेटिंग'],['more','ज़्यादा']];
+  const subs=[['today','आज'],['members','मेंबर'],['trainers','ट्रेनर'],['diet','डाइट'],['store','स्टोर'],['profile','मेरी जिम'],['backup','सेटिंग'],['more','ज़्यादा']];
   return '<div class="ohead"><div><p class="eyebrow">जिम ओनर पैनल</p><h1>'+esc(g.name)+'</h1><p class="muted">'+esc(g.address)+' · ID '+esc(g.code)+' · <span class="pill '+svc(g).c+'">'+svc(g).t+'</span></p></div></div>'
-   +'<div class="odash"><div class="sub" role="group" aria-label="पैनल के हिस्से">'+subs.map(s=>'<button type="button" data-act="sub" data-v="'+s[0]+'" aria-pressed="'+(ui.sub===s[0]||(s[0]==='more'&&['trainers','diet','backup'].indexOf(ui.sub)>=0))+'">'+s[1]+'</button>').join('')+'</div>'
-   +'<div class="obody">'+({today:vTodayN,members:vMembersP,trainers:()=>backL()+vTrainers(),diet:()=>backL()+vOwnerDiet(),store:()=>vStore("owner"),more:vMore,backup:()=>backL("backup")+vBackup()}[ui.sub]||vToday)()+'</div></div>';
+   +'<div class="odash"><div class="sub" role="group" aria-label="पैनल के हिस्से">'+subs.map(s=>'<button type="button" data-act="sub" data-v="'+s[0]+'" aria-pressed="'+(ui.sub===s[0]||(s[0]==='more'&&['trainers','diet','backup','profile'].indexOf(ui.sub)>=0))+'">'+s[1]+'</button>').join('')+'</div>'
+   +'<div class="obody">'+({today:vTodayN,members:vMembersP,trainers:()=>backL()+vTrainers(),diet:()=>backL()+vOwnerDiet(),store:()=>vStore("owner"),more:vMore,profile:()=>backL()+vGymProfile(),backup:()=>backL("backup")+vBackup()}[ui.sub]||vToday)()+'</div></div>';
 }
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v31';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v32';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -1491,6 +1525,7 @@ async function loadAll(light){
     try{N.acare=(must(await sb.rpc('admin_care_list'))||[])}catch(e){N.acare=[]}
     try{N.vendors=must(await sb.rpc('admin_vendors_list'))||[]}catch(e){N.vendors=[]}
     try{N.gpay=must(await sb.rpc('admin_payments_list'))||[]}catch(e){N.gpay=[]}
+    try{N.showcase=must(await sb.rpc('showcase_list'))||[]}catch(e){N.showcase=[]}
     try{N.sorders=must(await sb.rpc('store_orders_list'))||[]}catch(e){N.sorders=[]}
     try{N.reqs=(must(await sb.rpc('admin_requests'))||[]).map(q=>({id:q.id,name:q.name,address:q.address,owner:q.owner_name,phone:q.owner_phone,at:q.created_at}))}catch(e){N.reqs=[]}
     try{N.cans=(must(await sb.rpc('admin_cancellations'))||[]).map(c=>({id:c.gym_id,code:c.gym_code,name:c.gym_name,owner:c.owner_name,phone:c.owner_phone,on:c.cancel_on,why:c.cancel_reason,count:Number(c.member_count)}))}catch(e){N.cans=[]}
@@ -1499,6 +1534,8 @@ async function loadAll(light){
   }
   if(S.role==='vendor'){
     try{const vm=must(await sb.rpc('vendor_me'));N.vend=(vm&&vm[0])||vm||null}catch(e){N.vend=null}
+    try{N.vlinks=must(await sb.rpc('vendor_links_get'))||[]}catch(e){N.vlinks=[]}
+    try{N.showcase=must(await sb.rpc('showcase_list'))||[]}catch(e){N.showcase=[]}
     try{N.sorders=must(await sb.rpc('store_orders_list'))||[]}catch(e){N.sorders=[]}
     Object.assign(S,N);return;
   }
@@ -1532,6 +1569,9 @@ async function loadAll(light){
       if(st!==tg&&((tg<st&&cw<=tg)||(tg>st&&cw>=tg))){try{const a=must(await sb.rpc('claim_goal'));if(a){ui.award=a;N.fit=must(await sb.rpc('my_fitness'))}}catch(e){}}}
   }catch(e){N.fit=null}}
   if(N.role==='owner'){try{N.care=must(await sb.rpc('owner_care_list'))||[]}catch(e){N.care=[]}}
+  if(N.role==='owner'||N.role==='member'){try{const r=must(await sb.rpc('gym_profile_get'));N.gprof=(r&&r[0])||{photos:[],links:[],about:''}}catch(e){N.gprof={photos:[],links:[],about:''}}}
+  if(N.role==='vendor'){try{N.vlinks=must(await sb.rpc('vendor_links_get'))||[]}catch(e){N.vlinks=[]}}
+  try{N.showcase=must(await sb.rpc('showcase_list'))||[]}catch(e){N.showcase=[]}
   if(N.role==='owner'&&ui.sel)await loadOwnerFit(ui.sel);
   Object.assign(S,N);
 }
@@ -1565,6 +1605,7 @@ async function loadStore(force){
   if(!force&&s.list&&Date.now()-s.at<300000)return;
   try{s.list=must(await sb.rpc('store_list'))||[];s.at=Date.now()}catch(e){if(!s.list){s.list=[];s.at=Date.now()}}
   if(S.role==='owner'||S.role==='member'){try{s.mine=must(await sb.rpc('store_my_orders'))||[]}catch(e){s.mine=s.mine||[]}}
+  try{s.vl={};(must(await sb.rpc('store_vendors_links'))||[]).forEach(x=>{s.vl[x.vendor_id]=x.links})}catch(e){s.vl=s.vl||{}}
 }
 function ensureStore(){
   const s=stS();if(s.loading)return;
@@ -1590,7 +1631,7 @@ function spDetail(p){
   const s=stS(),ph=s.ph[p.id]||(p.photo?[p.photo]:[]),sel=(ui.stSel||{})[p.id]||p.variants[0].l,vr=p.variants.find(v=>v.l===sel)||p.variants[0];
   return '<div class="spd" role="region" aria-label="'+esc(p.name)+'"><div class="spdh"><b>'+esc(p.name)+'</b><button type="button" class="lnk" data-act="stclose">✕ बंद करें</button></div>'
    +(ph.length?'<div class="spph">'+ph.map(x=>'<img src="'+x+'" alt="'+esc(p.name)+'" loading="lazy">').join('')+'</div>':'')
-   +'<p class="muted sm">'+esc(p.vendor_name)+(p.gender&&p.gender!=='na'?' · '+SGEN[p.gender]:'')+'</p>'+(p.descr?'<p>'+esc(p.descr)+'</p>':'')
+   +'<p class="muted sm">'+esc(p.vendor_name)+(p.gender&&p.gender!=='na'?' · '+SGEN[p.gender]:'')+'</p>'+(p.descr?'<p>'+esc(p.descr)+'</p>':'')+(((stS().vl||{})[p.vendor_id]||[]).length?'<p class="sm" style="margin:8px 0 4px"><b>वेंडर के लिंक</b></p>'+linkCards((stS().vl||{})[p.vendor_id]):'')
    +'<p class="sm" style="margin:10px 0 6px"><b>'+(p.kind==='wear'?'साइज़ चुनें':'विकल्प चुनें')+'</b></p><div class="vch">'
    +p.variants.map(v=>'<button type="button" data-act="stvar" data-id="'+p.id+'" data-v="'+esc(v.l)+'" aria-pressed="'+(v.l===vr.l)+'"><b>'+esc(v.l)+'</b><span class="num">'+inr(v.p)+'</span></button>').join('')+'</div>'
    +'<p style="margin-top:12px"><button type="button" class="btn gold" data-act="stadd" data-id="'+p.id+'">कार्ट में जोड़ें · <span class="num">'+inr(vr.p)+'</span></button></p></div>';
@@ -1642,7 +1683,8 @@ function vendOrderCard(o,adm){
    +'<a class="btn sm" href="tel:'+esc(o.buyer_phone)+'">कॉल</a><a class="btn alt sm" target="_blank" rel="noopener" href="'+wa(o.buyer_phone,'नमस्ते '+o.buyer_name+' जी, आपका जिम स्टोर ऑर्डर मिला है। रेट और डिलीवरी की बात करनी थी।')+'">WhatsApp</a>'
    +(can?'<button type="button" class="btn alt sm" data-act="ocancel" data-id="'+o.id+'">रद्द करें</button>':'')+'</span>'+shipF+'</span></li>';
 }
-function vVendor(){
+function vVendor(){return vVendor0()+myLinksPanel()}
+function vVendor0(){
   const v=S.vend||{name:'',code:'',kind:'wear'},k=skind(v.kind),P=(stS().list||[]),ed=ui.vEdit?P.find(p=>p.id===ui.vEdit):null,O=S.sorders||[],nw=O.filter(o=>o.status==='new').length;
   ensureStore();
   const wear=v.kind==='wear',f=Object.assign({},ed||{name:'',descr:'',gender:'unisex',variants:[]},ui.vF||{});
@@ -1853,6 +1895,7 @@ function vMore(){
   return '<h2 style="margin-bottom:12px">ज़्यादा</h2><div class="morelist">'
    +row('🏋️','ट्रेनर','ट्रेनर जोड़ें और मेंबर को असाइन करें',{v:'trainers'})
    +row('🥗','डाइट इंक्वायरी','मेंबर की डाइट इंक्वायरी'+(nd?' ('+nd+' नई)':''),{v:'diet'})
+   +row('🏠','मेरी जिम','फ़ोटो और सोशल लिंक (ऑप्शनल)',{v:'profile'})
    +row('📱','गेट QR स्क्रीन','जिम के गेट पर चलाने वाली QR स्क्रीन',{href:'#gate'})
    +row('⚙️','सेटिंग और बैकअप','फ़ीस रेट, जगह, QR का तरीका, डेटा बैकअप',{v:'backup'})
    +'</div>';
@@ -1914,7 +1957,8 @@ function linesHTML(L){
 }
 function cartLines(){const c=ui.cart||{};return Object.keys(c).filter(k=>c[k]>0).map(k=>({pid:k,qty:c[k]}))}
 function pThumb(p,cls){return p.photo?'<img class="'+cls+'" src="'+p.photo+'" alt="'+esc(p.name)+'" loading="lazy">':'<span class="'+cls+' ph" aria-hidden="true">'+(CICON[p.cat]||'🧴')+'</span>'}
-function vCare(){
+function vCare(){return showcasePanel()+vCare0()}
+function vCare0(){
   ensureCP();
   const g=gOwn(),sel=ui.careSel||{},cart=ui.cart||{},ord=S.care||[],P=ui.cp||[],open=ui.careOpen;
   const lines=cartLines(),n=lines.length+Object.keys(sel).filter(k=>sel[k]).length;
@@ -1968,7 +2012,8 @@ function cpPanel(){
 document.addEventListener('change',async e=>{const t=e.target;
   if(t&&t.id==='cpf'&&t.files&&t.files[0]){try{ui.cpPhoto=await compressImg(t.files[0]);ui.cpDirty=true;const pv=$('#cpprev');if(pv){pv.src=ui.cpPhoto;pv.hidden=false}}catch(x){toast('फ़ोटो नहीं खुली, दूसरी चुनें')}}});
 document.addEventListener('input',e=>{const f=e.target&&e.target.closest&&e.target.closest('form[data-form=cpsave]');if(f)ui.cpDirty=true;const g=e.target&&e.target.closest&&e.target.closest('form[data-form=vsave]');if(g)ui.vDirty=true});
-document.addEventListener('change',async e=>{const t=e.target;if(t&&t.id==='vpf'&&t.files&&t.files.length){try{const a=[];for(const fl of Array.from(t.files).slice(0,3))a.push(await compressImg(fl));ui.vPhotos=a;ui.vDirty=true;render()}catch(x){toast('फ़ोटो नहीं खुली, दूसरी चुनें')}}});
+document.addEventListener('change',async e=>{const t=e.target;if(t&&t.id==='gpf'&&t.files&&t.files.length){try{const g=S.gprof||{},P=(g.photos||[]).slice();for(const fl of Array.from(t.files)){if(P.length>=2)break;P.push(await compressImg(fl))}await gSave(P,g.links||[],g.about);toast('फ़ोटो सेव हुई')}catch(x){toast('फ़ोटो नहीं खुली, दूसरी चुनें')}return}
+if(t&&t.id==='vpf'&&t.files&&t.files.length){try{const a=[];for(const fl of Array.from(t.files).slice(0,3))a.push(await compressImg(fl));ui.vPhotos=a;ui.vDirty=true;render()}catch(x){toast('फ़ोटो नहीं खुली, दूसरी चुनें')}}});
 const FEATS={
  owner:[
  ['att','🕒','हाज़िरी','QR स्कैन, बस एक टैप','जिम के गेट पर QR स्क्रीन लगाएँ। मेंबर अपने फ़ोन से स्कैन करते हैं और आना-जाना अपने आप दर्ज होता है।','owner','ओनर लॉगिन'],
@@ -2021,7 +2066,7 @@ function vLogin(){
    +'<p class="hintbox"><span aria-hidden="true">ℹ️</span> '+hint+'</p>'
    +'<form data-form="login-'+m+'" class="frm">'+f+(ui.err?'<p class="err full" role="alert">'+esc(ui.err)+'</p>':'')+'<div class="full"><button class="btn" type="submit">लॉगिन</button></div></form>'+forgotHTML(m)+'</div>'
    +'<div class="panel livebox" style="max-width:460px;margin-top:16px"><h2><i class="livedot" aria-hidden="true"></i>जिम लाइव भीड़ <span class="livetag">LIVE</span></h2><p class="muted sm" style="margin-bottom:10px">जिम जाने से पहले देखें कितनी भीड़ है। लॉगिन के बिना भी। सिर्फ़ भीड़ का स्तर दिखता है, किसी का नाम नहीं।</p>'
-   +'<form data-form="pubcrowd" class="frm"><div><label for="pg">जिम ID</label><input id="pg" name="code" value="'+esc(lsGet('sp360-gym')||'')+'" autocapitalize="characters" placeholder="SP360-001" required></div><div><button class="btn gold" type="submit">लाइव भीड़ देखें</button></div></form>'+pubHTML()+'</div></div><div class="lc lc2">'+heroHTML()+(m==='member'?'':reqHTML())+'</div></div>';
+   +'<form data-form="pubcrowd" class="frm"><div><label for="pg">जिम ID</label><input id="pg" name="code" value="'+esc(lsGet('sp360-gym')||'')+'" autocapitalize="characters" placeholder="SP360-001" required></div><div><button class="btn gold" type="submit">लाइव भीड़ देखें</button></div></form>'+pubHTML()+'</div></div><div class="lc lc2">'+heroHTML()+showcasePanel()+(m==='member'?'':reqHTML())+'</div></div>';
 }
 function forgotHTML(m){
   if(m==='admin')return '';
@@ -2103,7 +2148,7 @@ function sumOf(list){
   return{days:new Set(list.map(w=>w.d)).size,n:list.length,sets:sets,vol:Math.round(vol),min:min,top:Object.keys(by).sort((a,b)=>by[b]-by[a]).slice(0,3)};
 }
 const SHOWBODY=false;
-const EXIMG={biceps:{src:'ex-biceps.jpg',alt:'बाइसेप कर्ल करते हुए लड़का और लड़की',glow:[]}};
+const EXIMG={};Object.keys(MUS).forEach(k=>{EXIMG[k]={src:'ex-'+k+'.jpg',alt:MSHORT[k],glow:[]}});
 function exPhoto(k){
   const d=EXIMG[k];if(!d)return '';
   return '<figure class="exph"><img src="'+d.src+'" alt="'+d.alt+'" loading="lazy" onerror="this.parentNode.style.display=\'none\'">'+d.glow.map(g=>'<i class="gl" style="left:'+g[0]+'%;top:'+g[1]+'%"></i>').join('')+'<figcaption><span>PRIMARY</span> '+MSHORT[k]+'</figcaption></figure>';
@@ -2244,7 +2289,7 @@ function vMember(){
   const nav='<nav class="mnav" aria-label="मेंबर मेन्यू">'+MTABS.map(t=>'<button type="button" data-act="mtab" data-v="'+t[0]+'" aria-pressed="'+(t[0]===tab)+'"><span aria-hidden="true">'+t[1]+'</span><b>'+t[2]+'</b></button>').join('')+'</nav>';
   const m0=head.slice(0,head.indexOf('<section class="entry'));
   let body;
-  if(tab==='home')body=head+home;
+  if(tab==='home')body=head+gymCard()+home;
   else if(tab==='work')body=m0+'<div class="stack">'+(W||'<section class="panel"><p class="muted">अभी वर्कआउट नहीं मिला।</p></section>')+'</div>';
   else if(tab==='diet')body=m0+'<div class="stack">'+D+'</div>';
   else body=m0+vStore('member');
@@ -2332,7 +2377,7 @@ function vAdmin(){
   return '<div class="ohead"><div><p class="eyebrow">ShinePro360 एडमिन</p><h1>सभी जिम एक जगह</h1><p class="muted">जिम जोड़ें, ID-पासवर्ड दें और डाइट इंक्वायरी देखें। यहाँ मेंबर के नाम, फ़ीस या हाज़िरी नहीं दिखती।</p></div></div>'
    +'<div class="strip"><div><div class="big">'+S.gyms.length+'</div><div class="lab">जिम जुड़े हैं</div></div><div><div class="big">'+total+'</div><div class="lab">कुल मेंबर</div></div><div><div class="big">'+open+'</div><div class="lab">नई डाइट इंक्वायरी</div></div>'
    +'<div><div class="big">'+inr(paying*fee)+'</div><div class="lab">मासिक कमाई: भुगतान वाले '+paying+' जिम × '+inr(fee)+'</div></div></div>'
-   +storeAdmin()+carePanel()+cpPanel()+reqPanel()+rrPanel()+canPanel()
+   +storeAdmin()+showAdminPanel()+carePanel()+cpPanel()+reqPanel()+rrPanel()+canPanel()
    +'<div class="cols"><div class="stack"><section class="panel"><h2>नया जिम जोड़ें</h2><form data-form="addgym" class="frm">'
    +'<div><label for="gn">जिम का नाम</label><input id="gn" name="name" required></div><div><label for="go">ओनर का नाम</label><input id="go" name="owner" required></div>'
    +'<div><label for="gph">ओनर का मोबाइल</label><input id="gph" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required></div><div><label for="gc">क्षमता (एक समय में कितने लोग)</label><input id="gc" name="cap" type="number" min="5" max="500" value="25" required></div>'
@@ -2387,6 +2432,30 @@ function installBar(){
    +'<button type="button" class="btn gold sm" data-act="inst">'+(instEv?'इंस्टॉल करें':'कैसे?')+'</button><button type="button" class="lnk" data-act="instx" aria-label="छिपाएँ">✕</button>'
    +(ui.instHelp&&!instEv?'<p class="sm" style="flex-basis:100%;margin:6px 0 0">'+steps+'</p>':'')+'</div>';
 }
+
+function linkKind(u){let h='';try{h=new URL(u).hostname.replace(/^www\./,'')}catch(e){}
+  if(/(^|\.)youtube\.com$|^youtu\.be$/.test(h))return['▶️','YouTube'];if(/instagram\.com$/.test(h))return['📸','Instagram'];if(/facebook\.com$|^fb\.com$|^fb\.watch$/.test(h))return['👍','Facebook'];if(/^wa\.me$|whatsapp\.com$/.test(h))return['💬','WhatsApp'];return['🔗',h||'Link']}
+function ytThumb(u){const m=String(u).match(/(?:youtu\.be\/|[?&]v=|shorts\/|embed\/)([A-Za-z0-9_-]{11})/);return m?'https://i.ytimg.com/vi/'+m[1]+'/hqdefault.jpg':''}
+function linkCards(L){L=(L||[]).filter(l=>l&&/^https:\/\//i.test(l.u||''));if(!L.length)return '';
+  return '<div class="lkg">'+L.map(l=>{const k=linkKind(l.u),th=ytThumb(l.u);return '<a class="lkc" target="_blank" rel="noopener noreferrer" href="'+esc(l.u)+'">'+(th?'<img src="'+esc(th)+'" alt="" loading="lazy" referrerpolicy="no-referrer">':'<span class="lki" aria-hidden="true">'+k[0]+'</span>')+'<span class="lkt"><b>'+esc(l.t||k[1])+'</b><small>'+k[1]+'</small></span></a>'}).join('')+'</div>'}
+function linksEditor(scope,L){L=L||[];
+  return (L.length?'<div class="lkl">'+L.map((l,i)=>'<div class="szr"><span class="lkt"><b>'+esc(l.title||l.t||linkKind(l.url||l.u)[1])+'</b><small>'+esc(l.url||l.u)+'</small></span><button type="button" class="lnk" data-act="lkdel" data-scope="'+scope+'" data-i="'+i+'">✕ हटाएँ</button></div>').join('')+'</div>':'<p class="muted sm">अभी कोई लिंक नहीं जुड़ा है।</p>')
+   +'<form data-form="lkadd" data-scope="'+scope+'" class="frm one" style="margin-top:12px"><div><label for="lkt'+scope+'">नाम (जैसे Instagram, हमारा काम)</label><input id="lkt'+scope+'" name="t" maxlength="'+(scope==='show'?80:40)+'" autocomplete="off"></div><div><label for="lku'+scope+'">लिंक (https:// से शुरू)</label><input id="lku'+scope+'" name="u" type="url" inputmode="url" maxlength="500" placeholder="https://" required></div><div class="row"><button class="btn gold" type="submit">+ लिंक जोड़ें</button></div></form>'}
+function showcaseList(){return S.role?(S.showcase||[]):(ui.pubShow||[])}
+function showcasePanel(){const L=showcaseList().map(x=>({t:x.title,u:x.url}));if(!L.length)return '';
+  return '<section class="panel"><h2>हमारा काम</h2><p class="muted sm">ShinePro360 की जिम सफ़ाई सर्विस के वीडियो और डेमो। टैप करके देखें।</p>'+linkCards(L)+'</section>'}
+function showAdminPanel(){return '<section class="panel"><h2>हमारा काम (वीडियो / लिंक)</h2><p class="muted sm">यहाँ YouTube, Instagram या Facebook के लिंक डालें। ये लॉगिन पेज पर और जिम ओनर के जिम केयर में सबको दिखेंगे।</p>'+linksEditor('show',S.showcase)+'</section>'}
+function myLinksPanel(){return '<section class="panel"><h2>मेरे सोशल / वीडियो लिंक</h2><p class="muted sm">आपके प्रोडक्ट के साथ ग्राहक को ये लिंक दिखेंगे। अपना काम और डेमो दिखाएँ।</p>'+linksEditor('vend',S.vlinks)+'</section>'}
+function gymCard(){const g=S.gprof||{};if(!(g.photos&&g.photos.length)&&!(g.links&&g.links.length)&&!g.about)return '';
+  const nm=S.role==='owner'?gOwn().name:(S.gym&&S.gym.name)||'';
+  return '<section class="panel"><h2>'+esc(nm||'मेरी जिम')+'</h2>'+((g.photos||[]).length?'<div class="gph">'+g.photos.map(x=>'<img src="'+esc(x)+'" alt="" loading="lazy">').join('')+'</div>':'')+(g.about?'<p>'+esc(g.about)+'</p>':'')+linkCards(g.links)+'</section>'}
+async function gSave(ph,lk,ab){must(await sb.rpc('gym_profile_save',{p_photos:ph,p_links:lk,p_about:ab||null}));await refresh()}
+function vGymProfile(){const g=S.gprof||{photos:[],links:[],about:''},ph=g.photos||[];
+  return '<section class="panel"><h2>मेरी जिम</h2><p class="muted sm">ये सब ऑप्शनल है। 1–2 फ़ोटो और सोशल लिंक डालेंगे तो आपके मेंबर अपने होम पेज पर देखेंगे। न डालें तो कुछ नहीं दिखेगा।</p>'
+   +'<h3 style="margin:12px 0 6px">जिम की फ़ोटो (2 तक)</h3>'+(ph.length?'<div class="spph">'+ph.map((x,i)=>'<span class="phx"><img src="'+esc(x)+'" alt=""><button type="button" data-act="gphx" data-i="'+i+'" aria-label="फ़ोटो हटाएँ">✕</button></span>').join('')+'</div>':'')
+   +(ph.length<2?'<div style="margin-top:8px"><label for="gpf">फ़ोटो चुनें</label><input id="gpf" type="file" accept="image/*" multiple></div>':'<p class="muted sm">2 फ़ोटो लग गईं। बदलने के लिए पहले एक हटाएँ।</p>')
+   +'<form data-form="gabout" class="frm one" style="margin-top:14px"><div><label for="gab">जिम के बारे में दो लाइन (ऑप्शनल)</label><textarea id="gab" name="about" rows="2" maxlength="400" placeholder="जैसे: सुबह 5 से रात 10 बजे तक। ट्रेनर, कार्डियो, स्टीम">'+esc(g.about||'')+'</textarea></div><div class="row"><button class="btn gold" type="submit">सेव करें</button></div></form></section>'
+   +'<section class="panel"><h2>सोशल लिंक</h2><p class="muted sm">Instagram, Facebook, YouTube वगैरह के लिंक।</p>'+linksEditor('gym',g.links)+'</section>'}
 function dlText(name,txt){const f=new File([txt],name,{type:'text/csv'}),u=URL.createObjectURL(f),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(u);a.remove()},1500)}
 function parseCsv(t){t=String(t||'').replace(/^﻿/,'');const first=t.split(/\r?\n/)[0]||'';const d=(first.match(/\t/g)||[]).length?'\t':((first.match(/;/g)||[]).length>(first.match(/,/g)||[]).length?';':',');
   const rows=[];let row=[],c='',q=false;for(let i=0;i<t.length;i++){const ch=t[i];
@@ -2596,6 +2665,11 @@ const ACT={
     must(await sb.rpc('admin_record_payment',{p_gym:g.id,p_amount:num(a),p_days:30}));await refresh();toast('भुगतान दर्ज हुआ')},
   inst:async()=>{if(instEv){const e=instEv;instEv=null;try{e.prompt();const c=await e.userChoice;if(c&&c.outcome==='accepted')ui.instDone=true}catch(x){}render()}else{ui.instHelp=!ui.instHelp;render()}},
   instx:()=>{lsSet('sp360-inst-x',String(Date.now()));render()},
+  lkdel:async b=>{const sc=b.dataset.scope,i=Number(b.dataset.i);
+    if(sc==='show'){const x=(S.showcase||[])[i];if(!x)return;must(await sb.rpc('admin_showcase_delete',{p_id:x.id}));await refresh();return}
+    if(sc==='vend'){const L=(S.vlinks||[]).slice();L.splice(i,1);must(await sb.rpc('vendor_links_save',{p_links:L}));await refresh();return}
+    const g=S.gprof||{},L=(g.links||[]).slice();L.splice(i,1);await gSave(g.photos||[],L,g.about)},
+  gphx:async b=>{const g=S.gprof||{},P=(g.photos||[]).slice();P.splice(Number(b.dataset.i),1);await gSave(P,g.links||[],g.about)},
   priv:()=>{ui.priv=!ui.priv;render();try{window.scrollTo(0,0)}catch(e){}},
   csvtpl:()=>dlText('members-sample.csv',csvText([['Name','Phone','Months','Total','Paid'],['Rahul Sharma','9876543210','1','800','800'],['Amit Verma','9876500000','3','2100','1000']])),
   csvread:()=>{const t=document.getElementById('csvt');impParse(t?t.value:'')},
@@ -2633,6 +2707,13 @@ const FORMS={
     if(!ui.vEdit&&!(ui.vPhotos||[]).length&&!confirm('फ़ोटो के बिना जोड़ें? फ़ोटो से बिक्री ज़्यादा होती है।'))return;
     must(await sb.rpc('vendor_product_save',{p_id:ui.vEdit||null,p_name:String(d.get('name')).trim(),p_descr:String(d.get('descr')||'').trim(),p_gender:k==='wear'?String(d.get('gender')||'unisex'):'na',p_variants:vars,p_photos:(ui.vPhotos||[]).length?ui.vPhotos:null,p_active:true}));
     ui.vEdit=null;ui.vPhotos=[];ui.vSz={};ui.vF=null;ui.vDirty=false;await loadStore(true);render();toast('प्रोडक्ट सेव हो गया')},
+  lkadd:async f=>{const d=new FormData(f),sc=f.dataset.scope,t=String(d.get('t')||'').trim(),u=String(d.get('u')||'').trim();
+    if(!/^https:\/\/\S{4,}$/i.test(u)){toast('लिंक https:// से शुरू होना चाहिए');return}
+    if(sc==='show')must(await sb.rpc('admin_showcase_add',{p_title:t||linkKind(u)[1],p_url:u}));
+    else if(sc==='vend'){const L=(S.vlinks||[]).concat([{t:t,u:u}]);must(await sb.rpc('vendor_links_save',{p_links:L}))}
+    else{const g=S.gprof||{};await gSave(g.photos||[],(g.links||[]).concat([{t:t,u:u}]),g.about)}
+    await refresh();toast('लिंक जुड़ गया')},
+  gabout:async f=>{const g=S.gprof||{};await gSave(g.photos||[],g.links||[],String(new FormData(f).get('about')||'').trim());toast('सेव हो गया')},
   shipform:async f=>{const d=new FormData(f),id=f.dataset.id;
     must(await sb.rpc('store_order_update',{p_id:id,p_status:'shipped',p_courier:String(d.get('courier')),p_tracking:String(d.get('trk')||''),p_url:String(d.get('url')||'')}));
     ui.shipFor=null;await refresh();toast('भेजने की जानकारी सेव हुई')},
@@ -2763,6 +2844,7 @@ async function checkUpdate(){
 }
 async function init(){
   locStatic();
+  (async()=>{try{ui.pubShow=must(await sb.rpc('showcase_list'))||[];if(!S.role)render()}catch(e){}})();
   const qs=new URLSearchParams(location.search),t=qs.get('t'),g=qs.get('g');
   if(g){lsSet('sp360-gym',g);ui.lmode='member'}
   if(t){pending=t;ui.lmode='member'}
