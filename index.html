@@ -429,6 +429,14 @@ body:has(.mnav) .upd,body:has(.mnav) .toast{bottom:92px}
 .lkl{display:grid;gap:6px;margin-bottom:6px}.lkl .szr{border:1px solid var(--line);border-radius:10px;padding:2px 4px}.lkl .lkt{padding:6px}
 .gph{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:10px}.gph img{width:100%;height:170px;object-fit:cover;border-radius:12px;display:block}
 .vlk{margin:8px 0}
+
+.atabs{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 12px;margin:0 0 12px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.atab{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;border:2px solid var(--line);border-radius:999px;background:var(--surface);color:var(--fg);padding:8px 16px;min-height:44px;font-weight:700;white-space:nowrap}
+.atab.on{background:var(--head-bg);color:#fff;border-color:var(--gold-btn)}
+.atb{background:#e8ecf3;color:#12254a;border-radius:999px;padding:0 8px;font-size:12px;line-height:20px;min-width:20px;text-align:center}
+.atb.hot{background:#d6361f;color:#fff}
+.atabbody>.panel,.atabbody>section{margin-bottom:20px}
+@media (min-width:1000px){.atabs{flex-wrap:wrap;overflow:visible}}
 </style>
 </head>
 <body>
@@ -1290,7 +1298,17 @@ const EXTRA={
 "लिंक जुड़ गया": "Link added",
 "फ़ोटो सेव हुई": "Photo saved",
 "वेंडर के लिंक": "Vendor links",
-"जैसे: सुबह 5 से रात 10 बजे तक। ट्रेनर, कार्डियो, स्टीम": "e.g. 5 am to 10 pm. Trainers, cardio, steam"
+"जैसे: सुबह 5 से रात 10 बजे तक। ट्रेनर, कार्डियो, स्टीम": "e.g. 5 am to 10 pm. Trainers, cardio, steam",
+"🏠 होम": "🏠 Home",
+"🏋️ जुड़े जिम": "🏋️ Connected gyms",
+"➕ नया जिम": "➕ New gym",
+"🛍️ वेंडर": "🛍️ Vendors",
+"📦 ऑर्डर": "📦 Orders",
+"🎥 जिम केयर": "🎥 Gym care",
+"✨ हमारा काम": "✨ Our work",
+"🥗 डाइट इंक्वायरी": "🥗 Diet inquiries",
+"💰 पेमेंट व कमाई": "💰 Payments & earnings",
+"ऊपर के टैब से सेक्शन खोलें।": "Open a section from the tabs above."
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -1460,7 +1478,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v34';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v35';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -1709,9 +1727,9 @@ function vVendor0(){
    +'<div class="stack"><section class="panel"><h2>ऑर्डर '+(nw?'<span class="livetag">'+nw+' नए</span>':'')+'</h2>'+(O.length?ordersPanel(O,false):'<p class="muted sm">अभी कोई ऑर्डर नहीं आया।</p>')+'</section></div></div>';
 }
 /* ----- admin: vendors ----- */
-function storeAdmin(){
+function storeVendors(){
   ensureStore();
-  const V=S.vendors||[],O=S.sorders||[],P=stS().list||[],nv=ui.newVen,nw=O.filter(o=>o.status==='new').length;
+  const V=S.vendors||[],O=S.sorders||[],P=stS().list||[],nv=ui.newVen;
   const form='<form data-form="addvendor" class="frm"><div><label for="av1">दुकान / कंपनी का नाम</label><input id="av1" name="name" maxlength="80" required></div><div><label for="av2">संपर्क व्यक्ति</label><input id="av2" name="contact" maxlength="80"></div>'
    +'<div><label for="av3">मोबाइल नंबर</label><input id="av3" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required></div><div><label for="av4">शहर</label><input id="av4" name="city" maxlength="80"></div>'
    +'<div class="full"><label for="av5">वेंडर का प्रकार</label><select id="av5" name="kind">'+SKIND.map(k=>opt(k[0],k[2],false)).join('')+'</select></div>'
@@ -1721,7 +1739,12 @@ function storeAdmin(){
     +'<span class="row" style="margin-top:8px"><a class="btn alt sm" href="tel:'+esc(v.phone)+'">कॉल</a><button class="btn alt sm" type="button" data-act="venreset" data-id="'+v.id+'">नया पासवर्ड</button><button class="btn alt sm" type="button" data-act="venset" data-id="'+v.id+'">'+(v.active?'रोकें':'चालू करें')+'</button><button class="btn alt sm" type="button" data-act="vendel" data-id="'+v.id+'">हटाएँ</button></span></span></li>').join('')+'</ul>':'<p class="muted sm" style="margin-top:10px">अभी कोई वेंडर नहीं जुड़ा।</p>';
   const pl=P.length?'<details class="spdet"><summary>सभी वेंडर के प्रोडक्ट देखें <span class="num">('+P.length+')</span></summary><ul class="feed">'+P.map(p=>'<li style="grid-template-columns:minmax(0,1fr)"><span class="cprod" style="border:0;padding:0">'+spThumb(p,'cpt')+'<span class="cpi"><b>'+esc(p.name)+'</b> '+(p.active?'':'<span class="pill mute">बंद</span>')+'<span class="muted sm">'+esc(p.vendor_name)+' · '+skind(p.kind)[2]+'</span><span class="muted sm">'+esc(varsText(p))+'</span></span></span><span class="row" style="margin-top:6px"><button class="btn alt sm" type="button" data-act="astog" data-id="'+p.id+'">'+(p.active?'छिपाएँ':'दिखाएँ')+'</button></span></li>').join('')+'</ul></details>':'';
   return '<section class="panel storebox" style="margin-bottom:20px"><h2>🛍️ जिम स्टोर: वेंडर</h2><p class="muted sm" style="margin-bottom:10px">जिम वेयर बनाने वाले, इक्विपमेंट सप्लायर और इंटीरियर वाले यहाँ से जुड़ते हैं। उन्हें अपनी ID और पासवर्ड दें।</p>'+form+cred+vl+pl
-   +(O.length?'<h3 style="margin-top:16px">स्टोर के ऑर्डर '+(nw?'<span class="livetag">'+nw+' नए</span>':'')+'</h3>'+ordersPanel(O,true):'')+'</section>';
+   +'</section>';
+}
+function storeOrders(){
+  ensureStore();
+  const O=S.sorders||[],nw=O.filter(o=>o.status==='new').length;
+  return '<section class="panel storebox"><h2>📦 स्टोर के ऑर्डर '+(nw?'<span class="livetag">'+nw+' नए</span>':'')+'</h2>'+(O.length?ordersPanel(O,true):'<p class="muted">अभी कोई ऑर्डर नहीं आया।</p>')+'</section>';
 }
 
 /* ---------- crowd ---------- */
@@ -2375,24 +2398,32 @@ function canPanel(){
 function vAdmin(){
   const open=S.diets.filter(d=>d.status==='नया').length,fee=Number(ui.fee)||0,paying=S.gyms.filter(g=>g.sub==='paid').length,ng=ui.newGym;
   const total=S.gyms.reduce((a,g)=>a+g.count,0);
-  return '<div class="ohead"><div><p class="eyebrow">ShinePro360 एडमिन</p><h1>सभी जिम एक जगह</h1><p class="muted">जिम जोड़ें, ID-पासवर्ड दें और डाइट इंक्वायरी देखें। यहाँ मेंबर के नाम, फ़ीस या हाज़िरी नहीं दिखती।</p></div></div>'
+  const hd='<div class="ohead"><div><p class="eyebrow">ShinePro360 एडमिन</p><h1>सभी जिम एक जगह</h1><p class="muted">जिम जोड़ें, ID-पासवर्ड दें और डाइट इंक्वायरी देखें। यहाँ मेंबर के नाम, फ़ीस या हाज़िरी नहीं दिखती।</p></div></div>'
    +'<div class="strip"><div><div class="big">'+S.gyms.length+'</div><div class="lab">जिम जुड़े हैं</div></div><div><div class="big">'+total+'</div><div class="lab">कुल मेंबर</div></div><div><div class="big">'+open+'</div><div class="lab">नई डाइट इंक्वायरी</div></div>'
-   +'<div><div class="big">'+inr(paying*fee)+'</div><div class="lab">मासिक कमाई: भुगतान वाले '+paying+' जिम × '+inr(fee)+'</div></div></div>'
-   +storeAdmin()+showAdminPanel()+carePanel()+cpPanel()+reqPanel()+rrPanel()+canPanel()
-   +'<div class="cols"><div class="stack"><section class="panel"><h2>नया जिम जोड़ें</h2><form data-form="addgym" class="frm">'
+   +'<div><div class="big">'+inr(paying*fee)+'</div><div class="lab">मासिक कमाई: भुगतान वाले '+paying+' जिम × '+inr(fee)+'</div></div></div>';
+  const addG=''
+   +'<section class="panel"><h2>नया जिम जोड़ें</h2><form data-form="addgym" class="frm">'
    +'<div><label for="gn">जिम का नाम</label><input id="gn" name="name" required></div><div><label for="go">ओनर का नाम</label><input id="go" name="owner" required></div>'
    +'<div><label for="gph">ओनर का मोबाइल</label><input id="gph" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required></div><div><label for="gc">क्षमता (एक समय में कितने लोग)</label><input id="gc" name="cap" type="number" min="5" max="500" value="25" required></div>'
    +'<div class="full"><label for="ga">पता</label><input id="ga" name="address" required></div><div class="full"><button class="btn gold" type="submit">जिम जोड़ें और ID-पासवर्ड बनाएँ</button></div></form></section>'
    +(ng?'<section class="panel" role="status"><h2>'+esc(ng.name)+': लॉगिन तैयार</h2><div class="cred"><span class="muted">जिम ID</span><b>'+esc(ng.code)+'</b><button class="btn alt sm" type="button" data-act="copy" data-t="'+esc(ng.code)+'">कॉपी</button><span class="muted">पासवर्ड</span><b>'+esc(ng.pass)+'</b><button class="btn alt sm" type="button" data-act="copy" data-t="'+esc(ng.pass)+'">कॉपी</button></div><p style="margin-top:10px"><button class="btn alt sm" type="button" data-act="copy" data-t="'+esc(gymMsg(ng))+'">पूरा संदेश कॉपी करें</button></p>'
    +'<p class="sm muted" style="margin-top:8px">यह पासवर्ड अभी एक ही बार दिखेगा। ओनर को भेज दें।</p>'
-   +'<p class="row" style="margin-top:12px"><a class="btn sm" target="_blank" rel="noopener" href="'+wa(ng.phone,'नमस्ते '+ng.owner+', ShinePro360 पर आपके जिम '+ng.name+' का लॉगिन तैयार है। जिम ID: '+ng.code+', पासवर्ड: '+ng.pass+' ऐप लिंक: '+appUrl())+'">WhatsApp से भेजें</a></p></section>':'')
+   +'<p class="row" style="margin-top:12px"><a class="btn sm" target="_blank" rel="noopener" href="'+wa(ng.phone,'नमस्ते '+ng.owner+', ShinePro360 पर आपके जिम '+ng.name+' का लॉगिन तैयार है। जिम ID: '+ng.code+', पासवर्ड: '+ng.pass+' ऐप लिंक: '+appUrl())+'">WhatsApp से भेजें</a></p></section>':'');
+  const gymT=''
    +'<section><h2 style="margin-bottom:8px">जुड़े हुए जिम</h2><div class="tw"><table><thead><tr><th>ID</th><th>जिम</th><th>ओनर</th><th>पता</th><th>मेंबर</th><th>अभी अंदर</th><th>सेवा</th><th></th></tr></thead><tbody>'
-   +(S.gyms.length?S.gyms.map(g=>'<tr><td class="num">'+esc(g.code)+'</td><td><b>'+esc(g.name)+'</b></td><td>'+esc(g.owner)+'<br><span class="muted sm num">'+esc(g.phone)+'</span></td><td>'+esc(g.address)+'</td><td class="num">'+g.count+'</td><td class="num">'+g.inside+'</td><td><span class="pill '+svc(g).c+'">'+svc(g).t+'</span></td><td><div class="row"><button class="btn gold sm" type="button" data-act="paidgym" data-id="'+g.id+'">'+(g.sub==='paid'?'भुगतान हटाएँ':'भुगतान मिला')+'</button><button class="btn alt sm" type="button" data-act="editowner" data-id="'+g.id+'">ओनर बदलें</button> <button class="btn alt sm" type="button" data-act="resetpw" data-id="'+g.id+'">नया पासवर्ड</button><button class="btn alt sm" type="button" data-act="delgym" data-id="'+g.id+'">जिम हटाएँ</button></div></td></tr>').join(''):'<tr><td colspan="8" class="muted">अभी कोई जिम नहीं जुड़ा।</td></tr>')+'</tbody></table></div></section></div>'
-   +'<div class="stack"><section class="panel"><h2>कमाई का हिसाब</h2><label for="fee">हर जिम से मासिक शुल्क (₹)</label><input id="fee" type="number" min="0" data-inp="fee" value="'+esc(ui.fee)+'"><p class="sm muted" style="margin-top:8px">'+paying+' भुगतान वाले जिम × '+inr(fee)+' = <b id="feeTot">'+inr(paying*fee)+'</b> प्रति माह। पहला महीना फ़्री ट्रायल है।</p></section>'
-   +gpayPanel()+'<section class="panel"><h2>डाइट इंक्वायरी</h2><p class="sm muted">ऊपर वाले मेंबर की इंक्वायरी नीचे की तालिका में है।</p></section></div></div>'
-   +'<section style="margin-top:28px"><h2 style="margin-bottom:8px">सभी डाइट इंक्वायरी</h2><div class="tw">'+dietRows(S.diets,true)+'</div></section>';
+   +(S.gyms.length?S.gyms.map(g=>'<tr><td class="num">'+esc(g.code)+'</td><td><b>'+esc(g.name)+'</b></td><td>'+esc(g.owner)+'<br><span class="muted sm num">'+esc(g.phone)+'</span></td><td>'+esc(g.address)+'</td><td class="num">'+g.count+'</td><td class="num">'+g.inside+'</td><td><span class="pill '+svc(g).c+'">'+svc(g).t+'</span></td><td><div class="row"><button class="btn gold sm" type="button" data-act="paidgym" data-id="'+g.id+'">'+(g.sub==='paid'?'भुगतान हटाएँ':'भुगतान मिला')+'</button><button class="btn alt sm" type="button" data-act="editowner" data-id="'+g.id+'">ओनर बदलें</button> <button class="btn alt sm" type="button" data-act="resetpw" data-id="'+g.id+'">नया पासवर्ड</button><button class="btn alt sm" type="button" data-act="delgym" data-id="'+g.id+'">जिम हटाएँ</button></div></td></tr>').join(''):'<tr><td colspan="8" class="muted">अभी कोई जिम नहीं जुड़ा।</td></tr>')+'</tbody></table></div></section>';
+  const earn=''
+   +'<section class="panel"><h2>कमाई का हिसाब</h2><label for="fee">हर जिम से मासिक शुल्क (₹)</label><input id="fee" type="number" min="0" data-inp="fee" value="'+esc(ui.fee)+'"><p class="sm muted" style="margin-top:8px">'+paying+' भुगतान वाले जिम × '+inr(fee)+' = <b id="feeTot">'+inr(paying*fee)+'</b> प्रति माह। पहला महीना फ़्री ट्रायल है।</p></section>'
+   +gpayPanel();
+  const dietT=''+'<section><h2 style="margin-bottom:8px">सभी डाइट इंक्वायरी</h2><div class="tw">'+dietRows(S.diets,true)+'</div></section>';
+  if(!ui.atab)ui.atab='home';
+  const nw=(S.sorders||[]).filter(o=>o.status==='new').length;
+  const TB=[['home','🏠 होम',0],['gyms','🏋️ जुड़े जिम',S.gyms.length],['add','➕ नया जिम',0],['ven','🛍️ वेंडर',0],['ord','📦 ऑर्डर',nw],['care','🎥 जिम केयर',0],['work','✨ हमारा काम',0],['diet','🥗 डाइट इंक्वायरी',open],['earn','💰 पेमेंट व कमाई',0]];
+  const bar='<div class="atabs" role="tablist">'+TB.map(t=>'<button type="button" role="tab" class="atab'+(ui.atab===t[0]?' on':'')+'" aria-selected="'+(ui.atab===t[0])+'" data-act="atab" data-v="'+t[0]+'">'+t[1]+(t[2]?' <span class="atb'+(t[0]==='ord'||t[0]==='diet'?' hot':'')+'">'+t[2]+'</span>':'')+'</button>').join('')+'</div>';
+  const pg={home:()=>reqPanel()+rrPanel()+canPanel()+'<p class="muted sm" style="margin-top:14px">ऊपर के टैब से सेक्शन खोलें।</p>',gyms:()=>gymT,add:()=>addG,ven:storeVendors,ord:storeOrders,care:()=>carePanel()+cpPanel(),work:showAdminPanel,diet:()=>dietT,earn:()=>earn}[ui.atab]||(()=>'');
+  const hi=hd.indexOf('<div class="strip">');
+  return hd.slice(0,hi)+(ui.atab==='home'?hd.slice(hi):'')+bar+'<div class="atabbody">'+pg()+'</div>';
 }
-
 
 /* ---------- data backup (CSV) ---------- */
 const csvCell=v=>{v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
@@ -2553,6 +2584,7 @@ function toast(t){const e=$('#toast');e.textContent=lang==='en'?tr(t):t;e.hidden
 const ask=t=>confirm(lang==='en'?tr(t):t);
 const num=v=>Math.max(0,Math.round(Number(v)||0));
 const ACT={
+  atab:b=>{ui.atab=b.dataset.v;render();window.scrollTo(0,0)},
   calday:b=>{ui.calDay=ui.calDay===b.dataset.v?null:b.dataset.v;render()},
   forgot:()=>{ui.forgot=ui.lmode;ui.forgotDone=null;render()},
   stopopen:()=>{ui.stopOpen=!ui.stopOpen;render()},
