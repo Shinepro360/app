@@ -209,7 +209,7 @@ body{background-image:radial-gradient(circle at 12% 0%,rgba(217,164,65,.10),tran
 .strip>div,.sub button[aria-pressed=true]{border-radius:10px}
 .sub{gap:4px}
 .exph{position:relative;margin:0 0 12px;border-radius:12px;overflow:hidden;line-height:0}
-.exph img{width:100%;height:auto;display:block}
+.exph{background:var(--surface-2);text-align:center}.exph img{width:100%;height:auto;max-height:340px;object-fit:contain;display:block;margin:0 auto}
 .exph .gl{position:absolute;width:13%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,120,0,.75) 0%,rgba(255,120,0,.42) 50%,rgba(255,120,0,0) 75%);animation:lp 1.6s infinite;pointer-events:none}
 .exph figcaption{position:absolute;left:8px;bottom:8px;line-height:1.2;background:rgba(255,255,255,.95);color:#12254a;font-weight:800;font-size:13px;padding:6px 10px;border-radius:8px}
 .exph figcaption span{color:#c2410c;font-size:11px;letter-spacing:1px;margin-right:4px}
@@ -1459,7 +1459,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v32';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v33';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
