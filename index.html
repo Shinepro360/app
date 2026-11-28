@@ -1308,7 +1308,10 @@ const EXTRA={
 "✨ हमारा काम": "✨ Our work",
 "🥗 डाइट इंक्वायरी": "🥗 Diet inquiries",
 "💰 पेमेंट व कमाई": "💰 Payments & earnings",
-"ऊपर के टैब से सेक्शन खोलें।": "Open a section from the tabs above."
+"ऊपर के टैब से सेक्शन खोलें।": "Open a section from the tabs above.",
+"न्यूट्रिशन व नैचुरल फ़ूड": "Nutrition & natural food",
+"ड्राई फ्रूट्स, मखाना, घी, शहद": "Dry fruits, makhana, ghee, honey",
+"जिम के कपड़े और नैचुरल फ़ूड। चुनें, रेट देखें और ऑर्डर करें।": "Gym wear and natural food. Pick, check the price and order."
 };
 Object.assign(DICT,EXTRA);
 const DN={};Object.keys(DICT).forEach(k=>{DN[k.normalize('NFC')]=DICT[k]});
@@ -1478,7 +1481,7 @@ function vOwner(){
 /* ================= ShinePro360 real app: core (everything that talks to Supabase) ================= */
 const SB_URL='https://nlztthivztrcnvklbllk.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5senR0aGl2enRyY252a2xibGxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MzAyNzUsImV4cCI6MjExMDQwNjI3NX0.c4I62I4c4zZMXZK-Ya1WYY2TFF36WrtBcjZMEr30N1A'; /* anon key: public by design, protected by Row Level Security */
-const FN='rapid-worker',FN2='shinepro-admin',VER='v35';
+const FN='rapid-worker',FN2='shinepro-admin',VER='v36';
 const DEV_TEST=false;
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'sp360-auth'}}):null;
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
@@ -1597,7 +1600,7 @@ async function loadAll(light){
 async function refresh(){await loadAll();render()}
 
 /* ---------- gym store (vendors: gym wear, equipment, interior) ---------- */
-const SKIND=[['wear','👕','जिम वेयर','लड़कों और लड़कियों के कपड़े'],['equipment','🏋️','जिम इक्विपमेंट','डंबल, मशीन, रॉड, प्लेट'],['interior','🏢','जिम इंटीरियर','फ़्लोरिंग, मिरर, डिज़ाइन'],['other','📦','अन्य','जिम का बाकी सामान']];
+const SKIND=[['wear','👕','जिम वेयर','लड़कों और लड़कियों के कपड़े'],['equipment','🏋️','जिम इक्विपमेंट','डंबल, मशीन, रॉड, प्लेट'],['interior','🏢','जिम इंटीरियर','फ़्लोरिंग, मिरर, डिज़ाइन'],['food','🥜','न्यूट्रिशन व नैचुरल फ़ूड','ड्राई फ्रूट्स, मखाना, घी, शहद'],['other','📦','अन्य','जिम का बाकी सामान']];
 const SGEN={boys:'लड़के',girls:'लड़कियाँ',unisex:'सबके लिए',na:''};
 const SST={new:['नया','warn'],confirmed:['पक्का हुआ','info'],packed:['पैक हुआ','info'],shipped:['कूरियर से भेजा','info'],done:['पहुँच गया','ok'],cancelled:['रद्द','bad']};
 const STEPS=[['new','ऑर्डर मिला'],['confirmed','पक्का हुआ'],['packed','पैक हुआ'],['shipped','भेजा गया'],['done','पहुँच गया']];
@@ -1666,14 +1669,14 @@ function orderLines(L){
 }
 function vStore(role){
   ensureStore();
-  const s=stS(),all=(s.list||[]).filter(p=>role==='member'?p.kind==='wear':true),kind=role==='member'?'wear':(ui.stKind||'wear'),gen=ui.stGen||'all';
+  const s=stS(),all=(s.list||[]).filter(p=>role==='member'?(p.kind==='wear'||p.kind==='food'):true),kind=role==='member'?(ui.stKind==='food'?'food':'wear'):(ui.stKind||'wear'),gen=ui.stGen||'all';
   if(kind==='care'&&role==='owner'){const ch=SKIND.concat([['care','🧴','जिम केयर','']]).map(k=>'<button type="button" data-act="stkind" data-v="'+k[0]+'" aria-pressed="'+(k[0]==='care')+'"><span aria-hidden="true">'+k[1]+'</span> '+k[2]+'</button>').join('');return '<section class="panel storebox"><h2>🛍️ जिम स्टोर</h2><div class="chips skinds" role="group" aria-label="श्रेणी">'+ch+'</div></section>'+vCare()}
   const ps=all.filter(p=>p.kind===kind&&(kind!=='wear'||gen==='all'||p.gender===gen||p.gender==='unisex'));
   const op=ui.stOpen?all.find(p=>p.id===ui.stOpen):null,rows=cartRows(),total=rows.reduce((a,r)=>a+r.n*r.price,0),mine=s.mine||[];
   const me=role==='owner'?gOwn():(S.members.find(x=>x.id===S.me)||{});
-  const kc=role==='member'?'':'<div class="chips skinds" role="group" aria-label="श्रेणी">'+SKIND.concat([['care','🧴','जिम केयर','']]).map(k=>'<button type="button" data-act="stkind" data-v="'+k[0]+'" aria-pressed="'+(kind===k[0])+'"><span aria-hidden="true">'+k[1]+'</span> '+k[2]+' <span class="num">'+(k[0]==='care'?'':all.filter(p=>p.kind===k[0]).length)+'</span></button>').join('')+'</div>';
+  const kc='<div class="chips skinds" role="group" aria-label="श्रेणी">'+(role==='member'?SKIND.filter(k=>k[0]==='wear'||k[0]==='food'):SKIND.concat([['care','🧴','जिम केयर','']])).map(k=>'<button type="button" data-act="stkind" data-v="'+k[0]+'" aria-pressed="'+(kind===k[0])+'"><span aria-hidden="true">'+k[1]+'</span> '+k[2]+' <span class="num">'+(k[0]==='care'?'':all.filter(p=>p.kind===k[0]).length)+'</span></button>').join('')+'</div>';
   const gc=kind==='wear'?'<div class="chips" role="group" aria-label="किसके लिए">'+[['all','सभी'],['boys','लड़के'],['girls','लड़कियाँ']].map(g=>'<button type="button" data-act="stgen" data-v="'+g[0]+'" aria-pressed="'+(gen===g[0])+'">'+g[1]+'</button>').join('')+'</div>':'';
-  return '<section class="panel storebox"><h2>🛍️ जिम स्टोर</h2><p class="muted sm" style="margin-bottom:10px">'+(role==='member'?'जिम के कपड़े, लड़कों और लड़कियों दोनों के। साइज़ चुनें, रेट देखें और ऑर्डर करें।':'जिम वेयर, इक्विपमेंट, इंटीरियर और बाकी सामान सीधे वेंडर से। फ़ोटो देखें और ऑर्डर या पूछताछ भेजें।')+'</p>'
+  return '<section class="panel storebox"><h2>🛍️ जिम स्टोर</h2><p class="muted sm" style="margin-bottom:10px">'+(role==='member'?'जिम के कपड़े और नैचुरल फ़ूड। चुनें, रेट देखें और ऑर्डर करें।':'जिम वेयर, इक्विपमेंट, इंटीरियर और बाकी सामान सीधे वेंडर से। फ़ोटो देखें और ऑर्डर या पूछताछ भेजें।')+'</p>'
    +kc+gc
    +(s.list?(ps.length?'<div class="spg2">'+ps.map(spCard).join('')+'</div>':'<p class="muted sm" style="margin:12px 0">अभी इस हिस्से में कोई प्रोडक्ट नहीं जुड़ा है।</p>'):'<p class="muted sm" style="margin:12px 0">लोड हो रहा है…</p>')
    +(op?spDetail(op):'')
